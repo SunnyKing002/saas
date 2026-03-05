@@ -3,6 +3,7 @@
 
 import { defineConfig } from "astro/config";
 import react from "@astrojs/react";
+import sitemap from "@astrojs/sitemap";
 import tsconfigPaths from "vite-tsconfig-paths";
 
 const SITE_DOMAIN = process.env.SITE_DOMAIN || "https://bizarre-lineage.com";
@@ -12,7 +13,7 @@ export default defineConfig({
     output: "static",
     integrations: [
         react(),
-        // TODO: 升级 @astrojs/sitemap 到兼容版本后重新加入
+        sitemap(),
     ],
 
     // Vite 配置：解析 monorepo workspace 包
