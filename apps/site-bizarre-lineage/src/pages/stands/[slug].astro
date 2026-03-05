@@ -1,0 +1,711 @@
+---
+// src/pages/stands/[slug].astro
+import Layout from "../../layouts/Layout.astro";
+import TierBadge from "../../components/TierBadge.astro";
+import { stands, type Stand } from "../../data/stands";
+import { getStyleBySlug } from "../../data/fighting-styles";
+import { Zap, Dumbbell, ChevronRight, Swords, Star } from "lucide-react";
+
+export function getStaticPaths() {
+  return stands.map((stand) => ({
+    params: { slug: stand.slug },
+    props: { stand },
+  }));
+}
+
+interface Props {
+  stand: Stand;
+}
+
+const { stand } = Astro.props;
+const bestStyle = getStyleBySlug(stand.bestStyle);
+
+const statColorMap = {
+  damage: "var(--color-primary)",
+  sustain: "#4ade80",
+  pvpScore: "#8b5cf6",
+  pveScore: "#f59e0b",
+  mobility: "#06b6d4",
+} as const;
+
+// Dynamic SEO: Title, Meta using stand name
+const seoTitle = `${stand.name} in Bizarre Lineage — Stats, Abilities & Best Build`;
+const seoDesc = `Complete Bizarre Lineage ${stand.name} guide. ${stand.rarity} tier ${stand.tier} Stand. Stats, all ${stand.abilities?.length ?? 0} abilities, best fighting style, and pro tips. Updated March 2026.`;
+
+// Dynamic FAQ per Stand
+const faqs = [
+  {
+    question: `Is ${stand.name} good in Bizarre Lineage?`,
+    answer: `${stand.name} is a ${stand.tier}-tier Stand in Bizarre Lineage with a PvP score of ${stand.pvpScore}/10 and PvE score of ${stand.pveScore}/10. ${stand.description}`
+  },
+  {
+    question: `How do I get ${stand.name} in Bizarre Lineage?`,
+    answer: `In Bizarre Lineage, ${stand.name} can be obtained by: ${stand.obtainMethod}. ${stand.rarity === 'Mythical' ? 'As a Mythical rarity Stand, it has a very low drop rate from Stand Arrows.' : stand.rarity === 'Legendary' ? 'As a Legendary rarity Stand, it has approximately a 5% chance from Stand Arrows.' : 'As a Rare rarity Stand, it has approximately a 10% chance from Stand Arrows.'} Use Bizarre Lineage codes to get free Stand Arrows and increase your chances.`
+  },
+  {
+    question: `What is the best fighting style for ${stand.name} in Bizarre Lineage?`,
+    answer: `The recommended fighting style for ${stand.name} in Bizarre Lineage is ${bestStyle?.name ?? 'Boxing'}. ${bestStyle?.description ?? 'Boxing provides excellent combo extension and damage scaling for most Stands.'}`
+  },
+  {
+    question: `What are ${stand.name}'s best abilities in Bizarre Lineage?`,
+    answer: `${stand.name} has ${stand.abilities?.length ?? 6} abilities in Bizarre Lineage. ${stand.tips?.[0] ?? `The key ability combo starts with your Z move for maximum damage output.`} See the full moveset breakdown above.`
+  }
+];
+
+// JSON-LD: FAQPage
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map(f => ({
+    "@type": "Question",
+    "name": f.question,
+    "acceptedAnswer": { "@type": "Answer", "text": f.answer }
+  }))
+};
+
+// JSON-LD: ItemPage for the Stand
+const itemSchema = {
+  "@context": "https://schema.org",
+  "@type": "ItemPage",
+  "name": `${stand.name} — Bizarre Lineage Stand`,
+  "description": seoDesc,
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://bizarre-lineage.com/" },
+      { "@type": "ListItem", "position": 2, "name": "All Stands", "item": "https://bizarre-lineage.com/stands" },
+      { "@type": "ListItem", "position": 3, "name": stand.name, "item": `https://bizarre-lineage.com/stands/${stand.slug}` }
+    ]
+  }
+};
+---
+
+<Layout
+  title={seoTitle}
+  description={seoDesc}
+  canonicalPath={`/stands/${stand.slug}`}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  <script type="application/ld+json" set:html={JSON.stringify(itemSchema)} />
+
+  <!-- Breadcrumb + Stand Hero Header -->
+  <header class="stand-header">
+    <div class="header-glow"></div>
+    <div class="container relative z-10">
+      <nav class="breadcrumbs" aria-label="breadcrumb">
+        <a href="/">Home</a>
+        <ChevronRight size={14} className="bc-sep" />
+        <a href="/stands">Bizarre Lineage Stands</a>
+        <ChevronRight size={14} className="bc-sep" />
+        <span>{stand.name}</span>
+      </nav>
+
+      <div class="title-area">
+        <TierBadge tier={stand.tier} size="lg" />
+        <div class="title-text">
+          <span class="rarity-tag">{stand.rarity} Stand</span>
+          <h1 class="stand-title">{stand.name} — Bizarre Lineage</h1>
+        </div>
+      </div>
+
+      <p class="stand-description">{stand.description}</p>
+
+      <div class="hero-meta-chips">
+        <span class="chip">Tier: <strong>{stand.tier}</strong></span>
+        <span class="chip">PvP: <strong>{stand.pvpScore}/10</strong></span>
+        <span class="chip">PvE: <strong>{stand.pveScore}/10</strong></span>
+        <span class="chip">Rarity: <strong>{stand.rarity}</strong></span>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="content-grid">
+      <!-- Left Col: Stats -->
+      <div class="stats-col glass-panel animate-fade-in" style="animation-delay: 0.1s">
+        <h2 class="panel-title">{stand.name} Core Statistics</h2>
+
+        <div class="stat-bars">
+          {[
+            { label: "Damage", objKey: "damage", color: statColorMap.damage },
+            { label: "Sustain", objKey: "sustain", color: statColorMap.sustain },
+            { label: "PvP Score", objKey: "pvpScore", color: statColorMap.pvpScore },
+            { label: "PvE Score", objKey: "pveScore", color: statColorMap.pveScore },
+            { label: "Mobility", objKey: "mobility", color: statColorMap.mobility },
+          ].map(stat => (
+            <div class="stat-row">
+              <div class="stat-info">
+                <span class="stat-label">{stat.label}</span>
+                <span class="stat-value" style={`color: ${stat.color}`}>{stand[stat.objKey as keyof Stand]}/10</span>
+              </div>
+              <div class="progress-bg">
+                <div
+                  class="progress-fill"
+                  style={`width: ${Number(stand[stat.objKey as keyof Stand]) * 10}%; background: ${stat.color}; box-shadow: 0 0 10px ${stat.color};`}
+                ></div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div class="meta-info">
+          <div class="info-chunk">
+            <h4>How to Get {stand.name}</h4>
+            <p>{stand.obtainMethod}</p>
+          </div>
+          <div class="info-chunk">
+            <h4>Tier Ranking</h4>
+            <p>{stand.tier}-Tier in the Bizarre Lineage tier list. <a href="/tier-list">View full tier list →</a></p>
+          </div>
+        </div>
+
+        <!-- Pro Tips -->
+        {stand.tips && stand.tips.length > 0 && (
+          <div class="tips-section">
+            <h3 class="tips-title">
+              <Star size={16} />
+              Pro Tips for {stand.name}
+            </h3>
+            <ul class="tips-list">
+              {stand.tips.map(tip => (
+                <li>{tip}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
+
+      <!-- Right Col: Abilities + Build -->
+      <div class="abilities-col animate-fade-in" style="animation-delay: 0.2s">
+
+        <!-- Recommended Build -->
+        <div class="glass-panel mb-6 recommend-panel">
+          <h2 class="panel-title">Best Build for {stand.name} in Bizarre Lineage</h2>
+          <div class="rec-card">
+            <div class="rec-icon"><Dumbbell size={32} /></div>
+            <div class="rec-content">
+              <h4>Best Fighting Style: <span>{bestStyle?.name || "Boxing"}</span></h4>
+              <p>{bestStyle?.description || "Provides excellent durability and combo extenders that pair perfectly with this Stand's moveset."}</p>
+            </div>
+            <a href={`/fighting-styles/${bestStyle?.slug || "boxing"}`} class="rec-link">View Style Guide →</a>
+          </div>
+        </div>
+
+        <!-- Awakening -->
+        {stand.awakening && (
+          <div class="glass-panel mb-6">
+            <h2 class="panel-title text-accent">{stand.name} Awakening</h2>
+            <div class="passive-box">
+              <div class="passive-icon"><Zap size={24} /></div>
+              <p>{stand.awakening}</p>
+            </div>
+          </div>
+        )}
+
+        <!-- Full Moveset from abilities field -->
+        {stand.abilities && stand.abilities.length > 0 && (
+          <>
+            <h2 class="section-heading">{stand.name} Full Moveset — All Abilities</h2>
+            <div class="moves-grid">
+              {stand.abilities.map((ability) => (
+                <div class="move-card glass-card">
+                  <div class="move-header">
+                    <span class="move-key">{ability.key}</span>
+                    <div class="move-names">
+                      <h3 class="move-name">{ability.name}</h3>
+                    </div>
+                    {ability.cooldown && <span class="move-cd">{ability.cooldown}</span>}
+                  </div>
+                  <p class="move-desc">{ability.description}</p>
+                </div>
+              ))}
+            </div>
+          </>
+        )}
+      </div>
+    </div>
+
+    <!-- FAQ Section with JSON-LD -->
+    <section class="faq-section-stand section">
+      <h2 class="section-title">{stand.name} FAQ — Bizarre Lineage</h2>
+      <div class="faq-list">
+        {faqs.map(f => (
+          <details class="faq-item">
+            <summary>{f.question}</summary>
+            <p>{f.answer}</p>
+          </details>
+        ))}
+      </div>
+    </section>
+
+    <!-- Internal Links -->
+    <section class="internal-nav-section section">
+      <h2 class="section-title">More Bizarre Lineage Resources</h2>
+      <div class="nav-cards">
+        <a href="/tier-list" class="nav-card glass-panel">
+          <Swords size={28} />
+          <div>
+            <strong>Bizarre Lineage Tier List</strong>
+            <p>See how {stand.name} ranks vs all 17 Stands</p>
+          </div>
+        </a>
+        <a href="/codes" class="nav-card glass-panel">
+          <Star size={28} />
+          <div>
+            <strong>Bizarre Lineage Codes</strong>
+            <p>Get free Stand Arrows to roll for {stand.name}</p>
+          </div>
+        </a>
+        <a href="/stands" class="nav-card glass-panel">
+          <ChevronRight size={28} />
+          <div>
+            <strong>All Bizarre Lineage Stands</strong>
+            <p>Browse the complete Stands database</p>
+          </div>
+        </a>
+      </div>
+    </section>
+  </div>
+</Layout>
+
+<style>
+  /* Hero Header */
+  .stand-header {
+    position: relative;
+    padding: 6rem 0 4rem;
+    margin-bottom: 4rem;
+    border-bottom: 1px solid var(--color-glass-border);
+    overflow: hidden;
+  }
+
+  .header-glow {
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 800px; height: 100%;
+    background: radial-gradient(ellipse at top, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
+    z-index: 0;
+  }
+
+  .breadcrumbs {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 2rem;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+  }
+
+  .breadcrumbs a {
+    color: var(--color-primary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+
+  .breadcrumbs a:hover { color: var(--color-text-primary); }
+  .bc-sep { opacity: 0.4; }
+
+  .title-area {
+    display: flex;
+    align-items: flex-end;
+    gap: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .title-text { display: flex; flex-direction: column; }
+
+  .rarity-tag {
+    font-size: 0.85rem;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 0.25rem;
+  }
+
+  .stand-title {
+    font-size: 3rem;
+    font-weight: 900;
+    color: #fff;
+    margin: 0;
+    line-height: 1.1;
+  }
+
+  .stand-description {
+    font-size: 1.1rem;
+    color: var(--color-text-secondary);
+    max-width: 700px;
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-meta-chips {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.35rem 0.9rem;
+    background: var(--color-glass-bg);
+    border: 1px solid var(--color-glass-border);
+    border-radius: 99px;
+    font-size: 0.82rem;
+    color: var(--color-text-secondary);
+  }
+
+  .chip strong { color: var(--color-text-primary); }
+
+  /* Two-column layout */
+  .content-grid {
+    display: grid;
+    grid-template-columns: 360px 1fr;
+    gap: 2.5rem;
+    align-items: start;
+    margin-bottom: 4rem;
+  }
+
+  .glass-panel {
+    background: var(--color-glass-bg);
+    border: 1px solid var(--color-glass-border);
+    border-radius: 20px;
+    padding: 2rem;
+  }
+
+  .mb-6 { margin-bottom: 1.5rem; }
+
+  .panel-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin: 0 0 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .text-accent { color: var(--color-accent); }
+
+  /* Stat Bars */
+  .stat-bars { display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2rem; }
+
+  .stat-row { display: flex; flex-direction: column; gap: 0.4rem; }
+
+  .stat-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .stat-label {
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+  }
+
+  .stat-value {
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+
+  .progress-bg {
+    height: 6px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    border-radius: 99px;
+    transition: width 0.5s ease;
+  }
+
+  /* Meta Info */
+  .meta-info {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    margin-bottom: 1.5rem;
+  }
+
+  .info-chunk h4 {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    margin: 0 0 0.3rem;
+  }
+
+  .info-chunk p {
+    font-size: 0.88rem;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .info-chunk a { color: var(--color-primary); text-decoration: none; }
+  .info-chunk a:hover { text-decoration: underline; }
+
+  /* Pro Tips */
+  .tips-section {
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .tips-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--color-accent);
+    margin: 0 0 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .tips-list {
+    padding-left: 1rem;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .tips-list li {
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+  }
+
+  /* Recommend Panel */
+  .recommend-panel { }
+
+  .rec-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    position: relative;
+  }
+
+  .rec-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    background: rgba(139,92,246,0.1);
+    border: 1px solid rgba(139,92,246,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-primary);
+    flex-shrink: 0;
+  }
+
+  .rec-content { flex: 1; }
+  .rec-content h4 { font-size: 0.95rem; margin: 0 0 0.3rem; color: var(--color-text-primary); }
+  .rec-content h4 span { color: var(--color-primary); }
+  .rec-content p { font-size: 0.85rem; color: var(--color-text-secondary); line-height: 1.5; margin: 0; }
+
+  .rec-link {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    text-decoration: none;
+    white-space: nowrap;
+    align-self: center;
+  }
+
+  .rec-link:hover { text-decoration: underline; }
+
+  /* Passive / Awakening */
+  .passive-box {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .passive-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    background: rgba(245,158,11,0.1);
+    border: 1px solid rgba(245,158,11,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-accent);
+    flex-shrink: 0;
+  }
+
+  .passive-box p {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin: 0;
+    padding-top: 0.3rem;
+  }
+
+  /* Moves Grid */
+  .section-heading {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin: 0 0 1.2rem;
+  }
+
+  .moves-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  .glass-card {
+    background: var(--color-glass-bg);
+    border: 1px solid var(--color-glass-border);
+    border-radius: 14px;
+    padding: 1.2rem;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+
+  .glass-card:hover {
+    border-color: rgba(139,92,246,0.3);
+    transform: translateY(-2px);
+  }
+
+  .move-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .move-key {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: rgba(139,92,246,0.15);
+    border: 1px solid rgba(139,92,246,0.3);
+    color: var(--color-primary);
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+  }
+
+  .move-names { flex: 1; }
+
+  .move-name {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin: 0;
+  }
+
+  .move-cd {
+    font-size: 0.72rem;
+    background: rgba(245,158,11,0.1);
+    color: var(--color-accent);
+    padding: 0.1rem 0.5rem;
+    border-radius: 99px;
+    font-weight: 600;
+    white-space: nowrap;
+    border: 1px solid rgba(245,158,11,0.2);
+  }
+
+  .move-desc {
+    font-size: 0.82rem;
+    color: var(--color-text-secondary);
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  /* FAQ */
+  .faq-section-stand { padding-top: 2rem; }
+
+  .faq-list { max-width: 800px; margin: 0 auto; }
+  .faq-item {
+    background: var(--color-glass-bg);
+    border: 1px solid var(--color-glass-border);
+    border-radius: 12px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+  }
+  .faq-item summary {
+    padding: 1.2rem 1.5rem;
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    font-size: 1rem;
+    list-style: none;
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item p { padding: 0 1.5rem 1.2rem; margin: 0; color: var(--color-text-secondary); line-height: 1.7; }
+
+  /* Internal Nav */
+  .internal-nav-section { padding-top: 2rem; }
+
+  .nav-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .nav-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.2s;
+  }
+
+  .nav-card:hover {
+    border-color: rgba(139,92,246,0.3);
+    transform: translateY(-2px);
+  }
+
+  .nav-card > svg { color: var(--color-primary); flex-shrink: 0; }
+
+  .nav-card strong {
+    display: block;
+    font-size: 0.95rem;
+    color: var(--color-text-primary);
+    margin-bottom: 0.2rem;
+  }
+
+  .nav-card p {
+    font-size: 0.8rem;
+    color: var(--color-text-secondary);
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .content-grid { grid-template-columns: 1fr; }
+    .moves-grid { grid-template-columns: 1fr; }
+    .nav-cards { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 768px) {
+    .stand-title { font-size: 2.2rem; }
+    .title-area { flex-direction: column; align-items: flex-start; }
+    .hero-meta-chips { gap: 0.5rem; }
+  }
+</style>

@@ -1,0 +1,32 @@
+---
+// apps/site-template/src/components/SEO.astro
+// SEO 组件 - 生成所有 head 内的 meta 标签
+import { buildSeoMeta, buildOpenGraphTags, buildTwitterCardTags } from "@saas-matrix/core";
+import type { SiteConfig, SeoMeta } from "@saas-matrix/core";
+
+export interface Props {
+  seo?: Partial<SeoMeta>;
+  site: Pick<SiteConfig, "title" | "description" | "domain">;
+}
+
+const { seo = {}, site } = Astro.props;
+const meta = buildSeoMeta(seo, site);
+const canonicalUrl = seo.canonicalUrl || Astro.url.href;
+const ogTags = buildOpenGraphTags({ ...meta, canonicalUrl }, site.title);
+const twitterTags = buildTwitterCardTags(meta);
+---
+
+<!-- 基础 Meta -->
+<title>{meta.title}</title>
+<meta name="description" content={meta.description} />
+<link rel="canonical" href={canonicalUrl} />
+{meta.noIndex && <meta name="robots" content="noindex,nofollow" />}
+
+<!-- Open Graph -->
+{ogTags.map((tag) => <meta property={tag.property} content={tag.content} />)}
+
+<!-- Twitter Card -->
+{twitterTags.map((tag) => <meta name={tag.name} content={tag.content} />)}
+
+<!-- Favicon (TODO: 替换为实际 favicon) -->
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />

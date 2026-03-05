@@ -1,0 +1,19 @@
+{
+    "name": "@saas-matrix/scripts",
+    "version": "0.0.1",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "create:site": "tsx create-site.ts",
+        "lint": "eslint . --ext .ts",
+        "lint:fix": "eslint . --ext .ts --fix",
+        "type-check": "tsc --noEmit"
+    },
+    "dependencies": {
+        "@saas-matrix/core": "workspace:*"
+    },
+    "devDependencies": {
+        "tsx": "^4.7.0",
+        "typescript": "^5.4.5"
+    }
+}

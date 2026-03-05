@@ -1,0 +1,220 @@
+---
+import Layout from "../layouts/Layout.astro";
+import StandCard from "../components/StandCard.astro";
+import { stands } from "../data/stands";
+
+// Group stands by tier
+const sPlusStands = stands.filter((s) => s.tier === "S+");
+const sStands = stands.filter((s) => s.tier === "S");
+const aStands = stands.filter((s) => s.tier === "A");
+const bStands = stands.filter((s) => s.tier === "B");
+
+const faqs = [
+  {
+    question: "How often is the Bizarre Lineage tier list updated?",
+    answer: "We update this Bizarre Lineage tier list after every major game patch, balance change, or community-driven meta shift. Rankings are based on PvP leaderboard data and testing by experienced players."
+  },
+  {
+    question: "What makes a Stand S+ tier in the Bizarre Lineage tier list?",
+    answer: "S+ Stands in the Bizarre Lineage tier list deliver exceptional damage output, excellent crowd control, high mobility, and strong performance in both PvP arenas and PvE raids. They can solo carry matches consistently."
+  },
+  {
+    question: "Should I reroll my Stand based on this Bizarre Lineage tier list?",
+    answer: "If you have a B-tier Stand and enough Stand Arrows, rerolling is recommended. However, player skill matters — an experienced user with an A-tier Stand can beat a beginner with an S+ Stand. Use the tier list as a guideline, not a hard rule."
+  },
+  {
+    question: "Does the Bizarre Lineage tier list change after updates?",
+    answer: "Yes. Game balance patches frequently adjust Stand damage values, cooldowns, and passives. After each update we re-test every Stand and adjust positions on the Bizarre Lineage tier list accordingly."
+  }
+];
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map(f => ({
+    "@type": "Question",
+    "name": f.question,
+    "acceptedAnswer": { "@type": "Answer", "text": f.answer }
+  }))
+};
+---
+<Layout 
+  title="Bizarre Lineage Tier List — Best Stands Ranked for PvP & PvE (2026)"
+  description="Updated bizarre lineage tier list ranking all 17 stands from S+ to B. Find the best stands for PvP arenas and PvE grinding in Roblox."
+  canonicalPath="/tier-list"
+>
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+  <div class="page-header animate-fade-in">
+    <div class="container header-inner">
+      <h1 class="page-title">Bizarre Lineage Tier List (March 2026)</h1>
+      <p class="page-desc">The definitive Bizarre Lineage tier list ranking every Stand for the current meta. Data aggregated from the top 100 PvP leaderboard and verified through in-game testing by our team.</p>
+    </div>
+  </div>
+
+  <!-- Intro Content Block for SEO -->
+  <div class="container">
+    <div class="seo-intro">
+      <p>Choosing the right Stand is the single most important decision in Bizarre Lineage. This Bizarre Lineage tier list breaks down all 17 Stands into four clear tiers — S+, S, A, and B — based on their damage output, crowd control, mobility, combo potential, and performance across both PvP arenas and PvE boss raids.</p>
+      <p>Whether you are deciding which Stand to keep after using a Stand Arrow, or planning your next Prestige build, this Bizarre Lineage tier list gives you a data-driven answer. For detailed stats and movesets, visit each Stand's page in our <a href="/stands">Bizarre Lineage stands database</a>.</p>
+    </div>
+  </div>
+
+  <div class="container flex-col-gap">
+    {sPlusStands.length > 0 && (
+      <section class="tier-section">
+        <div class="tier-header">
+          <div class="tier-title-wrap">
+            <span class="tier-badge badge-splus">S+</span>
+            <h2 class="tier-name">S+ Tier — Best Bizarre Lineage Stands</h2>
+          </div>
+          <p class="tier-desc">Overwhelmingly powerful. These Bizarre Lineage Stands dominate both PvP and PvE. Absolute must-haves for competitive play.</p>
+        </div>
+        <div class="stands-grid">
+          {sPlusStands.map(s => <StandCard stand={s} />)}
+        </div>
+      </section>
+    )}
+
+    {sStands.length > 0 && (
+      <section class="tier-section">
+        <div class="tier-header">
+          <div class="tier-title-wrap">
+            <span class="tier-badge badge-s">S</span>
+            <h2 class="tier-name">S Tier — Meta Bizarre Lineage Stands</h2>
+          </div>
+          <p class="tier-desc">Exceptionally strong across almost all matchups. Highly recommended Bizarre Lineage Stands if S+ options are not available.</p>
+        </div>
+        <div class="stands-grid">
+          {sStands.map(s => <StandCard stand={s} />)}
+        </div>
+      </section>
+    )}
+
+    {aStands.length > 0 && (
+      <section class="tier-section">
+        <div class="tier-header">
+          <div class="tier-title-wrap">
+            <span class="tier-badge badge-a">A</span>
+            <h2 class="tier-name">A Tier — Viable Bizarre Lineage Stands</h2>
+          </div>
+          <p class="tier-desc">Solid performers in the Bizarre Lineage tier list. Requires more mechanical skill to beat S-tier Stands, but perfectly viable for competitive and casual play.</p>
+        </div>
+        <div class="stands-grid">
+          {aStands.map(s => <StandCard stand={s} />)}
+        </div>
+      </section>
+    )}
+
+    {bStands.length > 0 && (
+      <section class="tier-section">
+        <div class="tier-header">
+          <div class="tier-title-wrap">
+            <span class="tier-badge badge-b">B</span>
+            <h2 class="tier-name">B Tier — Niche Bizarre Lineage Stands</h2>
+          </div>
+          <p class="tier-desc">Situational picks on the Bizarre Lineage tier list. Fun to play but generally outclassed by higher-tier options in ranked matches.</p>
+        </div>
+        <div class="stands-grid">
+          {bStands.map(s => <StandCard stand={s} />)}
+        </div>
+      </section>
+    )}
+  </div>
+
+  <!-- Internal Links -->
+  <div class="container section" style="text-align:center;">
+    <h2 class="section-title">Go Deeper Into Bizarre Lineage</h2>
+    <p class="section-subtitle">Pair the right Stand with the right style and sub-ability for maximum impact.</p>
+    <div class="hero-cta" style="justify-content:center;">
+      <a href="/fighting-styles" class="btn btn-primary">Fighting Styles</a>
+      <a href="/codes" class="btn btn-secondary glass-btn">Bizarre Lineage Codes</a>
+      <a href="/guides/leveling" class="btn btn-secondary glass-btn">Leveling Guide</a>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="container section">
+    <h2 class="section-title">Bizarre Lineage Tier List FAQ</h2>
+    <div class="faq-list">
+      {faqs.map(f => (
+        <details class="faq-item">
+          <summary>{f.question}</summary>
+          <p>{f.answer}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</Layout>
+
+<style>
+  .page-header {
+    padding: 6rem 0 3rem;
+    background: radial-gradient(circle at top right, rgba(139, 92, 246, 0.1), transparent 60%);
+    border-bottom: 1px solid var(--color-glass-border);
+    margin-bottom: 2rem;
+  }
+  .header-inner { max-width: 800px; }
+  .page-title {
+    font-size: 3.5rem; font-weight: 900; margin-bottom: 1rem; color: #fff;
+    text-shadow: 0 0 40px rgba(139, 92, 246, 0.3);
+  }
+  .page-desc { font-size: 1.15rem; color: var(--color-text-secondary); }
+
+  .seo-intro {
+    max-width: 800px;
+    margin: 0 auto 2rem;
+    padding: 2rem;
+    background: var(--color-glass-bg);
+    border: 1px solid var(--color-glass-border);
+    border-radius: 16px;
+  }
+  .seo-intro p { color: var(--color-text-secondary); line-height: 1.7; margin: 0 0 1rem; font-size: 1rem; }
+  .seo-intro p:last-child { margin-bottom: 0; }
+  .seo-intro a { color: var(--color-primary); text-decoration: underline; text-underline-offset: 3px; }
+
+  .flex-col-gap { display: flex; flex-direction: column; gap: 4rem; }
+  .tier-section { position: relative; }
+  .tier-section:not(:last-child)::after {
+    content: ''; position: absolute; bottom: -2rem; left: 1.5rem;
+    width: 2px; height: 1.5rem; background: var(--color-glass-border);
+  }
+  .tier-header { margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
+  .tier-title-wrap { display: flex; align-items: center; gap: 1rem; margin-bottom: 0.5rem; }
+  .tier-badge {
+    display: flex; align-items: center; justify-content: center;
+    height: 40px; min-width: 50px; border-radius: 10px;
+    font-family: var(--font-heading); font-weight: 800; font-size: 1.25rem; border: 1px solid;
+  }
+  .badge-splus { color: #ef4444; background: rgba(239,68,68,0.1); border-color: rgba(239,68,68,0.3); box-shadow: 0 0 15px rgba(239,68,68,0.3); }
+  .badge-s { color: #f59e0b; background: rgba(245,158,11,0.1); border-color: rgba(245,158,11,0.3); box-shadow: 0 0 15px rgba(245,158,11,0.3); }
+  .badge-a { color: #a855f7; background: rgba(168,85,247,0.1); border-color: rgba(168,85,247,0.3); box-shadow: 0 0 15px rgba(168,85,247,0.3); }
+  .badge-b { color: #3b82f6; background: rgba(59,130,246,0.1); border-color: rgba(59,130,246,0.3); box-shadow: 0 0 15px rgba(59,130,246,0.3); }
+  .tier-name { font-size: 1.8rem; font-weight: 700; margin: 0; color: var(--color-text-primary); }
+  .tier-desc { color: var(--color-text-muted); font-size: 0.95rem; margin: 0; padding-left: 4.2rem; }
+  .stands-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+
+  /* FAQ inline */
+  .faq-list { max-width: 800px; margin: 0 auto; }
+  .faq-item {
+    background: var(--color-glass-bg); border: 1px solid var(--color-glass-border);
+    border-radius: 12px; margin-bottom: 1rem; overflow: hidden;
+  }
+  .faq-item summary {
+    padding: 1.2rem 1.5rem; cursor: pointer; font-weight: 600;
+    color: var(--color-text-primary); font-size: 1.05rem; list-style: none;
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item p { padding: 0 1.5rem 1.2rem; margin: 0; color: var(--color-text-secondary); line-height: 1.7; }
+
+  .btn { padding: 0.8rem 1.5rem; border-radius: 99px; font-family: var(--font-heading); font-size: 0.95rem; font-weight: 600; text-decoration: none; transition: all 0.2s; }
+  .btn-primary { background: var(--color-text-primary); color: #000; }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(255,255,255,0.2); }
+  .glass-btn { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--color-text-primary); }
+
+  @media (max-width: 768px) {
+    .page-title { font-size: 2.5rem; }
+    .tier-desc { padding-left: 0; margin-top: 1rem; }
+    .tier-name { font-size: 1.3rem; }
+  }
+</style>

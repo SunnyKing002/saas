@@ -1,0 +1,71 @@
+---
+// apps/site-template/src/layouts/Layout.astro
+// 通用页面布局 - 所有页面共享此布局
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+import SEO from "../components/SEO.astro";
+import siteConfig from "../../site.config";
+import type { SeoMeta } from "@saas-matrix/core";
+
+export interface Props {
+  /** 页面 SEO 信息（可覆盖站点默认值） */
+  seo?: Partial<SeoMeta>;
+}
+
+const { seo = {} } = Astro.props;
+
+// 从 Worker 注入的导航数据（通过 API 获取，详见 worker/index.ts 说明）
+// 本地开发时使用静态默认导航
+const navLinks = [
+  { label: "Home", url: "/" },
+  { label: "Blog", url: "/blog" },
+  { label: "Docs", url: "/docs" },
+  { label: "Pricing", url: "/#pricing" },
+];
+---
+
+<!doctype html>
+<html lang={siteConfig.locale}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <SEO seo={seo} site={siteConfig} />
+    <!-- TODO: 填写 gaId 后取消注释以启用 Google Analytics -->
+    <!-- {siteConfig.gaId && <script async src={`https://www.googletagmanager.com/gtag/js?id=${siteConfig.gaId}`} />} -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style is:global>
+      :root {
+        --color-primary: {siteConfig.primaryColor};
+        --font-sans: "Inter", system-ui, sans-serif;
+      }
+      *, *::before, *::after { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body {
+        margin: 0;
+        font-family: var(--font-sans);
+        background: #0a0a0f;
+        color: #e2e8f0;
+        line-height: 1.6;
+      }
+      a { color: inherit; }
+      img { max-width: 100%; }
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <Navbar links={navLinks} siteTitle={siteConfig.title} />
+    <main>
+      <slot />
+    </main>
+    <Footer siteTitle={siteConfig.title} socials={siteConfig.socials} />
+  </body>
+</html>

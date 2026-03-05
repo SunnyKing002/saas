@@ -1,0 +1,47 @@
+---
+// src/pages/sub-abilities/index.astro
+import Layout from "../../layouts/Layout.astro";
+import { subAbilities } from "../../data/sub-abilities";
+import { getStandBySlug } from "../../data/stands";
+---
+<Layout
+  title="Bizarre Lineage Sub Abilities — Hamon, Spin, Cyborg & Vampire Guide"
+  description="Complete guide to all bizarre lineage sub abilities. Compare Hamon, Spin, Cyborg, and Vampire for PvP value, PvE power, and best Stand pairings."
+  canonicalPath="/sub-abilities"
+>
+  <section class="section"><div class="container">
+    <h1 class="section-title">Bizarre Lineage Sub Abilities</h1>
+    <p class="section-subtitle">Sub Abilities in Bizarre Lineage provide passive bonuses, powerful utility skills, and alter your core gameplay loop. Pick the right Bizarre Lineage sub ability to complement your Stand and fighting style build.</p>
+    <div class="subs-grid">
+      {subAbilities.map((sub) => (
+        <a href={`/sub-abilities/${sub.slug}`} class="sub-card">
+          <span class="sub-part">{sub.part}</span>
+          <h2 class="sub-name">{sub.name}</h2>
+          <p class="sub-desc">{sub.description.substring(0, 100)}...</p>
+          <div class="sub-passive"><strong>Passive:</strong> {sub.passive}</div>
+          <div class="sub-stats">
+            <div><span class="sl">PvP</span><span class="sv">{sub.pvpValue}</span></div>
+            <div><span class="sl">PvE</span><span class="sv">{sub.pveValue}</span></div>
+            <div><span class="sl">Survival</span><span class="sv">{sub.survival}</span></div>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div></section>
+</Layout>
+
+<style>
+  .subs-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+  .sub-card { background: var(--color-card); border: 1px solid var(--color-border); border-radius: 16px; padding: 1.5rem; text-decoration: none; color: inherit; transition: all 0.25s; display: flex; flex-direction: column; gap: 0.6rem; }
+  .sub-card:hover { border-color: rgba(124,58,237,0.35); transform: translateY(-2px); }
+  .sub-part { font-size: 0.7rem; color: #f59e0b; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
+  .sub-name { margin: 0; font-size: 1.15rem; font-weight: 700; color: #e2e8f0; }
+  .sub-desc { margin: 0; font-size: 0.82rem; color: #94a3b8; line-height: 1.45; }
+  .sub-passive { font-size: 0.78rem; color: #94a3b8; background: rgba(124,58,237,0.05); padding: 0.5rem 0.8rem; border-radius: 8px; }
+  .sub-passive strong { color: #a855f7; }
+  .sub-stats { display: flex; gap: 1rem; }
+  .sub-stats div { display: flex; flex-direction: column; gap: 0.1rem; }
+  .sl { font-size: 0.65rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.06em; }
+  .sv { font-size: 0.9rem; font-weight: 700; color: #a855f7; }
+  @media (max-width: 640px) { .subs-grid { grid-template-columns: 1fr; } }
+</style>

@@ -1,0 +1,99 @@
+---
+// src/pages/guides/leveling.astro
+import Layout from "../../layouts/Layout.astro";
+---
+<Layout
+  title="Bizarre Lineage Leveling Guide — Fastest 1-50 XP Route (2026)"
+  description="Complete bizarre lineage leveling guide. Fastest route to max level 50 with optimal quest paths, XP farming spots, and stat allocation tips for solo players."
+  canonicalPath="/guides/leveling"
+>
+  <section class="section"><div class="container guide-content">
+    <nav class="breadcrumb"><a href="/">← Home</a> <span class="sep">/</span> <span>Guides</span></nav>
+    <h1>Bizarre Lineage Leveling Guide — Level 1 to 50</h1>
+    <p class="lead">The fastest leveling route in Bizarre Lineage. Go from Level 1 to max Level 50 as a solo player with optimized quest paths and XP farming spots.</p>
+
+    <div class="guide-nav">
+      <a href="/guides/leveling" class="active">Leveling</a>
+      <a href="/guides/prestige">Prestige</a>
+      <a href="/guides/awakening">Awakening</a>
+    </div>
+
+    <h2>Bizarre Lineage Leveling: Level 1-10 Getting Started</h2>
+    <ul>
+      <li>Complete the tutorial quests in the starting area near Bus Stop 1</li>
+      <li>Defeat Bandits near the spawn — they give the best XP-to-difficulty ratio at low levels</li>
+      <li>Use your first Stand Arrow as soon as you get one from the Level 5 quest reward</li>
+      <li>Allocate early stat points into <strong>Strength</strong> for faster mob clearing</li>
+    </ul>
+
+    <h2>Bizarre Lineage Leveling: Level 10-25 Mid-Game Grinding</h2>
+    <ul>
+      <li>Move to the Gym area (Bus Stop 2) for tougher NPCs with better XP</li>
+      <li>Complete all available storyline quests — they give massive XP chunks</li>
+      <li>Unlock a <strong>Fighting Style</strong> at Level 15 (Boxing recommended for beginners)</li>
+      <li>Start mixing stat points: 60% Strength, 20% Health, 20% Power</li>
+      <li>Participate in World Events whenever they spawn — great XP and rare drops</li>
+    </ul>
+
+    <h2>Bizarre Lineage Leveling: Level 25-40 Advanced Progression</h2>
+    <ul>
+      <li>Farm the Gang Members near Bus Stop 5 — strongest regular enemies</li>
+      <li>Unlock a <strong>Sub-Ability</strong> (Hamon recommended for most Stands)</li>
+      <li>Start doing Boss Raids when available (Yoshikage Kira raid unlocks at Level 30)</li>
+      <li>Optimize your stat allocation based on your Stand's strengths</li>
+      <li>Join groups for raid farming — significantly faster than solo grinding</li>
+    </ul>
+
+    <h2>Bizarre Lineage Leveling: Level 40-50 Final Push</h2>
+    <ul>
+      <li>Farm DIO's Mansion (Bus Stop 9) for maximum XP per kill</li>
+      <li>Complete all remaining storyline quests for bulk XP rewards</li>
+      <li>Use any <strong>EXP Boost</strong> codes during this phase for maximum efficiency</li>
+      <li>At Level 50, you can begin the <a href="/guides/prestige">Prestige</a> process</li>
+    </ul>
+
+    <h2>Bizarre Lineage Stat Allocation Guide</h2>
+    <div class="stats-table">
+      <table>
+        <thead><tr><th>Stat</th><th>Effect</th><th>Priority</th></tr></thead>
+        <tbody>
+          <tr><td>Strength</td><td>Physical damage & Stand physical hits</td><td>⭐⭐⭐⭐⭐</td></tr>
+          <tr><td>Health (Vitality)</td><td>Max HP & boss survivability</td><td>⭐⭐⭐⭐</td></tr>
+          <tr><td>Power (Energy)</td><td>Sub-ability & Stand special damage</td><td>⭐⭐⭐</td></tr>
+          <tr><td>Speed</td><td>Movement & dodge speed</td><td>⭐⭐⭐</td></tr>
+          <tr><td>Defense</td><td>Damage reduction</td><td>⭐⭐</td></tr>
+          <tr><td>Stamina</td><td>Block duration & dodge count</td><td>⭐⭐</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tip-box">
+      <h3>💡 Pro Tip</h3>
+      <p>Focus on 2-3 core stats that synergize with your Stand rather than spreading points evenly. Check your Stand's page in our <a href="/stands">Stands Database</a> for recommended stat builds.</p>
+    </div>
+  </div></section>
+</Layout>
+
+<style>
+  .guide-content { max-width: 780px; }
+  .breadcrumb { margin-bottom: 1.5rem; font-size: 0.82rem; color: #64748b; }
+  .breadcrumb a { color: #7c3aed; text-decoration: none; }
+  .sep { margin: 0 0.3rem; }
+  h1 { font-size: 2rem; font-weight: 800; color: #fff; margin: 0 0 0.5rem; }
+  .lead { color: #94a3b8; font-size: 1rem; margin: 0 0 1.5rem; }
+  .guide-nav { display: flex; gap: 0.4rem; margin-bottom: 2.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--color-border); }
+  .guide-nav a { padding: 0.4rem 1rem; border-radius: 8px; text-decoration: none; font-size: 0.85rem; font-weight: 500; color: #94a3b8; transition: all 0.2s; }
+  .guide-nav a.active { background: rgba(124,58,237,0.12); color: #a855f7; }
+  .guide-nav a:hover { color: #e2e8f0; }
+  h2 { font-size: 1.2rem; font-weight: 700; color: #e2e8f0; margin: 2rem 0 0.8rem; }
+  ul { padding-left: 1.2rem; } li { color: #94a3b8; font-size: 0.88rem; margin-bottom: 0.5rem; line-height: 1.6; }
+  li strong { color: #e2e8f0; } li a { color: #a855f7; }
+  .stats-table { overflow-x: auto; margin: 1rem 0; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+  th { text-align: left; padding: 0.6rem 0.8rem; color: #94a3b8; border-bottom: 1px solid var(--color-border); font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; }
+  td { padding: 0.6rem 0.8rem; color: #e2e8f0; border-bottom: 1px solid rgba(124,58,237,0.06); }
+  .tip-box { background: linear-gradient(135deg, rgba(245,158,11,0.08), rgba(124,58,237,0.06)); border: 1px solid rgba(245,158,11,0.2); border-radius: 12px; padding: 1.2rem; margin-top: 2rem; }
+  .tip-box h3 { margin: 0 0 0.4rem; font-size: 0.9rem; color: #f59e0b; }
+  .tip-box p { margin: 0; font-size: 0.85rem; color: #e2e8f0; line-height: 1.6; }
+  .tip-box a { color: #a855f7; }
+</style>

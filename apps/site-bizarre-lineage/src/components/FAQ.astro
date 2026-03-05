@@ -1,0 +1,88 @@
+---
+// src/components/FAQ.astro — FAQ + Schema.org markup
+interface Props {
+  items: { question: string; answer: string }[];
+}
+const { items } = Astro.props;
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: items.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: item.answer,
+    },
+  })),
+};
+---
+<section class="faq-section">
+  <h2 class="faq-title">Frequently Asked Questions</h2>
+  <div class="faq-list">
+    {items.map((item) => (
+      <details class="faq-item">
+        <summary class="faq-question">{item.question}</summary>
+        <p class="faq-answer">{item.answer}</p>
+      </details>
+    ))}
+  </div>
+</section>
+
+<script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+<style>
+  .faq-section { margin-top: 4rem; }
+  .faq-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #e2e8f0;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+  .faq-list {
+    max-width: 720px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+  .faq-item {
+    background: rgba(124,58,237,0.05);
+    border: 1px solid rgba(124,58,237,0.1);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+  .faq-item[open] {
+    border-color: rgba(124,58,237,0.25);
+  }
+  .faq-question {
+    padding: 1rem 1.2rem;
+    cursor: pointer;
+    font-weight: 600;
+    color: #e2e8f0;
+    font-size: 0.92rem;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .faq-question::before {
+    content: "▸";
+    color: #7c3aed;
+    transition: transform 0.2s;
+  }
+  .faq-item[open] .faq-question::before {
+    transform: rotate(90deg);
+  }
+  .faq-question::-webkit-details-marker { display: none; }
+  .faq-answer {
+    padding: 0 1.2rem 1rem;
+    margin: 0;
+    color: #94a3b8;
+    font-size: 0.85rem;
+    line-height: 1.6;
+  }
+</style>

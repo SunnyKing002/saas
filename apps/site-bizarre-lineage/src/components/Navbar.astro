@@ -1,0 +1,223 @@
+---
+// src/components/Navbar.astro
+import { siteConfig } from "../../site.config";
+import { Menu } from "lucide-react";
+
+const currentPath = Astro.url.pathname;
+
+const navLinks = [
+  { text: "Tier List", href: "/tier-list" },
+  { text: "Stands", href: "/stands" },
+  { text: "Styles", href: "/fighting-styles" },
+  { text: "Subs", href: "/sub-abilities" },
+  { text: "Codes", href: "/codes" },
+  { text: "Guides", href: "/guides/leveling" },
+];
+---
+<header class="header">
+  <div class="container nav-inner">
+    <!-- Logo -->
+    <a href="/" class="logo">
+      <img src="/logo.png" alt="Bizarre Lineage Logo" class="logo-img" />
+      <span class="logo-text">Bizarre Lineage</span>
+    </a>
+
+    <!-- Nav Links -->
+    <nav class="nav-links">
+      {navLinks.map((link) => (
+        <a 
+          href={link.href} 
+          class={`nav-link ${currentPath.startsWith(link.href) && link.href !== '/' ? 'active' : ''}`}
+        >
+          {link.text}
+        </a>
+      ))}
+    </nav>
+
+    <!-- Actions -->
+    <div class="nav-actions">
+      <a href={siteConfig.robloxLink} target="_blank" rel="noopener" class="btn-play">
+         Play Now
+      </a>
+    </div>
+
+    <!-- Mobile Menu Toggle (CSS Only) -->
+    <label for="mobile-menu-toggle" class="mobile-menu-btn">
+      <Menu size={24} />
+    </label>
+    <input type="checkbox" id="mobile-menu-toggle" class="mobile-menu-checkbox" aria-label="Toggle Navigation" />
+    
+    <div class="mobile-menu">
+      {navLinks.map((link) => (
+        <a href={link.href} class={`mobile-link ${currentPath.startsWith(link.href) ? 'active' : ''}`}>
+          {link.text}
+        </a>
+      ))}
+    </div>
+  </div>
+</header>
+
+<style>
+  /* Header Structure & Glassmorphism */
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    width: 100%;
+    /* Glass Effect */
+    background: rgba(10, 5, 18, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--color-glass-border);
+    transition: all 0.3s ease;
+  }
+
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 72px; /* Sleeker, taller header */
+  }
+
+  /* Logo */
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    transition: transform 0.2s ease;
+  }
+  
+  .logo:hover {
+    transform: scale(1.02);
+  }
+
+  .logo-img {
+    height: 36px;
+    width: auto;
+    filter: drop-shadow(0 0 8px var(--color-primary-glow));
+  }
+
+  .logo-text {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: 1.25rem;
+    color: var(--color-text-primary);
+    letter-spacing: -0.02em;
+  }
+
+  /* Desktop Nav */
+  .nav-links {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .nav-link {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    position: relative;
+  }
+
+  .nav-link:hover {
+    color: var(--color-text-primary);
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .nav-link.active {
+    color: var(--color-primary);
+    background: var(--color-primary-glow);
+  }
+
+  /* Primary CTA Button with Glow */
+  .btn-play {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.6rem 1.4rem;
+    border-radius: 9999px;
+    background: linear-gradient(135deg, var(--color-primary), #a855f7);
+    color: #fff;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    box-shadow: 0 4px 14px var(--color-primary-glow);
+    transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  .btn-play:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 6px 20px rgba(168, 85, 247, 0.5);
+  }
+  
+  .btn-play:active {
+    transform: translateY(0) scale(0.98);
+  }
+
+  /* Mobile Nav (CSS Toggle) */
+  .mobile-menu-btn {
+    display: none;
+    cursor: pointer;
+    color: var(--color-text-secondary);
+    padding: 0.5rem;
+    border-radius: 8px;
+  }
+  
+  .mobile-menu-btn:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--color-text-primary);
+  }
+
+  .mobile-menu-checkbox {
+    display: none;
+  }
+
+  .mobile-menu {
+    display: none;
+    position: absolute;
+    top: 72px;
+    left: 0;
+    width: 100%;
+    background: var(--color-bg-elevated);
+    border-bottom: 1px solid var(--color-border);
+    padding: 1rem;
+    flex-direction: column;
+    gap: 0.5rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  }
+
+  .mobile-link {
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    font-weight: 500;
+  }
+
+  .mobile-link:hover, .mobile-link.active {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--color-primary);
+  }
+
+  /* Responsive Rules */
+  @media (max-width: 860px) {
+    .nav-links { display: none; }
+    .nav-actions { display: none; }
+    .mobile-menu-btn { display: block; }
+    
+    .mobile-menu-checkbox:checked ~ .mobile-menu {
+      display: flex;
+      animation: slideDown 0.2s ease-out forwards;
+    }
+  }
+
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>

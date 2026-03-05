@@ -1,0 +1,220 @@
+---
+import type { Stand } from "../data/stands";
+import TierBadge from "./TierBadge.astro";
+import { getStyleBySlug } from "../data/fighting-styles";
+import { Swords, ArrowRight } from "lucide-react";
+
+interface Props {
+  stand: Stand;
+}
+const { stand } = Astro.props;
+const bestStyle = getStyleBySlug(stand.bestStyle);
+---
+<a href={`/stands/${stand.slug}`} class="stand-card glass-card">
+  <div class="card-header">
+    <div class="header-main">
+      <h3 class="stand-name">{stand.name}</h3>
+      <span class="rarity">{stand.rarity}</span>
+    </div>
+    <TierBadge tier={stand.tier} size="md" />
+  </div>
+
+  <div class="card-stats">
+    <!-- Damage Stat Bar -->
+    <div class="stat-row">
+      <div class="stat-meta">
+        <span class="stat-label">DMG</span>
+        <span class="stat-num text-red">{stand.damage}</span>
+      </div>
+      <div class="stat-bar-bg">
+        <div class="stat-bar-fill fill-red" style={`width:${stand.damage * 10}%`}></div>
+      </div>
+    </div>
+    
+    <!-- Sustain Stat Bar -->
+    <div class="stat-row">
+      <div class="stat-meta">
+        <span class="stat-label">SUS</span>
+        <span class="stat-num text-green">{stand.sustain}</span>
+      </div>
+      <div class="stat-bar-bg">
+        <div class="stat-bar-fill fill-green" style={`width:${stand.sustain * 10}%`}></div>
+      </div>
+    </div>
+
+    <!-- PvP Stat Bar -->
+    <div class="stat-row">
+      <div class="stat-meta">
+        <span class="stat-label">PvP</span>
+        <span class="stat-num text-purple">{stand.pvpScore}</span>
+      </div>
+      <div class="stat-bar-bg">
+        <div class="stat-bar-fill fill-purple" style={`width:${stand.pvpScore * 10}%`}></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-footer">
+    <div class="build-rec">
+      <Swords size={16} />
+      <span>Best: <span class="highlight">{bestStyle?.name || 'Boxing'}</span></span>
+    </div>
+    <div class="arrow-icon"><ArrowRight size={18} /></div>
+  </div>
+</a>
+
+<style>
+  /* Premium Glassmorphism Card Style */
+  .glass-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--color-glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--color-glass-border);
+    border-radius: 16px;
+    padding: 1.25rem;
+    text-decoration: none;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Hover Glow Effect */
+  .glass-card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    box-shadow: inset 0 0 0 1px transparent;
+    transition: all 0.3s;
+    pointer-events: none;
+  }
+
+  .glass-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(139, 92, 246, 0.15);
+    background: rgba(26, 15, 53, 0.8);
+  }
+  
+  .glass-card:hover::after {
+    box-shadow: inset 0 0 0 1px rgba(139, 92, 246, 0.3);
+  }
+
+  /* Header */
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.2rem;
+  }
+
+  .header-main {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .stand-name {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin: 0;
+    line-height: 1.2;
+  }
+
+  .rarity {
+    font-size: 0.7rem;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-weight: 600;
+  }
+
+  /* Stats Level Up */
+  .card-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin-bottom: 1.2rem;
+    flex: 1;
+  }
+
+  .stat-row {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .stat-meta {
+    width: 45px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    font-family: var(--font-heading);
+  }
+
+  .stat-label { color: var(--color-text-muted); }
+  
+  .text-red { color: #f87171; }
+  .text-green { color: #4ade80; }
+  .text-purple { color: #c084fc; }
+
+  .stat-bar-bg {
+    flex: 1;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 99px;
+    overflow: hidden;
+  }
+
+  .stat-bar-fill {
+    height: 100%;
+    border-radius: 99px;
+    transition: width 1s ease-out;
+  }
+
+  .fill-red { background: linear-gradient(90deg, #ef4444, #f87171); box-shadow: 0 0 8px rgba(239, 68, 68, 0.4); }
+  .fill-green { background: linear-gradient(90deg, #22c55e, #4ade80); box-shadow: 0 0 8px rgba(34, 197, 94, 0.4); }
+  .fill-purple { background: linear-gradient(90deg, #8b5cf6, #c084fc); box-shadow: 0 0 8px rgba(139, 92, 246, 0.4); }
+
+  /* Footer */
+  .card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .build-rec {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.8rem;
+    color: var(--color-text-secondary);
+  }
+  
+  .build-rec svg {
+    color: var(--color-primary);
+  }
+
+  .highlight {
+    color: var(--color-text-primary);
+    font-weight: 600;
+  }
+
+  .arrow-icon {
+    color: var(--color-primary);
+    font-weight: 600;
+    transition: transform 0.2s;
+    opacity: 0.6;
+  }
+
+  .glass-card:hover .arrow-icon {
+    transform: translateX(4px);
+    opacity: 1;
+  }
+</style>

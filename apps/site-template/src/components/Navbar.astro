@@ -1,0 +1,148 @@
+---
+// apps/site-template/src/components/Navbar.astro
+// 顶部导航栏 - 导航链接来自 D1（Worker 注入）或 Layout 默认值
+
+export interface NavLinkItem {
+  label: string;
+  url: string;
+  target?: string;
+}
+
+export interface Props {
+  links: NavLinkItem[];
+  siteTitle: string;
+}
+
+const { links, siteTitle } = Astro.props;
+const currentPath = Astro.url.pathname;
+---
+
+<nav class="navbar">
+  <div class="container nav-inner">
+    <!-- Logo / 站点名 -->
+    <a href="/" class="nav-logo" aria-label={siteTitle}>
+      <span class="logo-icon">◈</span>
+      <span class="logo-text">{siteTitle}</span>
+    </a>
+
+    <!-- 导航链接 -->
+    <ul class="nav-links" role="list">
+      {
+        links.map((link) => (
+          <li>
+            <a
+              href={link.url}
+              target={link.target || "_self"}
+              class:list={["nav-link", { active: currentPath === link.url }]}
+            >
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <!-- CTA 按钮 -->
+    <div class="nav-cta">
+      <a href="#pricing" class="btn btn-primary">Get Started</a>
+    </div>
+
+    <!-- 汉堡菜单（移动端，TODO: 用 React island 实现交互） -->
+    <button class="nav-hamburger" aria-label="Toggle menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<style>
+  .navbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(10, 10, 15, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  .nav-inner {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    height: 64px;
+  }
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #fff;
+    flex-shrink: 0;
+  }
+  .logo-icon { color: #818cf8; font-size: 1.4rem; }
+  .nav-links {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 0.25rem;
+    flex: 1;
+  }
+  .nav-link {
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    color: #94a3b8;
+    transition: color 0.2s, background 0.2s;
+  }
+  .nav-link:hover, .nav-link.active {
+    color: #e2e8f0;
+    background: rgba(255, 255, 255, 0.06);
+  }
+  .nav-cta { margin-left: auto; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 1.2rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s;
+    cursor: pointer;
+    border: none;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, #6366f1, #818cf8);
+    color: #fff;
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+  }
+  .btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 0 30px rgba(99, 102, 241, 0.5);
+  }
+  .nav-hamburger { display: none; }
+
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+    .nav-hamburger {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.25rem;
+      margin-left: auto;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: #e2e8f0;
+      border-radius: 2px;
+    }
+    .nav-cta { display: none; }
+  }
+</style>

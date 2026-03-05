@@ -1,0 +1,80 @@
+---
+// src/pages/sub-abilities/[slug].astro
+import Layout from "../../layouts/Layout.astro";
+import TierBadge from "../../components/TierBadge.astro";
+import { subAbilities, type SubAbility } from "../../data/sub-abilities";
+import { getStandBySlug } from "../../data/stands";
+
+export function getStaticPaths() {
+  return subAbilities.map((s) => ({ params: { slug: s.slug }, props: { sub: s } }));
+}
+const { sub } = Astro.props as { sub: SubAbility };
+---
+<Layout title={`${sub.name} Sub-Ability Guide`} description={`${sub.name} sub-ability guide for Bizarre Lineage. PvP: ${sub.pvpValue}/10, PvE: ${sub.pveValue}/10, Survival: ${sub.survival}/10. ${sub.passive}`} canonicalPath={`/sub-abilities/${sub.slug}`}>
+  <section class="section"><div class="container">
+    <nav class="breadcrumb"><a href="/sub-abilities">← All Sub-Abilities</a></nav>
+    <span class="part-badge">{sub.part}</span>
+    <h1 class="page-title">{sub.name}</h1>
+    <p class="page-desc">{sub.description}</p>
+
+    <div class="passive-box"><strong>Passive:</strong> {sub.passive}</div>
+
+    <div class="stats-row">
+      <div class="stat-box"><span class="stat-val">{sub.pvpValue}/10</span><span class="stat-label">PvP Value</span></div>
+      <div class="stat-box"><span class="stat-val">{sub.pveValue}/10</span><span class="stat-label">PvE Value</span></div>
+      <div class="stat-box"><span class="stat-val">{sub.survival}/10</span><span class="stat-label">Survival</span></div>
+    </div>
+
+    <h2 class="sub-title">Moves</h2>
+    <div class="moves-grid">
+      {sub.moves.map((move) => (
+        <div class="move-card">
+          <div class="move-header"><span class="move-key">{move.key}</span><h3>{move.name}</h3></div>
+          <p>{move.description}</p>
+        </div>
+      ))}
+    </div>
+
+    <div class="pros-cons">
+      <div><h2 class="sub-title">✅ Pros</h2><ul>{sub.pros.map((p) => <li>{p}</li>)}</ul></div>
+      <div><h2 class="sub-title">❌ Cons</h2><ul>{sub.cons.map((c) => <li>{c}</li>)}</ul></div>
+    </div>
+
+    <h2 class="sub-title">Best Stands to Pair With</h2>
+    <div class="pairing-grid">
+      {sub.bestStands.map((slug) => {
+        const s = getStandBySlug(slug);
+        return s ? <a href={`/stands/${s.slug}`} class="pairing-card"><TierBadge tier={s.tier} size="sm" /><span>{s.name}</span></a> : null;
+      })}
+    </div>
+
+    <div class="obtain-box"><h3>How to Unlock</h3><p>{sub.howToGet}</p></div>
+  </div></section>
+</Layout>
+
+<style>
+  .breadcrumb { margin-bottom: 1.5rem; } .breadcrumb a { color: #7c3aed; text-decoration: none; font-size: 0.85rem; }
+  .part-badge { display: inline-block; font-size: 0.72rem; color: #f59e0b; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.4rem; }
+  .page-title { font-size: 2rem; font-weight: 800; color: #fff; margin: 0 0 0.6rem; }
+  .page-desc { color: #94a3b8; font-size: 0.95rem; max-width: 640px; margin: 0 0 1.5rem; line-height: 1.6; }
+  .sub-title { font-size: 1.1rem; font-weight: 700; color: #e2e8f0; margin: 2rem 0 1rem; }
+  .passive-box { background: rgba(124,58,237,0.06); border: 1px solid rgba(124,58,237,0.15); border-radius: 10px; padding: 0.8rem 1rem; font-size: 0.88rem; color: #94a3b8; margin-bottom: 2rem; }
+  .passive-box strong { color: #a855f7; }
+  .stats-row { display: flex; gap: 1rem; margin-bottom: 2rem; }
+  .stat-box { background: var(--color-card); border: 1px solid var(--color-border); border-radius: 12px; padding: 1rem 1.5rem; display: flex; flex-direction: column; align-items: center; gap: 0.2rem; flex: 1; }
+  .stat-val { font-size: 1.3rem; font-weight: 800; color: #a855f7; } .stat-label { font-size: 0.72rem; color: #64748b; text-transform: uppercase; }
+  .moves-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.8rem; }
+  .move-card { background: var(--color-card); border: 1px solid var(--color-border); border-radius: 12px; padding: 1rem; }
+  .move-header { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem; }
+  .move-key { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; background: rgba(124,58,237,0.15); border: 1px solid rgba(124,58,237,0.3); border-radius: 6px; font-size: 0.72rem; font-weight: 700; color: #a855f7; }
+  .move-card h3 { margin: 0; font-size: 0.88rem; font-weight: 600; color: #e2e8f0; }
+  .move-card p { margin: 0; font-size: 0.8rem; color: #94a3b8; line-height: 1.4; }
+  .pros-cons { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .pros-cons ul { padding-left: 1.2rem; } .pros-cons li { color: #94a3b8; font-size: 0.85rem; margin-bottom: 0.4rem; }
+  .pairing-grid { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .pairing-card { display: inline-flex; align-items: center; gap: 0.4rem; background: var(--color-card); border: 1px solid var(--color-border); border-radius: 8px; padding: 0.5rem 0.8rem; text-decoration: none; transition: all 0.2s; font-size: 0.82rem; font-weight: 600; color: #e2e8f0; }
+  .pairing-card:hover { border-color: rgba(124,58,237,0.3); }
+  .obtain-box { background: var(--color-card); border: 1px solid var(--color-border); border-radius: 12px; padding: 1.2rem; margin-top: 2rem; }
+  .obtain-box h3 { margin: 0 0 0.3rem; font-size: 0.9rem; color: #e2e8f0; } .obtain-box p { margin: 0; font-size: 0.85rem; color: #94a3b8; }
+  @media (max-width: 640px) { .moves-grid { grid-template-columns: 1fr; } .pros-cons { grid-template-columns: 1fr; } .stats-row { flex-direction: column; } }
+</style>

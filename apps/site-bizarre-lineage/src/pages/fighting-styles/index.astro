@@ -1,0 +1,66 @@
+---
+// src/pages/fighting-styles/index.astro
+import Layout from "../../layouts/Layout.astro";
+import { fightingStyles } from "../../data/fighting-styles";
+import { getStandBySlug } from "../../data/stands";
+---
+<Layout
+  title="Bizarre Lineage Fighting Styles — Boxing, Kendo & Vampire Guide"
+  description="Complete guide to all bizarre lineage fighting styles. Compare Boxing, Kendo, and Vampire for combo potential, damage scaling, and best Stand pairings."
+  canonicalPath="/fighting-styles"
+>
+  <section class="section">
+    <div class="container">
+      <h1 class="section-title">Bizarre Lineage Fighting Styles</h1>
+      <p class="section-subtitle">Fighting Styles in Bizarre Lineage modify your base combat capabilities. Choose the right Bizarre Lineage fighting style and pair it with a specific Stand to unlock devastating combo potential and dominate PvP arenas.</p>
+      <div class="styles-grid">
+        {fightingStyles.map((style) => (
+          <a href={`/fighting-styles/${style.slug}`} class="style-card">
+            <h2 class="style-name">{style.name}</h2>
+            <p class="style-desc">{style.description.substring(0, 120)}...</p>
+            <div class="style-stats">
+              <div class="style-stat">
+                <span class="style-stat-label">Combo</span>
+                <span class="style-stat-val">{style.comboPoential}/10</span>
+              </div>
+              <div class="style-stat">
+                <span class="style-stat-label">Damage</span>
+                <span class="style-stat-val">{style.damageScaling}/10</span>
+              </div>
+              <div class="style-stat">
+                <span class="style-stat-label">Range</span>
+                <span class="style-stat-val">{style.range}</span>
+              </div>
+            </div>
+            <div class="style-best">
+              <span class="best-label">Best with:</span>
+              {style.bestStands.slice(0, 3).map((slug) => {
+                const s = getStandBySlug(slug);
+                return s ? <span class="best-stand">{s.name}</span> : null;
+              })}
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .styles-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+  .style-card {
+    background: var(--color-card); border: 1px solid var(--color-border); border-radius: 16px; padding: 1.5rem;
+    text-decoration: none; color: inherit; transition: all 0.25s; display: flex; flex-direction: column; gap: 0.8rem;
+  }
+  .style-card:hover { border-color: rgba(124,58,237,0.35); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(124,58,237,0.15); }
+  .style-name { margin: 0; font-size: 1.2rem; font-weight: 700; color: #e2e8f0; }
+  .style-desc { margin: 0; font-size: 0.82rem; color: #94a3b8; line-height: 1.5; }
+  .style-stats { display: flex; gap: 1rem; }
+  .style-stat { display: flex; flex-direction: column; gap: 0.1rem; }
+  .style-stat-label { font-size: 0.65rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.06em; }
+  .style-stat-val { font-size: 0.9rem; font-weight: 700; color: #a855f7; }
+  .style-best { display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; }
+  .best-label { font-size: 0.72rem; color: #64748b; }
+  .best-stand { font-size: 0.72rem; color: #e2e8f0; background: rgba(124,58,237,0.1); padding: 0.15rem 0.5rem; border-radius: 4px; }
+  @media (max-width: 768px) { .styles-grid { grid-template-columns: 1fr; } }
+</style>

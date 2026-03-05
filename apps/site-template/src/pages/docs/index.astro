@@ -1,0 +1,93 @@
+---
+// apps/site-template/src/pages/docs/index.astro
+// 文档列表页
+import Layout from "../../layouts/Layout.astro";
+import siteConfig from "../../../site.config";
+
+const API_BASE = import.meta.env.WORKER_API_URL || "http://localhost:8787";
+
+let docs: Array<{ slug: string; title: string; order_index: number }> = [];
+try {
+  const res = await fetch(`${API_BASE}/api/docs?site=${siteConfig.key}`);
+  if (res.ok) {
+    const data = await res.json() as { docs: typeof docs };
+    docs = data.docs || [];
+  }
+} catch {
+  console.warn("[Docs] 无法连接 Worker API，使用占位数据");
+  docs = [
+    { slug: "getting-started", title: "Getting Started", order_index: 0 },
+    { slug: "api-reference", title: "API Reference", order_index: 1 },
+    { slug: "faq", title: "Frequently Asked Questions", order_index: 2 },
+  ];
+}
+---
+
+<Layout
+  seo={{
+    title: `Documentation — ${siteConfig.title}`,
+    description: `Official documentation for ${siteConfig.title}.`,
+    canonicalUrl: `https://${siteConfig.domain}/docs`,
+  }}
+>
+  <div class="docs-layout">
+    <!-- 侧边栏 -->
+    <aside class="docs-sidebar">
+      <h2>Documentation</h2>
+      <nav>
+        <ul role="list">
+          {docs.map((doc) => (
+            <li>
+              <a href={`/docs/${doc.slug}`} class="sidebar-link">{doc.title}</a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- 主内容 -->
+    <main class="docs-main">
+      <h1>Documentation</h1>
+      <p class="docs-intro">
+        Welcome to the {siteConfig.title} documentation. Choose a topic from the sidebar to get started.
+      </p>
+      <div class="doc-cards">
+        {docs.map((doc) => (
+          <a href={`/docs/${doc.slug}`} class="doc-card">
+            <h3>{doc.title}</h3>
+            <span>Read →</span>
+          </a>
+        ))}
+      </div>
+    </main>
+  </div>
+</Layout>
+
+<style>
+  .docs-layout {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem;
+    gap: 3rem;
+    min-height: calc(100vh - 64px);
+  }
+  .docs-sidebar h2 { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #475569; margin: 0 0 1rem; }
+  .docs-sidebar ul { list-style: none; padding: 0; margin: 0; }
+  .docs-sidebar li { margin: 0.1rem 0; }
+  .sidebar-link { display: block; padding: 0.4rem 0.75rem; border-radius: 6px; color: #64748b; font-size: 0.9rem; text-decoration: none; transition: color 0.2s, background 0.2s; }
+  .sidebar-link:hover { color: #e2e8f0; background: rgba(255,255,255,0.05); }
+  .docs-main h1 { font-size: 2rem; font-weight: 800; color: #fff; margin: 0 0 1rem; }
+  .docs-intro { color: #64748b; font-size: 1rem; margin: 0 0 2rem; }
+  .doc-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
+  .doc-card { background: rgba(255,255,255,0.025); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 1.25rem; text-decoration: none; transition: border-color 0.2s, transform 0.2s; }
+  .doc-card:hover { border-color: rgba(99,102,241,0.3); transform: translateY(-2px); }
+  .doc-card h3 { font-size: 0.95rem; font-weight: 600; color: #e2e8f0; margin: 0 0 0.5rem; }
+  .doc-card span { font-size: 0.8rem; color: #818cf8; }
+
+  @media (max-width: 768px) {
+    .docs-layout { grid-template-columns: 1fr; }
+    .docs-sidebar { display: none; }
+  }
+</style>

@@ -1,0 +1,216 @@
+---
+// src/pages/codes.astro
+import Layout from "../layouts/Layout.astro";
+import { activeCodes, expiredCodes, expectedRewards } from "../data/codes";
+import { Gift, ArrowRight } from "lucide-react";
+
+const faqs = [
+  {
+    question: "Are there any active Bizarre Lineage codes right now?",
+    answer: "As of March 2026, the Bizarre Lineage code redemption system is still being finalized by the developers. We monitor every official channel and will publish new Bizarre Lineage codes the moment they go live."
+  },
+  {
+    question: "How do I redeem Bizarre Lineage codes?",
+    answer: "Once the system launches, you will redeem Bizarre Lineage codes by opening the in-game menu, tapping the codes icon, typing the code exactly as shown, and pressing confirm. We will update this section with screenshots when the feature releases."
+  },
+  {
+    question: "Where do Bizarre Lineage codes come from?",
+    answer: "Bizarre Lineage codes are released by the official developers through their Discord server, the Roblox game page, and social media. Codes typically celebrate milestones like 50K likes, seasonal events, or major patches."
+  },
+  {
+    question: "Do Bizarre Lineage codes expire?",
+    answer: "Yes, most Bizarre Lineage codes have limited redemption windows. Codes can expire as quickly as 24 hours after release. Bookmark this page to stay updated and never miss a Bizarre Lineage code drop."
+  },
+  {
+    question: "What rewards do Bizarre Lineage codes give?",
+    answer: "Bizarre Lineage codes typically reward free Stand Arrows, Rokakaka Fruits for re-rolling Stands, in-game Cash, and EXP Boost items. Some rare Bizarre Lineage codes may offer exclusive cosmetics."
+  }
+];
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map(f => ({
+    "@type": "Question",
+    "name": f.question,
+    "acceptedAnswer": { "@type": "Answer", "text": f.answer }
+  }))
+};
+---
+<Layout
+  title="Bizarre Lineage Codes — All Active & Free Redeem Codes (March 2026)"
+  description="All working bizarre lineage codes for free stand arrows, cash, and XP boosts. Updated daily — bookmark and never miss a code drop."
+  canonicalPath="/codes"
+>
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+  <section class="section"><div class="container">
+    <h1 class="section-title">Bizarre Lineage Codes — Free Rewards List (March 2026)</h1>
+    <p class="section-subtitle">Every working Bizarre Lineage code in one place. We check for new codes daily and update this list within minutes of each drop. Bookmark this page to never miss free Stand Arrows, Cash, or EXP Boosts.</p>
+
+    {activeCodes.length > 0 ? (
+      <div class="codes-list">
+        <h2 class="sub-title">Active Bizarre Lineage Codes</h2>
+        {activeCodes.map((c) => (
+          <div class="code-card active">
+            <code class="code-text">{c.code}</code>
+            <span class="code-reward">{c.reward}</span>
+            <span class="code-status">Active</span>
+          </div>
+        ))}
+      </div>
+    ) : (
+      <div class="no-codes glass-panel">
+        <Gift size={48} className="no-codes-icon-svg" />
+        <h2>No Active Bizarre Lineage Codes Yet</h2>
+        <p>The Bizarre Lineage code redemption system has not been released by the developers yet. Bookmark this page — we will publish every new Bizarre Lineage code the moment it drops.</p>
+      </div>
+    )}
+
+    <!-- How to Redeem -->
+    <h2 class="sub-title">How to Redeem Bizarre Lineage Codes</h2>
+    <div class="steps-grid">
+      <div class="step-card glass-panel">
+        <span class="step-num">1</span>
+        <h3>Launch Bizarre Lineage</h3>
+        <p>Open Roblox and load into the Bizarre Lineage game world.</p>
+      </div>
+      <div class="step-card glass-panel">
+        <span class="step-num">2</span>
+        <h3>Open the Codes Menu</h3>
+        <p>Tap the menu icon on the left side of your screen and select the codes tab.</p>
+      </div>
+      <div class="step-card glass-panel">
+        <span class="step-num">3</span>
+        <h3>Enter Your Code</h3>
+        <p>Type or paste the Bizarre Lineage code exactly as shown and press Redeem.</p>
+      </div>
+      <div class="step-card glass-panel">
+        <span class="step-num">4</span>
+        <h3>Collect Rewards</h3>
+        <p>Your free items — Stand Arrows, Cash, or EXP Boosts — will appear in your inventory instantly.</p>
+      </div>
+    </div>
+
+    <!-- Where Codes Come From -->
+    <h2 class="sub-title">Where Do Bizarre Lineage Codes Come From?</h2>
+    <div class="seo-block glass-panel">
+      <p>Bizarre Lineage codes are released exclusively by the official development team. The most common triggers for new Bizarre Lineage code drops include reaching player milestones (such as 20K, 50K, or 100K likes on the Roblox page), seasonal holiday events, and major content patches that introduce new Stands or gameplay features.</p>
+      <p>To stay ahead, follow the official <strong>Bizarre Lineage Discord server</strong> and the game's Roblox page. Alternatively, bookmark this page — our team monitors all official channels around the clock and publishes new Bizarre Lineage codes within minutes of release.</p>
+    </div>
+
+    <!-- Expected Rewards -->
+    <h2 class="sub-title">What Will Bizarre Lineage Codes Give?</h2>
+    <div class="rewards-grid">
+      {expectedRewards.map((r) => (
+        <div class="reward-card glass-panel">
+          <span class="reward-icon">{r.icon}</span>
+          <h3>{r.name}</h3>
+          <p>{r.description}</p>
+        </div>
+      ))}
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-box glass-panel">
+      <h3>While You Wait for Bizarre Lineage Codes...</h3>
+      <p>Make sure you are ready to use your rewards wisely. Check the tier list to know which Stand to keep, and browse our leveling guide to maximize your XP boosts.</p>
+      <div class="cta-links">
+        <a href="/tier-list" class="btn btn-primary">Bizarre Lineage Tier List</a>
+        <a href="/stands" class="btn btn-outline">Browse All Stands</a>
+        <a href="/guides/leveling" class="btn btn-outline">Leveling Guide</a>
+      </div>
+    </div>
+
+    {expiredCodes.length > 0 && (
+      <div class="expired-section">
+        <h2 class="sub-title">Expired Bizarre Lineage Codes</h2>
+        <p class="expired-note">These Bizarre Lineage codes no longer work. We keep them here for reference so you know which codes have already been released.</p>
+        {expiredCodes.map((c) => (
+          <div class="code-card expired">
+            <code class="code-text">{c.code}</code>
+            <span class="code-reward">{c.reward}</span>
+            <span class="code-status expired">Expired</span>
+          </div>
+        ))}
+      </div>
+    )}
+
+    <!-- FAQ -->
+    <h2 class="sub-title" style="margin-top:3rem;">Bizarre Lineage Codes FAQ</h2>
+    <div class="faq-list">
+      {faqs.map(f => (
+        <details class="faq-item">
+          <summary>{f.question}</summary>
+          <p>{f.answer}</p>
+        </details>
+      ))}
+    </div>
+  </div></section>
+</Layout>
+
+<style>
+  .sub-title { font-size: 1.3rem; font-weight: 700; color: var(--color-text-primary); margin: 2.5rem 0 1rem; }
+  
+  .glass-panel {
+    background: var(--color-glass-bg); border: 1px solid var(--color-glass-border);
+    border-radius: 16px; padding: 1.5rem;
+  }
+  
+  .no-codes { text-align: center; padding: 3rem 2rem; margin: 2rem 0; }
+  .no-codes-icon-svg { color: var(--color-accent); margin-bottom: 1rem; }
+  .no-codes h2 { margin: 1rem 0 0.6rem; font-size: 1.3rem; color: var(--color-text-primary); }
+  .no-codes p { margin: 0; color: var(--color-text-secondary); font-size: 0.95rem; max-width: 520px; margin: 0 auto; line-height: 1.6; }
+
+  .steps-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem; }
+  .step-card { text-align: center; padding: 1.5rem 1rem; }
+  .step-num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 36px; height: 36px; border-radius: 50%;
+    background: rgba(139, 92, 246, 0.15); color: var(--color-primary);
+    font-family: var(--font-heading); font-weight: 800; font-size: 1.1rem;
+    margin-bottom: 0.8rem;
+  }
+  .step-card h3 { margin: 0 0 0.4rem; font-size: 1rem; color: var(--color-text-primary); }
+  .step-card p { margin: 0; font-size: 0.85rem; color: var(--color-text-secondary); line-height: 1.5; }
+
+  .seo-block { margin-bottom: 2rem; }
+  .seo-block p { color: var(--color-text-secondary); line-height: 1.7; margin: 0 0 1rem; font-size: 0.95rem; }
+  .seo-block p:last-child { margin-bottom: 0; }
+  .seo-block strong { color: var(--color-text-primary); }
+
+  .rewards-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+  .reward-card { text-align: center; }
+  .reward-icon { font-size: 2rem; display: block; margin-bottom: 0.5rem; }
+  .reward-card h3 { margin: 0 0 0.3rem; font-size: 0.95rem; color: var(--color-text-primary); }
+  .reward-card p { margin: 0; font-size: 0.8rem; color: var(--color-text-secondary); line-height: 1.4; }
+
+  .cta-box { text-align: center; margin-top: 2rem; background: linear-gradient(135deg, rgba(139,92,246,0.08), rgba(245,158,11,0.06)); border-color: rgba(139,92,246,0.15); }
+  .cta-box h3 { margin: 0 0 0.4rem; font-size: 1.1rem; color: var(--color-text-primary); }
+  .cta-box p { margin: 0 0 1.2rem; color: var(--color-text-secondary); font-size: 0.9rem; }
+  .cta-links { display: flex; gap: 0.8rem; justify-content: center; flex-wrap: wrap; }
+  
+  .btn { display: inline-flex; align-items: center; padding: 0.7rem 1.4rem; border-radius: 10px; font-size: 0.9rem; font-weight: 600; text-decoration: none; transition: all 0.2s; border: none; cursor: pointer; }
+  .btn-primary { background: linear-gradient(135deg, #7c3aed, #a855f7); color: #fff; }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(139,92,246,0.4); }
+  .btn-outline { background: transparent; color: var(--color-primary); border: 1px solid rgba(139,92,246,0.3); }
+  .btn-outline:hover { background: rgba(139,92,246,0.1); }
+
+  .expired-note { color: var(--color-text-muted); font-size: 0.9rem; margin-bottom: 1rem; }
+  .code-card { display: flex; align-items: center; gap: 1rem; padding: 0.8rem 1rem; background: var(--color-glass-bg); border: 1px solid var(--color-glass-border); border-radius: 10px; margin-bottom: 0.5rem; }
+  .code-text { font-size: 1rem; font-weight: 700; color: #f59e0b; background: rgba(245,158,11,0.1); padding: 0.3rem 0.8rem; border-radius: 6px; }
+  .code-reward { font-size: 0.85rem; color: var(--color-text-secondary); flex: 1; }
+  .code-status { font-size: 0.75rem; font-weight: 600; padding: 0.2rem 0.6rem; border-radius: 4px; }
+  .code-card.active .code-status { background: rgba(34,197,94,0.15); color: #22c55e; }
+  .code-card.expired .code-status { background: rgba(239,68,68,0.15); color: #ef4444; }
+  .code-card.expired .code-text { color: #64748b; }
+
+  .faq-list { max-width: 800px; }
+  .faq-item { background: var(--color-glass-bg); border: 1px solid var(--color-glass-border); border-radius: 12px; margin-bottom: 1rem; overflow: hidden; }
+  .faq-item summary { padding: 1.2rem 1.5rem; cursor: pointer; font-weight: 600; color: var(--color-text-primary); font-size: 1rem; list-style: none; }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item p { padding: 0 1.5rem 1.2rem; margin: 0; color: var(--color-text-secondary); line-height: 1.7; }
+
+  @media (max-width: 768px) { .rewards-grid, .steps-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px) { .rewards-grid, .steps-grid { grid-template-columns: 1fr; } .cta-links { flex-direction: column; align-items: center; } }
+</style>

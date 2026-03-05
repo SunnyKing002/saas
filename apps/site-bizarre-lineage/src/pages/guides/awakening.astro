@@ -1,0 +1,72 @@
+---
+// src/pages/guides/awakening.astro
+import Layout from "../../layouts/Layout.astro";
+---
+<Layout title="Awakening Guide" description="How to awaken your Stand in Bizarre Lineage. Complete requirements, quest walkthrough, and tips for unlocking ultimate abilities." canonicalPath="/guides/awakening">
+  <section class="section"><div class="container guide-content">
+    <nav class="breadcrumb"><a href="/">← Home</a> <span class="sep">/</span> <span>Guides</span></nav>
+    <h1>Bizarre Lineage Awakening Guide</h1>
+    <p class="lead">Unlock your Stand's ultimate power. Awakening grants a devastating H-ability and visual transformation.</p>
+
+    <div class="guide-nav">
+      <a href="/guides/leveling">Leveling</a>
+      <a href="/guides/prestige">Prestige</a>
+      <a href="/guides/awakening" class="active">Awakening</a>
+    </div>
+
+    <h2>Awakening Requirements</h2>
+    <ol>
+      <li><strong>Player Level 50</strong> — reach max character level</li>
+      <li><strong>Conjuration Level 100</strong> — max out your Stand's skill tree</li>
+      <li><strong>Complete Awakening Quest</strong> — a multi-step challenge</li>
+    </ol>
+
+    <h2>Step-by-Step Awakening Process</h2>
+    <div class="steps">
+      <div class="step"><span class="step-num">1</span><div><h3>Meet the Requirements</h3><p>Reach Level 50 and get your Stand Conjuration to 100. You can check your Conjuration level in the Stand menu (G → Stats).</p></div></div>
+      <div class="step"><span class="step-num">2</span><div><h3>Visit the Gym</h3><p>Go to the <strong>Gym (Bus Stop 2)</strong> and sit on the meditation mat.</p></div></div>
+      <div class="step"><span class="step-num">3</span><div><h3>Start the Quest</h3><p>Choose <strong>"I want to surpass my limits"</strong> when prompted. This begins the Awakening quest chain.</p></div></div>
+      <div class="step"><span class="step-num">4</span><div><h3>Complete Raid Objectives</h3><p>Defeat the following bosses in raid instances:</p><ul><li><strong>Jotaro Kujo</strong> — Star Platinum fight</li><li><strong>Muhammad Avdol</strong> — Fire Stand fight</li><li><strong>DIO</strong> — Final boss encounter</li></ul></div></div>
+      <div class="step"><span class="step-num">5</span><div><h3>Complete World Events</h3><p>Finish <strong>50 World Events</strong>. These spawn at regular intervals across the map.</p></div></div>
+      <div class="step"><span class="step-num">6</span><div><h3>Activate Awakening</h3><p>After completing all objectives, press <strong>H</strong> to trigger your Stand's ultimate awakening ability!</p></div></div>
+    </div>
+
+    <h2>Awakening Tips</h2>
+    <ul>
+      <li>Boss raids can be done in groups — bring allies for easier clears</li>
+      <li>World Events have a visual indicator on the map — check the minimap (N) regularly</li>
+      <li>Some Stands have unique awakening transformations (e.g., Whitesnake → C-Moon)</li>
+      <li>The H ability has a long cooldown — save it for clutch moments in PvP</li>
+      <li>Awakened Stands gain a visual aura that shows your achievement to other players</li>
+    </ul>
+
+    <div class="tip-box">
+      <h3>💡 Pro Tip</h3>
+      <p>Some Stands evolve through a different path than standard awakening. Whitesnake evolves into C-Moon (with Green Baby) and then Made in Heaven (with DIO's Bone). Check each Stand's page in our <a href="/stands">Stands Database</a> for specific evolution paths.</p>
+    </div>
+  </div></section>
+</Layout>
+
+<style>
+  .guide-content { max-width: 780px; }
+  .breadcrumb { margin-bottom: 1.5rem; font-size: 0.82rem; color: #64748b; }
+  .breadcrumb a { color: #7c3aed; text-decoration: none; } .sep { margin: 0 0.3rem; }
+  h1 { font-size: 2rem; font-weight: 800; color: #fff; margin: 0 0 0.5rem; }
+  .lead { color: #94a3b8; font-size: 1rem; margin: 0 0 1.5rem; }
+  .guide-nav { display: flex; gap: 0.4rem; margin-bottom: 2.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--color-border); }
+  .guide-nav a { padding: 0.4rem 1rem; border-radius: 8px; text-decoration: none; font-size: 0.85rem; font-weight: 500; color: #94a3b8; transition: all 0.2s; }
+  .guide-nav a.active { background: rgba(124,58,237,0.12); color: #a855f7; }
+  h2 { font-size: 1.2rem; font-weight: 700; color: #e2e8f0; margin: 2rem 0 0.8rem; }
+  ol, ul { padding-left: 1.2rem; } li { color: #94a3b8; font-size: 0.88rem; margin-bottom: 0.5rem; line-height: 1.6; }
+  li strong, p strong { color: #e2e8f0; } li a, p a { color: #a855f7; }
+  p { color: #94a3b8; font-size: 0.9rem; line-height: 1.6; }
+  .steps { display: flex; flex-direction: column; gap: 1rem; margin: 1rem 0; }
+  .step { display: flex; gap: 1rem; background: var(--color-card); border: 1px solid var(--color-border); border-radius: 14px; padding: 1.2rem; }
+  .step-num { display: flex; align-items: center; justify-content: center; min-width: 36px; height: 36px; background: linear-gradient(135deg, #7c3aed, #a855f7); color: #fff; border-radius: 50%; font-size: 0.85rem; font-weight: 700; flex-shrink: 0; }
+  .step h3 { margin: 0 0 0.3rem; font-size: 0.95rem; color: #e2e8f0; }
+  .step p { margin: 0; font-size: 0.85rem; color: #94a3b8; }
+  .step ul { margin: 0.5rem 0 0; }
+  .tip-box { background: linear-gradient(135deg, rgba(245,158,11,0.08), rgba(124,58,237,0.06)); border: 1px solid rgba(245,158,11,0.2); border-radius: 12px; padding: 1.2rem; margin-top: 2rem; }
+  .tip-box h3 { margin: 0 0 0.4rem; font-size: 0.9rem; color: #f59e0b; }
+  .tip-box p { margin: 0; font-size: 0.85rem; color: #e2e8f0; }
+</style>

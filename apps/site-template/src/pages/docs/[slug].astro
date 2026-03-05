@@ -1,0 +1,125 @@
+---
+// apps/site-template/src/pages/docs/[slug].astro
+// 文档详情页 - Markdown 渲染，带侧边栏
+import Layout from "../../layouts/Layout.astro";
+import siteConfig from "../../../site.config";
+import { marked } from "marked";
+
+const API_BASE = import.meta.env.WORKER_API_URL || "http://localhost:8787";
+
+export async function getStaticPaths() {
+  const apiBase = import.meta.env.WORKER_API_URL || "http://localhost:8787";
+  const siteKey = (await import("../../../site.config")).default.key;
+
+  let docs: Array<{ slug: string }> = [];
+  try {
+    const res = await fetch(`${apiBase}/api/docs?site=${siteKey}`);
+    if (res.ok) {
+      const data = await res.json() as { docs: typeof docs };
+      docs = data.docs || [];
+    }
+  } catch {
+    docs = [{ slug: "getting-started" }, { slug: "api-reference" }, { slug: "faq" }];
+  }
+
+  return docs.map((doc) => ({ params: { slug: doc.slug } }));
+}
+
+const { slug } = Astro.params;
+
+let doc: { title: string; content_markdown: string; order_index: number } | null = null;
+let allDocs: Array<{ slug: string; title: string }> = [];
+
+try {
+  const [docRes, docsRes] = await Promise.all([
+    fetch(`${API_BASE}/api/docs/${slug}?site=${siteConfig.key}`),
+    fetch(`${API_BASE}/api/docs?site=${siteConfig.key}`),
+  ]);
+  if (docRes.ok) doc = await docRes.json() as typeof doc;
+  if (docsRes.ok) {
+    const data = await docsRes.json() as { docs: typeof allDocs };
+    allDocs = data.docs || [];
+  }
+} catch {
+  console.warn(`[Docs] 无法获取文档 ${slug}`);
+}
+
+if (!doc) {
+  doc = {
+    title: "Getting Started",
+    content_markdown: `# Getting Started\n\nWelcome to ${siteConfig.title}!\n\nConnect your Cloudflare Worker API to display real documentation content.\n\n## Quick Setup\n\n1. Deploy the Worker\n2. Run the schema migrations\n3. Add content via D1\n`,
+    order_index: 0,
+  };
+  allDocs = [{ slug: "getting-started", title: "Getting Started" }];
+}
+
+const contentHtml = await marked(doc.content_markdown, { async: true, gfm: true, breaks: true });
+---
+
+<Layout
+  seo={{
+    title: `${doc.title} — Docs — ${siteConfig.title}`,
+    description: `${doc.title} documentation for ${siteConfig.title}.`,
+    canonicalUrl: `https://${siteConfig.domain}/docs/${slug}`,
+  }}
+>
+  <div class="docs-layout">
+    <aside class="docs-sidebar">
+      <h2>Documentation</h2>
+      <nav>
+        <ul role="list">
+          {allDocs.map((d) => (
+            <li>
+              <a
+                href={`/docs/${d.slug}`}
+                class:list={["sidebar-link", { active: d.slug === slug }]}
+              >
+                {d.title}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </aside>
+
+    <main class="docs-main">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Home</a><span>›</span>
+        <a href="/docs">Docs</a><span>›</span>
+        <span>{doc.title}</span>
+      </nav>
+      <h1>{doc.title}</h1>
+      <div class="prose" set:html={contentHtml} />
+      <footer class="doc-footer">
+        <a href="/docs" class="back-link">← All Docs</a>
+      </footer>
+    </main>
+  </div>
+</Layout>
+
+<style>
+  .docs-layout { display: grid; grid-template-columns: 240px 1fr; max-width: 1200px; margin: 0 auto; padding: 3rem 1.5rem; gap: 3rem; }
+  .docs-sidebar h2 { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #475569; margin: 0 0 1rem; }
+  .docs-sidebar ul { list-style: none; padding: 0; margin: 0; }
+  .docs-sidebar li { margin: 0.1rem 0; }
+  .sidebar-link { display: block; padding: 0.4rem 0.75rem; border-radius: 6px; color: #64748b; font-size: 0.9rem; text-decoration: none; transition: color 0.2s, background 0.2s; }
+  .sidebar-link:hover, .sidebar-link.active { color: #e2e8f0; background: rgba(255,255,255,0.05); }
+  .sidebar-link.active { color: #818cf8; font-weight: 600; }
+  .breadcrumb { display: flex; gap: 0.5rem; font-size: 0.8rem; color: #475569; margin-bottom: 1.5rem; }
+  .breadcrumb a { color: #64748b; text-decoration: none; }
+  .breadcrumb a:hover { color: #818cf8; }
+  .docs-main h1 { font-size: 2rem; font-weight: 800; color: #fff; margin: 0 0 2rem; }
+  /* prose styles same as blog */
+  .prose { color: #94a3b8; font-size: 0.95rem; line-height: 1.8; }
+  .prose :global(h1), .prose :global(h2), .prose :global(h3) { color: #e2e8f0; font-weight: 700; margin: 2rem 0 1rem; }
+  .prose :global(h2) { font-size: 1.4rem; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 0.5rem; }
+  .prose :global(p) { margin: 0 0 1.2rem; }
+  .prose :global(a) { color: #818cf8; }
+  .prose :global(code) { background: rgba(99,102,241,0.1); color: #c084fc; padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.875em; }
+  .prose :global(pre) { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 1.5rem; overflow-x: auto; margin: 1.5rem 0; }
+  .prose :global(pre code) { background: none; color: #e2e8f0; padding: 0; }
+  .prose :global(ul), .prose :global(ol) { padding-left: 1.5rem; margin: 0 0 1.2rem; }
+  .doc-footer { margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.06); }
+  .back-link { color: #818cf8; text-decoration: none; font-size: 0.9rem; font-weight: 600; }
+  @media (max-width: 768px) { .docs-layout { grid-template-columns: 1fr; } .docs-sidebar { display: none; } }
+</style>

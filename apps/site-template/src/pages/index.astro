@@ -1,0 +1,328 @@
+---
+// apps/site-template/src/pages/index.astro
+// 首页：产品介绍、特性、CTA、定价
+import Layout from "../layouts/Layout.astro";
+import siteConfig from "../../site.config";
+
+// TODO: 从 D1 读取定价套餐（本地开发时使用静态占位数据）
+// import { createRepositories } from "@saas-matrix/core";
+// const repos = createRepositories(Astro.locals.db);
+// const plans = await repos.plans.getPlans(siteId);
+const plans = [
+  {
+    name: "Free",
+    price: 0,
+    currency: "USD",
+    billing_cycle: "monthly",
+    features: ["5 projects", "Basic analytics", "Community support", "1 GB storage"],
+    cta: "Get Started Free",
+    ctaUrl: "#",
+    highlighted: false,
+  },
+  {
+    name: "Pro",
+    price: 19,
+    currency: "USD",
+    billing_cycle: "monthly",
+    features: ["Unlimited projects", "Advanced analytics", "Priority support", "20 GB storage", "Custom domain"],
+    cta: "Start Pro Trial",
+    ctaUrl: "#",
+    highlighted: true,
+  },
+  {
+    name: "Enterprise",
+    price: 99,
+    currency: "USD",
+    billing_cycle: "monthly",
+    features: ["Everything in Pro", "SSO / SAML", "Dedicated support", "Unlimited storage", "SLA guarantee"],
+    cta: "Contact Sales",
+    ctaUrl: "mailto:sales@example.com",
+    highlighted: false,
+  },
+];
+
+const features = [
+  { icon: "⚡", title: "Lightning Fast", desc: "Built on edge infrastructure for sub-100ms response times globally." },
+  { icon: "🔒", title: "Secure by Default", desc: "End-to-end encryption and SOC2 compliant architecture." },
+  { icon: "📊", title: "Analytics Built-in", desc: "Real-time dashboards with actionable insights, no setup required." },
+  { icon: "🌍", title: "Global CDN", desc: "Your content delivered from 300+ PoPs across 100+ countries." },
+  { icon: "🔗", title: "API First", desc: "RESTful & GraphQL APIs with comprehensive documentation." },
+  { icon: "🛠️", title: "Extensible", desc: "Plugin system and webhooks to integrate with your existing tools." },
+];
+---
+
+<Layout
+  seo={{
+    title: siteConfig.title,
+    description: siteConfig.description,
+    canonicalUrl: `https://${siteConfig.domain}/`,
+  }}
+>
+  <!-- ① Hero Section -->
+  <section class="hero">
+    <div class="container hero-inner">
+      <div class="hero-badge">✨ Now in Public Beta</div>
+      <h1 class="hero-title">
+        The Smarter Way to<br />
+        <span class="gradient-text">Run Your SaaS</span>
+      </h1>
+      <p class="hero-desc">{siteConfig.description}</p>
+      <div class="hero-cta">
+        <a href="#pricing" class="btn btn-primary btn-lg">Start for Free</a>
+        <a href="/docs" class="btn btn-outline btn-lg">Read the Docs →</a>
+      </div>
+      <!-- 统计数字 -->
+      <div class="hero-stats">
+        <div class="stat"><strong>10K+</strong><span>Users</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat"><strong>99.9%</strong><span>Uptime</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat"><strong>150+</strong><span>Countries</span></div>
+      </div>
+    </div>
+    <div class="hero-glow"></div>
+  </section>
+
+  <!-- ② Features Section -->
+  <section class="section" id="features">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label">Features</p>
+        <h2 class="section-title">Everything you need to scale</h2>
+        <p class="section-desc">Packed with powerful features designed for modern SaaS teams.</p>
+      </div>
+      <div class="feature-grid">
+        {features.map((f) => (
+          <div class="feature-card">
+            <div class="feature-icon">{f.icon}</div>
+            <h3>{f.title}</h3>
+            <p>{f.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ③ Pricing Section -->
+  <section class="section" id="pricing">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-label">Pricing</p>
+        <h2 class="section-title">Simple, transparent pricing</h2>
+        <p class="section-desc">No hidden fees. Upgrade or downgrade anytime.</p>
+      </div>
+      <div class="pricing-grid">
+        {plans.map((plan) => (
+          <div class:list={["pricing-card", { highlighted: plan.highlighted }]}>
+            {plan.highlighted && <div class="pricing-badge">Most Popular</div>}
+            <h3 class="plan-name">{plan.name}</h3>
+            <div class="plan-price">
+              <span class="price-currency">$</span>
+              <span class="price-amount">{plan.price}</span>
+              <span class="price-period">/{plan.billing_cycle}</span>
+            </div>
+            <ul class="plan-features">
+              {plan.features.map((f) => (
+                <li>
+                  <span class="check">✓</span> {f}
+                </li>
+              ))}
+            </ul>
+            <a
+              href={plan.ctaUrl}
+              class:list={["btn btn-full", plan.highlighted ? "btn-primary" : "btn-outline"]}
+            >
+              {plan.cta}
+            </a>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ④ CTA Banner -->
+  <section class="cta-banner">
+    <div class="container">
+      <h2>Ready to get started?</h2>
+      <p>Join thousands of makers building with {siteConfig.title}.</p>
+      <a href="#" class="btn btn-primary btn-lg">Create Free Account</a>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  /* ---- Hero ---- */
+  .hero {
+    position: relative;
+    min-height: 85vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    text-align: center;
+  }
+  .hero-inner { position: relative; z-index: 2; }
+  .hero-glow {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(99,102,241,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.9rem;
+    border-radius: 100px;
+    background: rgba(99,102,241,0.12);
+    border: 1px solid rgba(99,102,241,0.3);
+    color: #818cf8;
+    font-size: 0.82rem;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+  }
+  .hero-title {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    color: #fff;
+    margin: 0 0 1.5rem;
+  }
+  .gradient-text {
+    background: linear-gradient(135deg, #818cf8 0%, #c084fc 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-desc {
+    max-width: 580px;
+    margin: 0 auto 2.5rem;
+    color: #94a3b8;
+    font-size: 1.1rem;
+    line-height: 1.7;
+  }
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 3rem;
+  }
+  .hero-stats {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    align-items: center;
+  }
+  .stat { text-align: center; }
+  .stat strong { display: block; font-size: 1.8rem; font-weight: 800; color: #fff; }
+  .stat span { font-size: 0.8rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.1em; }
+  .stat-divider { width: 1px; height: 40px; background: rgba(255,255,255,0.08); }
+
+  /* ---- Sections ---- */
+  .section { padding: 5rem 0; }
+  .section-header { text-align: center; max-width: 600px; margin: 0 auto 4rem; }
+  .section-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: #818cf8; margin: 0 0 0.75rem; }
+  .section-title { font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 800; color: #fff; margin: 0 0 1rem; letter-spacing: -0.03em; }
+  .section-desc { color: #64748b; font-size: 1rem; margin: 0; }
+
+  /* ---- Features ---- */
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+  .feature-card {
+    background: rgba(255,255,255,0.025);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 16px;
+    padding: 2rem;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .feature-card:hover { border-color: rgba(99,102,241,0.3); transform: translateY(-2px); }
+  .feature-icon { font-size: 2rem; margin-bottom: 1rem; }
+  .feature-card h3 { font-size: 1.1rem; font-weight: 700; color: #e2e8f0; margin: 0 0 0.5rem; }
+  .feature-card p { color: #64748b; font-size: 0.9rem; margin: 0; line-height: 1.6; }
+
+  /* ---- Pricing ---- */
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    align-items: start;
+  }
+  .pricing-card {
+    background: rgba(255,255,255,0.025);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 20px;
+    padding: 2rem;
+    position: relative;
+    transition: border-color 0.2s;
+  }
+  .pricing-card.highlighted {
+    background: linear-gradient(135deg, rgba(99,102,241,0.1), rgba(192,132,252,0.05));
+    border-color: rgba(99,102,241,0.4);
+    box-shadow: 0 0 60px rgba(99,102,241,0.1);
+  }
+  .pricing-badge {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #6366f1, #818cf8);
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.25rem 0.9rem;
+    border-radius: 100px;
+    white-space: nowrap;
+  }
+  .plan-name { font-size: 1rem; font-weight: 700; color: #94a3b8; margin: 0 0 1rem; text-transform: uppercase; letter-spacing: 0.1em; }
+  .plan-price { display: flex; align-items: baseline; gap: 0.2rem; margin-bottom: 1.5rem; }
+  .price-currency { font-size: 1.2rem; color: #64748b; }
+  .price-amount { font-size: 3rem; font-weight: 800; color: #fff; }
+  .price-period { font-size: 0.85rem; color: #64748b; }
+  .plan-features { list-style: none; padding: 0; margin: 0 0 2rem; display: flex; flex-direction: column; gap: 0.6rem; }
+  .plan-features li { display: flex; gap: 0.5rem; font-size: 0.9rem; color: #94a3b8; }
+  .check { color: #818cf8; font-weight: 700; flex-shrink: 0; }
+  .btn-full { width: 100%; justify-content: center; }
+
+  /* ---- CTA Banner ---- */
+  .cta-banner {
+    background: linear-gradient(135deg, rgba(99,102,241,0.1), rgba(192,132,252,0.05));
+    border-top: 1px solid rgba(99,102,241,0.2);
+    border-bottom: 1px solid rgba(99,102,241,0.2);
+    text-align: center;
+    padding: 5rem 0;
+  }
+  .cta-banner h2 { font-size: 2.5rem; font-weight: 800; color: #fff; margin: 0 0 1rem; }
+  .cta-banner p { color: #94a3b8; font-size: 1rem; margin: 0 0 2rem; }
+
+  /* ---- Buttons ---- */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.6rem 1.4rem;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.2s;
+    border: none;
+    cursor: pointer;
+  }
+  .btn-lg { padding: 0.8rem 2rem; font-size: 1rem; }
+  .btn-primary {
+    background: linear-gradient(135deg, #6366f1, #818cf8);
+    color: #fff;
+    box-shadow: 0 0 30px rgba(99,102,241,0.3);
+  }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 0 40px rgba(99,102,241,0.5); }
+  .btn-outline {
+    background: transparent;
+    color: #e2e8f0;
+    border: 1px solid rgba(255,255,255,0.12);
+  }
+  .btn-outline:hover { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.2); }
+</style>

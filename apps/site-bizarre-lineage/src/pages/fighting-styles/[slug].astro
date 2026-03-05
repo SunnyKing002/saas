@@ -1,0 +1,103 @@
+---
+// src/pages/fighting-styles/[slug].astro
+import Layout from "../../layouts/Layout.astro";
+import { fightingStyles, type FightingStyle } from "../../data/fighting-styles";
+import { getStandBySlug } from "../../data/stands";
+import TierBadge from "../../components/TierBadge.astro";
+
+export function getStaticPaths() {
+  return fightingStyles.map((s) => ({ params: { slug: s.slug }, props: { style: s } }));
+}
+const { style } = Astro.props as { style: FightingStyle };
+---
+<Layout
+  title={`${style.name} Fighting Style Guide`}
+  description={`${style.name} fighting style guide for Bizarre Lineage. ${style.comboPoential}/10 combo potential, ${style.damageScaling}/10 damage scaling. Best paired with ${style.bestStands.slice(0,3).map(s => getStandBySlug(s)?.name).join(", ")}.`}
+  canonicalPath={`/fighting-styles/${style.slug}`}
+>
+  <section class="section">
+    <div class="container">
+      <nav class="breadcrumb"><a href="/fighting-styles">← All Styles</a></nav>
+      <h1 class="page-title">{style.name}</h1>
+      <p class="page-desc">{style.description}</p>
+
+      <div class="stats-row">
+        <div class="stat-box"><span class="stat-val">{style.comboPoential}/10</span><span class="stat-label">Combo Potential</span></div>
+        <div class="stat-box"><span class="stat-val">{style.damageScaling}/10</span><span class="stat-label">Damage Scaling</span></div>
+        <div class="stat-box"><span class="stat-val">{style.range}</span><span class="stat-label">Range</span></div>
+      </div>
+
+      <h2 class="sub-title">Moves</h2>
+      <div class="moves-grid">
+        {style.moves.map((move) => (
+          <div class="move-card">
+            <div class="move-header">
+              <span class="move-key">{move.key}</span>
+              <h3>{move.name}</h3>
+            </div>
+            <p>{move.description}</p>
+          </div>
+        ))}
+      </div>
+
+      <div class="pros-cons">
+        <div class="pros">
+          <h2 class="sub-title">✅ Pros</h2>
+          <ul>{style.pros.map((p) => <li>{p}</li>)}</ul>
+        </div>
+        <div class="cons">
+          <h2 class="sub-title">❌ Cons</h2>
+          <ul>{style.cons.map((c) => <li>{c}</li>)}</ul>
+        </div>
+      </div>
+
+      <h2 class="sub-title">Best Stands to Pair With</h2>
+      <div class="pairing-grid">
+        {style.bestStands.map((slug) => {
+          const s = getStandBySlug(slug);
+          if (!s) return null;
+          return (
+            <a href={`/stands/${s.slug}`} class="pairing-card">
+              <TierBadge tier={s.tier} size="sm" />
+              <span class="pairing-name">{s.name}</span>
+            </a>
+          );
+        })}
+      </div>
+
+      <div class="obtain-box">
+        <h3>How to Unlock</h3>
+        <p>{style.howToGet}</p>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .breadcrumb { margin-bottom: 1.5rem; }
+  .breadcrumb a { color: #7c3aed; text-decoration: none; font-size: 0.85rem; }
+  .page-title { font-size: 2rem; font-weight: 800; color: #fff; margin: 0 0 0.6rem; }
+  .page-desc { color: #94a3b8; font-size: 0.95rem; max-width: 640px; margin: 0 0 2rem; line-height: 1.6; }
+  .sub-title { font-size: 1.1rem; font-weight: 700; color: #e2e8f0; margin: 2rem 0 1rem; }
+  .stats-row { display: flex; gap: 1rem; margin-bottom: 2rem; }
+  .stat-box { background: var(--color-card); border: 1px solid var(--color-border); border-radius: 12px; padding: 1rem 1.5rem; display: flex; flex-direction: column; align-items: center; gap: 0.2rem; flex: 1; }
+  .stat-val { font-size: 1.3rem; font-weight: 800; color: #a855f7; }
+  .stat-label { font-size: 0.72rem; color: #64748b; text-transform: uppercase; }
+  .moves-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.8rem; }
+  .move-card { background: var(--color-card); border: 1px solid var(--color-border); border-radius: 12px; padding: 1rem; }
+  .move-header { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem; }
+  .move-key { display: inline-flex; align-items: center; justify-content: center; width: 26px; height: 26px; background: rgba(124,58,237,0.15); border: 1px solid rgba(124,58,237,0.3); border-radius: 6px; font-size: 0.72rem; font-weight: 700; color: #a855f7; }
+  .move-card h3 { margin: 0; font-size: 0.88rem; font-weight: 600; color: #e2e8f0; }
+  .move-card p { margin: 0; font-size: 0.8rem; color: #94a3b8; line-height: 1.4; }
+  .pros-cons { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .pros ul, .cons ul { padding-left: 1.2rem; }
+  .pros li, .cons li { color: #94a3b8; font-size: 0.85rem; margin-bottom: 0.4rem; }
+  .pairing-grid { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .pairing-card { display: inline-flex; align-items: center; gap: 0.4rem; background: var(--color-card); border: 1px solid var(--color-border); border-radius: 8px; padding: 0.5rem 0.8rem; text-decoration: none; transition: all 0.2s; }
+  .pairing-card:hover { border-color: rgba(124,58,237,0.3); }
+  .pairing-name { font-size: 0.82rem; font-weight: 600; color: #e2e8f0; }
+  .obtain-box { background: var(--color-card); border: 1px solid var(--color-border); border-radius: 12px; padding: 1.2rem; margin-top: 2rem; }
+  .obtain-box h3 { margin: 0 0 0.3rem; font-size: 0.9rem; color: #e2e8f0; }
+  .obtain-box p { margin: 0; font-size: 0.85rem; color: #94a3b8; }
+  @media (max-width: 640px) { .moves-grid { grid-template-columns: 1fr; } .pros-cons { grid-template-columns: 1fr; } .stats-row { flex-direction: column; } }
+</style>

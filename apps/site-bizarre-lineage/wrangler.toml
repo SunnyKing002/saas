@@ -1,0 +1,46 @@
+# ==============================================================
+# apps/site-template/wrangler.toml
+# Cloudflare Workers / Pages 配置
+# 文档：https://developers.cloudflare.com/workers/wrangler/configuration/
+# ==============================================================
+
+name = "site-bizarre-lineage-worker"       # TODO: 克隆新站时改为 "site-{newKey}-worker"
+compatibility_date = "2024-05-24"   # Workers 兼容日期，保持最新
+compatibility_flags = ["nodejs_compat"]  # 启用 Node.js 兼容模式
+
+# 入口文件（Worker 源码）
+main = "worker/index.ts"
+
+# ---------------------------------------------------------------
+# Cloudflare Pages 配置（静态托管）
+# ---------------------------------------------------------------
+[site]
+bucket = "./dist"  # Astro 构建输出目录
+
+# ---------------------------------------------------------------
+# D1 数据库绑定
+# ---------------------------------------------------------------
+[[d1_databases]]
+binding = "DB"          # Worker 代码中通过 env.DB 访问
+database_name = "saas-matrix-db"  # TODO: 改为你在 CF 创建的 D1 数据库名
+database_id = "bffa94e5-235e-47bc-b25f-1d7dd495d5fd"  # TODO: 执行 `wrangler d1 create saas-matrix-db` 后填入
+
+# ---------------------------------------------------------------
+# 环境变量
+# ---------------------------------------------------------------
+[vars]
+SITE_KEY = "bizarre-lineage"          # TODO: 克隆新站时改为对应站点 key
+ENVIRONMENT = "production"
+
+# ---------------------------------------------------------------
+# 本地开发配置（wrangler dev 时生效）
+# ---------------------------------------------------------------
+[dev]
+port = 8787             # Worker 本地端口
+local_protocol = "http"
+
+# ---------------------------------------------------------------
+# 本地开发环境（覆盖上方 vars）
+# ---------------------------------------------------------------
+[env.development]
+vars = { SITE_KEY = "bizarre-lineage", ENVIRONMENT = "development" }

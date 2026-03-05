@@ -1,0 +1,68 @@
+---
+// src/pages/stands/index.astro
+import Layout from "../../layouts/Layout.astro";
+import StandCard from "../../components/StandCard.astro";
+import { stands } from "../../data/stands";
+
+const mythicalStands = stands.filter(s => s.rarity === "Mythical" || s.rarity === "Mythical Evolution");
+const legendaryStands = stands.filter(s => s.rarity === "Legendary");
+const rareStands = stands.filter(s => s.rarity === "Rare");
+const otherStands = stands.filter(s => !["Mythical", "Mythical Evolution", "Legendary", "Rare"].includes(s.rarity));
+---
+<Layout
+  title="All Bizarre Lineage Stands — Complete Stats, Abilities & Builds"
+  description="Browse all 17 bizarre lineage stands with detailed stats, movesets, passives, and recommended build combos. Find your perfect stand."
+  canonicalPath="/stands"
+>
+  <section class="section">
+    <div class="container">
+      <h1 class="section-title">All Bizarre Lineage Stands</h1>
+      <p class="section-subtitle">
+        The complete database of every Bizarre Lineage Stand available in the game. Click any Stand below to view its full stat breakdown, moveset, passive ability, and recommended fighting style pairing.
+      </p>
+
+      <div class="seo-intro glass-panel">
+        <p>There are currently <strong>17 unique Stands</strong> in Bizarre Lineage, each with its own rarity, moveset, and combat specialty. Stands in Bizarre Lineage range from Common rarity all the way up to Mythical Evolution, and your Stand choice directly affects your effectiveness in PvP arenas and PvE raids.</p>
+        <p>Use this Bizarre Lineage stands database alongside our <a href="/tier-list">tier list</a> to identify which Stand fits your playstyle. Pair your Stand with the right <a href="/fighting-styles">fighting style</a> and <a href="/sub-abilities">sub-ability</a> for maximum combat performance.</p>
+      </div>
+
+      <div class="stands-grid">
+        {stands.map((stand) => (
+          <StandCard stand={stand} />
+        ))}
+      </div>
+
+      <div class="internal-links glass-panel">
+        <h2>Related Bizarre Lineage Resources</h2>
+        <ul>
+          <li><a href="/tier-list">Bizarre Lineage Tier List</a> — See where each Stand ranks in the current meta</li>
+          <li><a href="/fighting-styles">Bizarre Lineage Fighting Styles</a> — Pair your Stand with the optimal combat style</li>
+          <li><a href="/codes">Bizarre Lineage Codes</a> — Claim free Stand Arrows to unlock new Stands</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  .stands-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+  .glass-panel {
+    background: var(--color-glass-bg); border: 1px solid var(--color-glass-border);
+    border-radius: 16px; padding: 1.5rem; margin-bottom: 2rem;
+  }
+  .seo-intro { max-width: 800px; margin: 0 auto 2rem; }
+  .seo-intro p { color: var(--color-text-secondary); line-height: 1.7; margin: 0 0 1rem; }
+  .seo-intro p:last-child { margin-bottom: 0; }
+  .seo-intro a, .internal-links a { color: var(--color-primary); text-decoration: underline; text-underline-offset: 3px; }
+  .seo-intro strong { color: var(--color-text-primary); }
+  .internal-links h2 { font-size: 1.3rem; margin: 0 0 1rem; color: var(--color-text-primary); }
+  .internal-links ul { padding-left: 1.2rem; margin: 0; }
+  .internal-links li { color: var(--color-text-secondary); margin-bottom: 0.6rem; line-height: 1.5; font-size: 0.95rem; }
+  @media (max-width: 768px) { .stands-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px) { .stands-grid { grid-template-columns: 1fr; } }
+</style>

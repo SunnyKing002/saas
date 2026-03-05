@@ -1,0 +1,156 @@
+---
+// apps/site-template/src/pages/blog/[slug].astro
+// 博客详情页 - 支持 Markdown 渲染
+import Layout from "../../layouts/Layout.astro";
+import siteConfig from "../../../site.config";
+import { marked } from "marked";
+
+// ----------------------------------------------------------------
+// 数据获取 - 静态路径生成 (getStaticPaths)
+// 构建时从 Worker API 获取所有文章 slug，生成对应静态页面
+// ----------------------------------------------------------------
+
+const API_BASE = import.meta.env.WORKER_API_URL || "http://localhost:8787";
+
+export async function getStaticPaths() {
+  // TODO: WORKER_API_URL 需要在 .env 中配置
+  const apiBase = import.meta.env.WORKER_API_URL || "http://localhost:8787";
+  const siteKey = (await import("../../../site.config")).default.key;
+
+  let posts: Array<{ slug: string; [key: string]: unknown }> = [];
+  try {
+    const res = await fetch(`${apiBase}/api/posts?site=${siteKey}`);
+    if (res.ok) {
+      const data = await res.json() as { posts: typeof posts };
+      posts = data.posts || [];
+    }
+  } catch {
+    // 本地开发占位
+    posts = [
+      { slug: "getting-started" },
+      { slug: "best-practices" },
+    ];
+  }
+
+  return posts.map((post) => ({
+    params: { slug: post.slug },
+  }));
+}
+
+const { slug } = Astro.params;
+
+// 获取文章详情
+let post: {
+  title: string;
+  summary: string;
+  content_markdown: string;
+  published_at: string;
+  cover_url?: string;
+} | null = null;
+
+try {
+  const res = await fetch(`${API_BASE}/api/posts/${slug}?site=${siteConfig.key}`);
+  if (res.ok) {
+    post = await res.json() as typeof post;
+  }
+} catch {
+  console.warn(`[Blog] 无法获取文章 ${slug}，使用占位数据`);
+}
+
+// 本地开发占位数据
+if (!post) {
+  post = {
+    title: slug === "getting-started" ? "Getting Started with Our Platform" : "Best Practices for SaaS",
+    summary: "This is a sample blog post.",
+    content_markdown: `# Welcome\n\nThis is a **sample** post. Connect your Worker API to see real content.\n\n## Getting Started\n\nFollow the [DEPLOY.md](/DEPLOY.md) guide to set up Cloudflare D1 and start adding real content.\n`,
+    published_at: new Date().toISOString(),
+  };
+}
+
+// 渲染 Markdown → HTML
+const contentHtml = await marked(post.content_markdown, {
+  async: true,
+  gfm: true,    // GitHub 风格 Markdown
+  breaks: true, // 换行转 <br>
+});
+
+function formatDate(iso: string) {
+  return new Date(iso).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
+}
+---
+
+<Layout
+  seo={{
+    title: `${post.title} — ${siteConfig.title}`,
+    description: post.summary,
+    ogType: "article",
+    canonicalUrl: `https://${siteConfig.domain}/blog/${slug}`,
+    ...(post.cover_url ? { ogImage: post.cover_url } : {}),
+  }}
+>
+  <article class="container article-content">
+    <!-- 面包屑 -->
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span>›</span>
+      <a href="/blog">Blog</a>
+      <span>›</span>
+      <span>{post.title}</span>
+    </nav>
+
+    <!-- 文章头部 -->
+    <header class="article-header">
+      {post.cover_url && (
+        <img src={post.cover_url} alt={post.title} class="article-cover" />
+      )}
+      <time class="article-date" datetime={post.published_at}>
+        {formatDate(post.published_at)}
+      </time>
+      <h1 class="article-title">{post.title}</h1>
+      <p class="article-summary">{post.summary}</p>
+    </header>
+
+    <!-- Markdown 渲染内容 -->
+    <div class="prose" set:html={contentHtml} />
+
+    <!-- 文章底部 -->
+    <footer class="article-footer">
+      <a href="/blog" class="back-link">← Back to Blog</a>
+    </footer>
+  </article>
+</Layout>
+
+<style>
+  .article-content { padding: 3rem 1.5rem 6rem; max-width: 760px; }
+  .breadcrumb { display: flex; gap: 0.5rem; font-size: 0.8rem; color: #475569; margin-bottom: 2rem; flex-wrap: wrap; }
+  .breadcrumb a { color: #64748b; text-decoration: none; }
+  .breadcrumb a:hover { color: #818cf8; }
+  .article-cover { width: 100%; border-radius: 16px; margin-bottom: 2rem; max-height: 400px; object-fit: cover; }
+  .article-date { font-size: 0.8rem; color: #475569; text-transform: uppercase; letter-spacing: 0.06em; }
+  .article-title { font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 800; color: #fff; margin: 0.5rem 0 1rem; letter-spacing: -0.03em; line-height: 1.2; }
+  .article-summary { font-size: 1.1rem; color: #64748b; margin: 0 0 2.5rem; line-height: 1.6; border-left: 3px solid #6366f1; padding-left: 1rem; }
+
+  /* Markdown 样式 */
+  .prose { color: #94a3b8; font-size: 1rem; line-height: 1.8; }
+  .prose :global(h1), .prose :global(h2), .prose :global(h3) { color: #e2e8f0; font-weight: 700; margin: 2rem 0 1rem; }
+  .prose :global(h2) { font-size: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 0.5rem; }
+  .prose :global(h3) { font-size: 1.2rem; }
+  .prose :global(p) { margin: 0 0 1.2rem; }
+  .prose :global(a) { color: #818cf8; text-decoration: underline; }
+  .prose :global(a:hover) { color: #c084fc; }
+  .prose :global(code) { background: rgba(99,102,241,0.1); color: #c084fc; padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.875em; }
+  .prose :global(pre) { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 1.5rem; overflow-x: auto; margin: 1.5rem 0; }
+  .prose :global(pre code) { background: none; color: #e2e8f0; padding: 0; }
+  .prose :global(ul), .prose :global(ol) { padding-left: 1.5rem; margin: 0 0 1.2rem; }
+  .prose :global(li) { margin: 0.3rem 0; }
+  .prose :global(blockquote) { border-left: 3px solid #6366f1; margin: 1.5rem 0; padding: 0.5rem 0 0.5rem 1.5rem; color: #64748b; font-style: italic; }
+  .prose :global(img) { border-radius: 12px; margin: 1.5rem 0; }
+  .prose :global(hr) { border: none; border-top: 1px solid rgba(255,255,255,0.06); margin: 2rem 0; }
+  .prose :global(table) { width: 100%; border-collapse: collapse; margin: 1.5rem 0; }
+  .prose :global(th), .prose :global(td) { border: 1px solid rgba(255,255,255,0.06); padding: 0.6rem 1rem; text-align: left; }
+  .prose :global(th) { background: rgba(255,255,255,0.04); color: #e2e8f0; }
+
+  .article-footer { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.06); }
+  .back-link { color: #818cf8; text-decoration: none; font-size: 0.9rem; font-weight: 600; }
+  .back-link:hover { color: #c084fc; }
+</style>

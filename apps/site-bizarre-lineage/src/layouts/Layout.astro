@@ -1,0 +1,216 @@
+---
+// src/layouts/Layout.astro
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+import { siteConfig } from "../../site.config";
+
+interface Props {
+  title?: string;
+  description?: string;
+  canonicalPath?: string;
+}
+
+const {
+  title = "Bizarre Lineage Wiki & Tools",
+  description = "The ultimate wiki and tools for Roblox Bizarre Lineage. Find tier lists, Stand guides, builds, and codes.",
+  canonicalPath = "",
+} = Astro.props;
+
+const canonicalUrl = new URL(canonicalPath, Astro.site || siteConfig.domain);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/png" href="/logo.png" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- SEO Meta Tags -->
+    <title>{title} | {siteConfig.title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content={`${title} | ${siteConfig.title}`} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="/logo.png" />
+    <meta property="og:site_name" content={siteConfig.title} />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={`${title} | ${siteConfig.title}`} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content="/logo.png" />
+
+    <!-- JSON-LD WebSite Schema -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": siteConfig.title,
+      "url": siteConfig.domain,
+      "description": "The ultimate wiki and tools for Roblox Bizarre Lineage. Tier lists, stand guides, codes, and builds.",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": siteConfig.domain + "/stands/{search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    })} />
+    
+    <!-- Google Fonts: Outfit (Display/Headings) & Inter (Body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <!-- Ambient Background Glows -->
+    <div class="ambient-glow glow-top-left"></div>
+    <div class="ambient-glow glow-bottom-right"></div>
+    
+    <Navbar />
+    <main class="main-content">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>
+
+<style is:global>
+  /* 
+   * Bizarre Lineage Premium Theme 
+   * Dark Space Purple / Cyber Gold
+   */
+  :root {
+    /* Core Colors */
+    --color-bg-base: #0a0512;        /* Very dark purple/black */
+    --color-bg-surface: #130a24;     /* Raised surface */
+    --color-bg-elevated: #1a0f35;    /* Popovers, cards */
+    
+    /* Accents (Purple & Gold/Amber) */
+    --color-primary: #8b5cf6;        /* Vibrant purple */
+    --color-primary-glow: rgba(139, 92, 246, 0.4);
+    --color-accent: #f59e0b;         /* Stand Arrow Gold */
+    --color-accent-glow: rgba(245, 158, 11, 0.3);
+    
+    /* Text */
+    --color-text-primary: #f8fafc;
+    --color-text-secondary: #cbd5e1;
+    --color-text-muted: #64748b;
+    
+    /* Borders & Glass */
+    --color-border: rgba(139, 92, 246, 0.15);
+    --color-glass-bg: rgba(19, 10, 36, 0.6);
+    --color-glass-border: rgba(255, 255, 255, 0.05);
+
+    /* Typography */
+    --font-heading: 'Outfit', system-ui, sans-serif;
+    --font-body: 'Inter', system-ui, sans-serif;
+  }
+
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    font-family: var(--font-body);
+    background-color: var(--color-bg-base);
+    color: var(--color-text-primary);
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* Headings Typography */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin-top: 0;
+  }
+
+  p {
+    line-height: 1.6;
+  }
+
+  /* Ambient Glow Effects for Background */
+  .ambient-glow {
+    position: fixed;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    filter: blur(120px);
+    z-index: -1;
+    opacity: 0.5;
+    pointer-events: none;
+  }
+  
+  .glow-top-left {
+    top: -200px;
+    left: -200px;
+    background: radial-gradient(circle, rgba(139,92,246,0.2) 0%, transparent 70%);
+  }
+
+  .glow-bottom-right {
+    bottom: -200px;
+    right: -200px;
+    background: radial-gradient(circle, rgba(245,158,11,0.1) 0%, transparent 70%);
+  }
+
+  .main-content {
+    flex: 1;
+    min-height: calc(100vh - 140px); /* rough navbar + footer height */
+    padding-bottom: 4rem;
+  }
+
+  /* Structural Classes */
+  .container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .section {
+    padding: 4rem 0;
+  }
+
+  .section-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(135deg, #f8fafc 0%, #cbd5e1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .section-subtitle {
+    text-align: center;
+    color: var(--color-text-secondary);
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto 3rem;
+  }
+
+  /* Base Animations */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+  }
+</style>

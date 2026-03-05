@@ -1,0 +1,198 @@
+---
+// src/components/Footer.astro
+import { siteConfig } from "../../site.config";
+---
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <div class="logo">
+        <img src="/logo.png" alt="Bizarre Lineage Logo" class="logo-img" />
+        <span class="logo-text">Bizarre Lineage</span>
+      </div>
+      <p class="brand-desc">
+        The most comprehensive toolset and game data repository for Bizarre Lineage on Roblox.
+      </p>
+      <div class="social-links">
+        <a href={siteConfig.discordLink} target="_blank" rel="noopener" class="social-btn">Discord</a>
+        <a href={siteConfig.robloxLink} target="_blank" rel="noopener" class="social-btn">Roblox Game</a>
+      </div>
+    </div>
+
+    <div class="footer-links">
+      <div class="link-col">
+        <h4>Game Data</h4>
+        <a href="/tier-list">Tier List</a>
+        <a href="/stands">Stands</a>
+        <a href="/fighting-styles">Fighting Styles</a>
+        <a href="/sub-abilities">Sub-Abilities</a>
+      </div>
+      <div class="link-col">
+        <h4>Resources</h4>
+        <a href="/codes">Active Codes</a>
+        <a href="/guides/leveling">Leveling Guide</a>
+        <a href="/guides/prestige">Prestige Guide</a>
+        <a href="/guides/awakening">Awakening Guide</a>
+      </div>
+      <div class="link-col">
+        <h4>Legal</h4>
+        <a href="/about">About Us</a>
+        <a href="/privacy">Privacy Policy</a>
+        <a href="/terms">Terms of Service</a>
+      </div>
+    </div>
+  </div>
+  
+  <div class="footer-bottom">
+    <div class="container">
+      <p>
+        Not affiliated with Roblox Corporation or the Bizarre Lineage developers. 
+        Game assets & names belong to their respective owners.
+      </p>
+      <p class="copyright">&copy; {new Date().getFullYear()} Bizarre Lineage Tools. Built by fans, for fans.</p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--color-bg-elevated);
+    border-top: 1px solid var(--color-glass-border);
+    margin-top: auto;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Decorative glow for footer */
+  .footer::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--color-primary), transparent);
+    opacity: 0.5;
+  }
+
+  .footer-inner {
+    padding: 4rem 1.5rem;
+    display: grid;
+    grid-template-columns: 1.2fr 2fr;
+    gap: 4rem;
+  }
+
+  .footer-brand .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .logo-img {
+    height: 32px;
+    width: auto;
+    filter: drop-shadow(0 0 6px var(--color-primary-glow));
+  }
+
+  .logo-text {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: 1.2rem;
+    color: var(--color-text-primary);
+  }
+
+  .brand-desc {
+    color: var(--color-text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    max-width: 320px;
+  }
+
+  .social-links {
+    display: flex;
+    gap: 0.8rem;
+  }
+
+  .social-btn {
+    padding: 0.4rem 0.8rem;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid var(--color-glass-border);
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.2s;
+  }
+
+  .social-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--color-primary);
+    border-color: rgba(139, 92, 246, 0.3);
+  }
+
+  .footer-links {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+
+  .link-col h4 {
+    color: var(--color-text-primary);
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 1.05rem;
+    margin: 0 0 1.2rem;
+  }
+
+  .link-col a {
+    display: block;
+    color: var(--color-text-muted);
+    text-decoration: none;
+    font-size: 0.9rem;
+    margin-bottom: 0.8rem;
+    transition: all 0.2s;
+  }
+
+  .link-col a:hover {
+    color: var(--color-primary);
+    transform: translateX(4px);
+  }
+
+  .footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 1.5rem 0;
+    background: var(--color-bg-base);
+  }
+
+  .footer-bottom p {
+    margin: 0;
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    text-align: center;
+  }
+
+  .footer-bottom .copyright {
+    margin-top: 0.4rem;
+  }
+
+  @media (max-width: 860px) {
+    .footer-inner {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .footer-links {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .footer-links {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
