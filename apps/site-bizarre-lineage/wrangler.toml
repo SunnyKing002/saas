@@ -15,7 +15,8 @@ main = "worker/index.ts"
 # Cloudflare Pages 配置（静态托管）
 # ---------------------------------------------------------------
 [site]
-bucket = "./dist"  # Astro 构建输出目录
+bucket = "./dist"  # 兼容旧版本
+pages_build_output_dir = "./dist" # Cloudflare Pages V2 必须
 
 # ---------------------------------------------------------------
 # D1 数据库绑定
