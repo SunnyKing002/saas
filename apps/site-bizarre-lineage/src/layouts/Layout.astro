@@ -23,7 +23,7 @@ const canonicalUrl = new URL(canonicalPath, Astro.site || siteConfig.domain);
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
     <link rel="icon" type="image/png" href="/logo.png" />
     <meta name="generator" content={Astro.generator} />
 
@@ -61,10 +61,16 @@ const canonicalUrl = new URL(canonicalPath, Astro.site || siteConfig.domain);
       }
     })} />
     
-    <!-- Google Fonts: Outfit (Display/Headings) & Inter (Body) -->
+    <!-- Font Preconnections -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- FCP/LCP Optimization: Asynchronous font loading -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap" as="style">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap" media="print" onload="this.media='all'">
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap">
+    </noscript>
   </head>
   <body>
     <!-- Ambient Background Glows -->
@@ -115,11 +121,20 @@ const canonicalUrl = new URL(canonicalPath, Astro.site || siteConfig.domain);
     box-sizing: border-box;
   }
 
+  /* INP Optimization: Eradicate mobile touch delays & layout tap-highlights */
   html {
     font-family: var(--font-body);
     background-color: var(--color-bg-base);
     color: var(--color-text-primary);
     scroll-behavior: smooth;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* INP / Mobile UX: Enforce 44px minimum touch targets */
+  a, button, [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
   }
 
   body {
