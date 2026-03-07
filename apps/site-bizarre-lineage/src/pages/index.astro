@@ -145,6 +145,27 @@ const faqs = [
     </div>
   </section>
 
+  <!-- FEATURED VIDEO SECTION -->
+  <section class="featured-video-section section">
+    <div class="container">
+      <h2 class="section-title">Watch Bizarre Lineage in Action</h2>
+      <p class="section-subtitle">Check out the latest gameplay showcases, combo guides, and new Stand previews from the community.</p>
+      
+      <div class="video-container glass-card">
+        <iframe 
+          width="100%" 
+          height="100%" 
+          src="https://www.youtube.com/embed/Tx0h0rJK6yo" 
+          title="Bizarre Lineage Gameplay Showcase" 
+          frameborder="0" 
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+          allowfullscreen
+          loading="lazy"
+        ></iframe>
+      </div>
+    </div>
+  </section>
+
   <!-- FAQ SECTION -->
   <section class="faq-section section">
     <div class="container">
@@ -461,6 +482,24 @@ const faqs = [
 
 .view-all-stands {
   text-align: center;
+}
+
+/* Video Embed */
+.video-container {
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0;
+  overflow: hidden;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 30px rgba(139, 92, 246, 0.15);
+}
+
+.video-container iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
 }
 
 /* Responsive */

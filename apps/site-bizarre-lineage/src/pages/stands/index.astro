@@ -4,10 +4,6 @@ import Layout from "../../layouts/Layout.astro";
 import StandCard from "../../components/StandCard.astro";
 import { stands } from "../../data/stands";
 
-const mythicalStands = stands.filter(s => s.rarity === "Mythical" || s.rarity === "Mythical Evolution");
-const legendaryStands = stands.filter(s => s.rarity === "Legendary");
-const rareStands = stands.filter(s => s.rarity === "Rare");
-const otherStands = stands.filter(s => !["Mythical", "Mythical Evolution", "Legendary", "Rare"].includes(s.rarity));
 ---
 <Layout
   title="All Bizarre Lineage Stands — Complete Stats, Abilities & Builds"

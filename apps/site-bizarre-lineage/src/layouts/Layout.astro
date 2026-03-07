@@ -25,6 +25,7 @@ const canonicalUrl = new URL(canonicalPath, Astro.site || siteConfig.domain);
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
     <link rel="icon" type="image/png" href="/logo.png" />
+    <link rel="apple-touch-icon" href="/logo.png" />
     <meta name="generator" content={Astro.generator} />
 
     <!-- SEO Meta Tags -->
@@ -47,29 +48,40 @@ const canonicalUrl = new URL(canonicalPath, Astro.site || siteConfig.domain);
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content="/logo.png" />
 
-    <!-- JSON-LD WebSite Schema -->
-    <script type="application/ld+json" set:html={JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": siteConfig.title,
-      "url": siteConfig.domain,
-      "description": "The ultimate wiki and tools for Roblox Bizarre Lineage. Tier lists, stand guides, codes, and builds.",
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": siteConfig.domain + "/stands/{search_term_string}",
-        "query-input": "required name=search_term_string"
+    <!-- JSON-LD WebSite and Organization Schema -->
+    <script type="application/ld+json" set:html={JSON.stringify([
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": siteConfig.title,
+        "url": siteConfig.domain,
+        "description": "The ultimate wiki and tools for Roblox Bizarre Lineage. Tier lists, stand guides, codes, and builds.",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": siteConfig.domain + "/stands/{search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": siteConfig.title,
+        "url": siteConfig.domain,
+        "logo": new URL("/logo.png", Astro.site || siteConfig.domain).toString()
       }
-    })} />
+    ])} />
     
-    <!-- Font Preconnections -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Font Preconnections for FCP optimization -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
     
-    <!-- FCP/LCP Optimization: Asynchronous font loading -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap" as="style">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap" media="print" onload="this.media='all'">
+    <!-- FCP/LCP Optimization: Reduced font weights explicitly to only what is needed -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;600;800;900&display=swap" as="style">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;600;800;900&display=swap" media="print" onload="this.media='all'">
     <noscript>
-      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;600;800;900&display=swap">
     </noscript>
   </head>
   <body>

@@ -1,0 +1,371 @@
+---
+import Layout from "../layouts/Layout.astro";
+import fs from "fs";
+import path from "path";
+import { Sparkles, Shield, Zap, Target } from "lucide-react";
+import SkinsGallery from "../components/SkinsGallery";
+
+// Read skins directory on server side
+const skinsDir = path.join(process.cwd(), "public/bizarre/skins");
+let skins: { filename: string; name: string; stand: string }[] = [];
+
+try {
+  const files = fs.readdirSync(skinsDir);
+  
+  // Parse filename to get readable name and stand name
+  skins = files
+    .filter(file => file.endsWith('.webp') || file.endsWith('.png') || file.endsWith('.jpg'))
+    .map(filename => {
+      const nameWithoutExt = filename.replace(/\.(webp|png|jpg)$/, '');
+      const cleanName = nameWithoutExt.replace('-skin-bizarre-lineage', '');
+      const parts = cleanName.split('-');
+      const variant = parts[0]; 
+      const standArr = parts.slice(1);
+      
+      const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+      
+      const formattedVariant = capitalize(variant);
+      const formattedStand = standArr.map(capitalize).join(' ');
+      
+      const readableName = parts.length > 1 
+        ? `${formattedVariant} ${formattedStand}`
+        : parts.map(capitalize).join(' ');
+
+      return {
+        filename,
+        name: readableName,
+        stand: formattedStand || 'Unknown Stand'
+      };
+    });
+} catch (error) {
+  console.error("Error reading skins directory:", error);
+}
+
+const faqs = [
+  {
+    question: "How do I get bizarre lineage skins?",
+    answer: "You can obtain bizarre lineage skins by using Stand Arrows in-game. Every time you roll a new Stand, there is a very small percentage chance it will unlock with a rare cosmetic applied."
+  },
+  {
+    question: "Do bizarre lineage skins provide damage or PvP boosts?",
+    answer: "No, all bizarre lineage skins are entirely cosmetic. They change the visual model and sometimes aura effects of your Stand, but they do not alter hitboxes, cooldowns, or damage output in PvP or PvE."
+  },
+  {
+    question: "What are the most popular bizarre lineage skins?",
+    answer: "Currently, the Deimos and Kawaii variants are among the most sought-after bizarre lineage skins. The Galaxy Garou Star Platinum is also highly desired by top-tier players."
+  },
+  {
+    question: "Can I trade my bizarre lineage skins with other players?",
+    answer: "At this moment, bizarre lineage skins are locked to the account that rolls them. Trading features may be introduced in future updates, so keep your rare skins safe!"
+  }
+];
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map(f => ({
+    "@type": "Question",
+    "name": f.question,
+    "acceptedAnswer": { "@type": "Answer", "text": f.answer }
+  }))
+};
+---
+
+<Layout 
+  title="Bizarre Lineage Skins | View All Skin"
+  description="Discover every bizarre lineage skin in our interactive 3D gallery. Preview exclusive Mythical and Legendary Stand cosmetic models & aura effects today!"
+  canonicalPath="/skins"
+>
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+  <!-- PAGE HEADER -->
+  <div class="page-header animate-fade-in">
+    <div class="header-glow"></div>
+    <div class="container header-inner relative z-10">
+      <div class="title-badge">
+        <Sparkles size={16} /> Complete Cosmetic Collection
+      </div>
+      <h1 class="page-title">Ultimate Guide to Bizarre Lineage Skins</h1>
+      <p class="page-desc">
+        Welcome to the definitive database for all <strong>bizarre lineage skins</strong>. Stand out in the arena by collecting the rarest cosmetic variants for your favorite Stands. From the demonic Deimos series to the vibrant Galaxy editions, preview every custom model currently obtainable in-game and learn exactly how to get them.
+      </p>
+    </div>
+  </div>
+
+  <div class="container section">
+
+    <!-- SEO Content Block 1: Intro & Values -->
+    <div class="seo-text-block mb-12 animate-fade-in" style="animation-delay: 0.1s;">
+      <h2 class="section-subtitle-left">Why Collect Bizarre Lineage Skins?</h2>
+      <p class="text-gray-300 text-lg mb-6 leading-relaxed">
+        In the highly competitive PvP landscape of this Roblox experience, true mastery is shown not just through skill, but through style. Collecting <strong>bizarre lineage skins</strong> allows you to personalize your gameplay. While these skins do not grant unfair stat advantages, equipping rare <strong>bizarre lineage skins</strong> acts as a massive flex against your opponents. Whether you are climbing the ranked ladder or grinding PvE bosses, doing it with a custom Stand model makes every victory sweeter.
+      </p>
+      
+      <div class="features-grid">
+        <div class="feature-card glass-panel">
+          <Shield className="feature-icon" size={28} />
+          <h3>Visual Dominance</h3>
+          <p>Unique models and custom auras ensure your Stand looks entirely different from the default variants in the battlefield.</p>
+        </div>
+        <div class="feature-card glass-panel">
+          <Zap className="feature-icon" size={28} />
+          <h3>Pure Cosmetic Balance</h3>
+          <p>All <strong>bizarre lineage skins</strong> maintain identical hitboxes and frame data, ensuring fair, skill-based competitive play.</p>
+        </div>
+        <div class="feature-card glass-panel">
+          <Target className="feature-icon" size={28} />
+          <h3>High Rarity Value</h3>
+          <p>Rolling top-tier bizarre lineage skins requires dedication, making them the ultimate badge of honor for veteran players.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SKINS GALLERY (Interactive React Component) -->
+    <h2 class="section-subtitle-left">Interactive Gallery of Bizarre Lineage Skins</h2>
+    <p class="mb-8 text-gray-400">Search, filter, and click on any of the <strong>bizarre lineage skins</strong> below to view high-resolution details and cosmetic rarity.</p>
+    
+    <div class="mb-12">
+      <SkinsGallery client:visible initialSkins={skins} />
+    </div>
+
+    <!-- SEO Content Block 2: How to Obtain -->
+    <div class="seo-text-block mt-16 animate-fade-in">
+      <h2 class="section-subtitle-left">How to Obtain Bizarre Lineage Skins</h2>
+      <p class="text-gray-300 mb-6">
+        Getting your hands on these exclusive <strong>bizarre lineage skins</strong> requires patience and a good supply of Stand Arrows. Here is the step-by-step process to unlocking your custom Stand:
+      </p>
+      <div class="steps-container">
+        <div class="step-item glass-panel">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h3>Farm Stand Arrows</h3>
+            <p>Collect arrows spawning around the map or defeat bosses. You will need a significant amount to reliably roll <strong>bizarre lineage skins</strong>.</p>
+          </div>
+        </div>
+        <div class="step-item glass-panel">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h3>Use Promo Codes</h3>
+            <p>Check our active codes page to claim free Rokakaka fruits and arrows, vastly speeding up your hunt for rare <strong>bizarre lineage skins</strong>.</p>
+          </div>
+        </div>
+        <div class="step-item glass-panel">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <h3>Reroll and Pray</h3>
+            <p>Consume a Rokakaka fruit to reset your current Stand, then use an arrow. If you hit the low-percentage jackpot, your new Stand will spawn with a skin applied!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- CTA Block -->
+    <div class="cta-block glass-panel mt-12 text-center">
+      <h2 class="mb-2">Ready to Roll for Bizarre Lineage Skins?</h2>
+      <p class="mb-6 text-gray-400">Don't waste time grinding manually. Grab our latest free reward codes to instantly stock up on Stand Arrows and Rokakaka fruits.</p>
+      <a href="/codes" class="btn-primary-glow inline-block">Get Free Stand Arrows Now</a>
+    </div>
+
+  </div>
+
+  <!-- FAQ SECTION -->
+  <section class="faq-section section bg-black/40 mt-12">
+    <div class="container">
+      <h2 class="section-title text-center mb-10">Bizarre Lineage Skins FAQ</h2>
+      <div class="faq-list">
+        {faqs.map(f => (
+          <details class="faq-item">
+            <summary>{f.question}</summary>
+            <p>{f.answer}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+</Layout>
+
+<style>
+  /* Header styling matched to tier-list */
+  .page-header {
+    position: relative;
+    padding: 6rem 0 4rem;
+    border-bottom: 1px solid var(--color-glass-border);
+    margin-bottom: 2rem;
+    overflow: hidden;
+  }
+  
+  .header-glow {
+    position: absolute;
+    top: -50%; left: 50%;
+    transform: translateX(-50%);
+    width: 800px; height: 100%;
+    background: radial-gradient(ellipse, rgba(139, 92, 246, 0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  
+  .header-inner { 
+    max-width: 800px; 
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .title-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 1rem;
+    background: rgba(139, 92, 246, 0.1);
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    border-radius: 99px;
+    color: var(--color-primary);
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .page-title {
+    font-size: 3.5rem; 
+    font-weight: 900; 
+    margin-bottom: 1rem; 
+    color: #fff;
+    text-shadow: 0 0 40px rgba(139, 92, 246, 0.3);
+  }
+  
+  .page-desc { 
+    font-size: 1.15rem; 
+    color: var(--color-text-secondary); 
+    line-height: 1.6;
+    max-width: 650px;
+  }
+
+  /* SEO Blocks & Typography */
+  .section-subtitle-left {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--color-text-primary);
+    margin: 0 0 1rem;
+  }
+  
+  .text-gray-300 { color: #d1d5db; }
+  .text-gray-400 { color: #9ca3af; }
+  .mb-6 { margin-bottom: 1.5rem; }
+  .mb-8 { margin-bottom: 2rem; }
+  .mb-10 { margin-bottom: 2.5rem; }
+  .mb-12 { margin-bottom: 3rem; }
+  .mt-6 { margin-top: 1.5rem; }
+  .mt-12 { margin-top: 3rem; }
+  .mt-16 { margin-top: 4rem; }
+  .text-lg { font-size: 1.125rem; }
+  .leading-relaxed { line-height: 1.75; }
+  .py-12 { padding-top: 3rem; padding-bottom: 3rem; }
+  .inline-block { display: inline-block; }
+
+  /* Glass Panels */
+  .glass-panel {
+    background: var(--color-glass-bg);
+    border: 1px solid var(--color-glass-border);
+    border-radius: 16px;
+    padding: 1.5rem 2rem;
+  }
+
+  /* Features Grid */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  
+  .feature-card {
+    display: flex;
+    flex-direction: column;
+    padding: 1.5rem;
+  }
+  
+  .feature-icon {
+    color: var(--color-primary);
+    margin-bottom: 1rem;
+  }
+  
+  .feature-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    color: #fff;
+  }
+  
+  .feature-card p {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* Steps Section */
+  .steps-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  
+  .step-item {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+  
+  .step-number {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(139, 92, 246, 0.2);
+    border: 1px solid var(--color-primary);
+    color: var(--color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 1.2rem;
+    flex-shrink: 0;
+  }
+  
+  .step-content h3 {
+    font-size: 1.15rem;
+    color: #fff;
+    margin-bottom: 0.4rem;
+  }
+  
+  .step-content p {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  /* CTA Button */
+  .btn-primary-glow {
+    padding: 0.8rem 2rem;
+    background: linear-gradient(135deg, var(--color-primary), #a855f7);
+    color: #fff;
+    font-weight: 700;
+    border-radius: 99px;
+    text-decoration: none;
+    box-shadow: 0 4px 15px var(--color-primary-glow);
+    transition: all 0.2s;
+  }
+  
+  .btn-primary-glow:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(168, 85, 247, 0.5);
+  }
+
+  @media (max-width: 900px) {
+    .features-grid, .steps-container { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 768px) {
+    .page-title { font-size: 2.5rem; }
+  }
+</style>
