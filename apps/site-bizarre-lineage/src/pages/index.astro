@@ -33,28 +33,13 @@ const faqs = [
   }
 ];
 
-// FAQ JSON-LD
-const faqSchema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": faqs.map(f => ({
-    "@type": "Question",
-    "name": f.question,
-    "acceptedAnswer": {
-      "@type": "Answer",
-      "text": f.answer
-    }
-  }))
-};
+
 ---
 
 <Layout
   title="Bizarre Lineage Wiki — Tier List, Codes & Stands Guide (2026)"
   description="Bizarre Lineage hub for Roblox players. Get the latest tier list, active codes, all 17 stands, fighting styles, and leveling guides — updated daily."
 >
-  <!-- FAQ JSON-LD -->
-  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
-
   <!-- HERO SECTION -->
   <section class="hero-section">
     <div class="container hero-content animate-fade-in">
