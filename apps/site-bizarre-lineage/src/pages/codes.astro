@@ -6,24 +6,24 @@ import { Gift, ArrowRight } from "lucide-react";
 
 const faqs = [
   {
-    question: "Are there any active Bizarre Lineage codes right now?",
-    answer: "As of March 2026, the Bizarre Lineage code redemption system is still being finalized by the developers. We monitor every official channel and will publish new Bizarre Lineage codes the moment they go live."
+    question: "Are there any Bizarre Lineage codes working right now?",
+    answer: "Currently, no. The game just launched and lead developer MIDAS is still finalizing the code redemption UI. However, MIDAS has promised the very first code will be '200KLIKES' once the game hits that milestone on the Roblox page."
   },
   {
-    question: "How do I redeem Bizarre Lineage codes?",
-    answer: "Once the system launches, you will redeem Bizarre Lineage codes by opening the in-game menu, tapping the codes icon, typing the code exactly as shown, and pressing confirm. We will update this section with screenshots when the feature releases."
+    question: "How do I redeem my Bizarre Lineage codes?",
+    answer: "Once the code patch drops, you'll open up the in-game menu (usually by tapping 'M' or the UI button on the left), click the 'Codes' tab (the Twitter bird icon), paste the code exactly as we have it below, and hit Redeem. We'll update this with exact screenshots the second it's live."
   },
   {
-    question: "Where do Bizarre Lineage codes come from?",
-    answer: "Bizarre Lineage codes are released by the official developers through their Discord server, the Roblox game page, and social media. Codes typically celebrate milestones like 50K likes, seasonal events, or major patches."
+    question: "Where is the best place to find new Bizarre Lineage codes?",
+    answer: "Right here! Alternatively, you can join the official Bizarre Lineage Discord server or check their official Trello board. We constantly scrape both of those sources to update this list so you don't have to."
   },
   {
     question: "Do Bizarre Lineage codes expire?",
-    answer: "Yes, most Bizarre Lineage codes have limited redemption windows. Codes can expire as quickly as 24 hours after release. Bookmark this page to stay updated and never miss a Bizarre Lineage code drop."
+    answer: "Absolutely. Roblox game codes constantly expire naturally after a few days or when a new major update drops. You've gotta be quick. Bookmark us to make sure you grab your Roka and Arrows before they vanish."
   },
   {
-    question: "What rewards do Bizarre Lineage codes give?",
-    answer: "Bizarre Lineage codes typically reward free Stand Arrows, Rokakaka Fruits for re-rolling Stands, in-game Cash, and EXP Boost items. Some rare Bizarre Lineage codes may offer exclusive cosmetics."
+    question: "What do I get from Bizarre Lineage codes?",
+    answer: "You can expect the usual essentials: free Stand Arrows (to roll for shiny Mythicals), Rokakaka Fruits (to reset your bad pulls), Cash for sub-abilities, and temporary EXP Boosts to help you grind up to max level faster."
   }
 ];
 
@@ -38,32 +38,37 @@ const faqSchema = {
 };
 ---
 <Layout
-  title="Bizarre Lineage Codes — All Active & Free Redeem Codes (March 2026)"
-  description="All working bizarre lineage codes for free stand arrows, cash, and XP boosts. Updated daily — bookmark and never miss a code drop."
+  title="Bizarre Lineage Codes (March 2026) | code"
+  description="Looking for Bizarre Lineage codes? Get all the latest working codes for free Stand Arrows, Cash, and Rokakaka. We check the official Discord daily so you don't have to."
   canonicalPath="/codes"
 >
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 
   <section class="section"><div class="container">
-    <h1 class="section-title">Bizarre Lineage Codes — Free Rewards List (March 2026)</h1>
-    <p class="section-subtitle">Every working Bizarre Lineage code in one place. We check for new codes daily and update this list within minutes of each drop. Bookmark this page to never miss free Stand Arrows, Cash, or EXP Boosts.</p>
+    <h1 class="section-title">All Bizarre Lineage Codes</h1>
+    <p class="section-subtitle">Tired of grinding for Stand Arrows and Roka? We've got you covered. Here's the complete, up-to-date list of every working <b>Bizarre Lineage code</b>. We actively monitor lead dev MIDAS's Discord and the official Trello board so this page updates the second a new code drops.</p>
 
     {activeCodes.length > 0 ? (
       <div class="codes-list">
-        <h2 class="sub-title">Active Bizarre Lineage Codes</h2>
+        <h2 class="sub-title">Active & Upcoming Bizarre Lineage Codes</h2>
         {activeCodes.map((c) => (
-          <div class="code-card active">
+          <div class={`code-card ${c.status}`}>
             <code class="code-text">{c.code}</code>
             <span class="code-reward">{c.reward}</span>
-            <span class="code-status">Active</span>
+            {c.status === 'upcoming' ? (
+              <span class="code-status upcoming">Awaiting Patch</span>
+            ) : (
+              <span class="code-status active">Active</span>
+            )}
           </div>
         ))}
+        <p class="text-sm text-gray-400 mt-4 mb-8"><em>* Developer MIDAS promised the <strong>200KLIKES</strong> code will drop in the upcoming update. The redemption UI is currently disabled in-game. Be ready to redeem it the moment servers reboot!</em></p>
       </div>
     ) : (
       <div class="no-codes glass-panel">
         <Gift size={48} className="no-codes-icon-svg" />
         <h2>No Active Bizarre Lineage Codes Yet</h2>
-        <p>The Bizarre Lineage code redemption system has not been released by the developers yet. Bookmark this page — we will publish every new Bizarre Lineage code the moment it drops.</p>
+        <p>The Bizarre Lineage code redemption system hasn't been enabled by the devs yet. Bookmark this page — we will publish the absolute latest codes the second MIDAS hits the switch.</p>
       </div>
     )}
 
@@ -95,8 +100,8 @@ const faqSchema = {
     <!-- Where Codes Come From -->
     <h2 class="sub-title">Where Do Bizarre Lineage Codes Come From?</h2>
     <div class="seo-block glass-panel">
-      <p>Bizarre Lineage codes are released exclusively by the official development team. The most common triggers for new Bizarre Lineage code drops include reaching player milestones (such as 20K, 50K, or 100K likes on the Roblox page), seasonal holiday events, and major content patches that introduce new Stands or gameplay features.</p>
-      <p>To stay ahead, follow the official <strong>Bizarre Lineage Discord server</strong> and the game's Roblox page. Alternatively, bookmark this page — our team monitors all official channels around the clock and publishes new Bizarre Lineage codes within minutes of release.</p>
+      <p>If you're wondering who makes these codes, they are handed out directly by <b>MIDAS</b> and the official development team. The devs drop new codes to celebrate huge community milestones (like hitting massive Like goals on the Roblox page), whenever there's a big content patch, or even if servers slam and they need to hand out apology compensation.</p>
+      <p>Want to hunt for them yourself? The two best official sources are the <a href="https://discord.com/invite/bizarrelineage" target="_blank" rel="noopener noreferrer" style="color:var(--color-primary);">Bizarre Lineage Discord Server</a> and the official <a href="https://trello.com/b/Zi6UTMnO/official-bizzare-lineage" target="_blank" rel="noopener noreferrer" style="color:var(--color-primary);">Trello board</a>. But honestly, watching Discord announcements all day is exhausting. Just bookmark our page instead — we do the heavy lifting for you.</p>
     </div>
 
     <!-- Expected Rewards -->
@@ -202,8 +207,14 @@ const faqSchema = {
   .code-reward { font-size: 0.85rem; color: var(--color-text-secondary); flex: 1; }
   .code-status { font-size: 0.75rem; font-weight: 600; padding: 0.2rem 0.6rem; border-radius: 4px; }
   .code-card.active .code-status { background: rgba(34,197,94,0.15); color: #22c55e; }
+  .code-card.upcoming .code-status { background: rgba(56,189,248,0.15); color: #38bdf8; }
   .code-card.expired .code-status { background: rgba(239,68,68,0.15); color: #ef4444; }
   .code-card.expired .code-text { color: #64748b; }
+  
+  .text-sm { font-size: 0.875rem; }
+  .text-gray-400 { color: #9ca3af; }
+  .mt-4 { margin-top: 1rem; }
+  .mb-8 { margin-bottom: 2rem; }
 
   .faq-list { max-width: 800px; }
   .faq-item { background: var(--color-glass-bg); border: 1px solid var(--color-glass-border); border-radius: 12px; margin-bottom: 1rem; overflow: hidden; }

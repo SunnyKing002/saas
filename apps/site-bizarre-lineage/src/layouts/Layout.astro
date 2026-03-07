@@ -34,6 +34,10 @@ const canonicalUrl = new URL(canonicalPath, Astro.site || siteConfig.domain);
     <link rel="canonical" href={canonicalUrl} />
     <meta name="robots" content="index, follow" />
 
+    <!-- Google AdSense -->
+    <meta name="google-adsense-account" content="ca-pub-5724967585602439" />
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5724967585602439" crossorigin="anonymous"></script>
+
     <!-- Open Graph -->
     <meta property="og:title" content={`${title} | ${siteConfig.title}`} />
     <meta property="og:description" content={description} />
