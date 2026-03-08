@@ -7,7 +7,7 @@ import sitemap from "@astrojs/sitemap";
 import tsconfigPaths from "vite-tsconfig-paths";
 
 // TODO: 将 site 改为你的实际域名（或通过环境变量注入）
-const SITE_DOMAIN = process.env.SITE_DOMAIN || "https://yourtool.example.com";
+const SITE_DOMAIN = process.env.SITE_DOMAIN || "https://facepaint.top";
 
 export default defineConfig({
     // 站点根 URL（生成 sitemap 和 canonical URL 必需）
