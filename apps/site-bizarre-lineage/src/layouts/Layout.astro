@@ -38,6 +38,16 @@ const canonicalUrl = new URL(canonicalPath, Astro.site || siteConfig.domain);
     <meta name="google-adsense-account" content="ca-pub-5724967585602439" />
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5724967585602439" crossorigin="anonymous"></script>
 
+    <!-- Google tag (gtag.js) -->
+    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-JGRS5V8H3V"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-JGRS5V8H3V');
+    </script>
+
     <!-- Open Graph -->
     <meta property="og:title" content={`${title} | ${siteConfig.title}`} />
     <meta property="og:description" content={description} />
