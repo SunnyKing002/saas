@@ -1,0 +1,169 @@
+---
+// src/components/Footer.astro
+const year = new Date().getFullYear();
+---
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <!-- Brand -->
+      <div class="footer-brand">
+        <a href="/" class="footer-logo">
+          <img src="/logo.png" alt="Face Paint Logo" width="32" height="32" class="footer-logo-img" />
+          <span>Face Paint <strong>Ideas</strong></span>
+        </a>
+        <p class="footer-tagline">
+          Creative face painting ideas and designs for kids, parties, and Halloween — powered by AI.
+        </p>
+      </div>
+
+      <!-- Links -->
+      <div class="footer-links-group">
+        <h3 class="footer-heading">Ideas</h3>
+        <ul class="footer-links">
+          <li><a href="/face-paint-ideas-for-kids">For Kids</a></li>
+          <li><a href="/easy-face-paint-ideas">Easy Ideas</a></li>
+          <li><a href="/halloween-face-paint-ideas">Halloween</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-links-group">
+        <h3 class="footer-heading">Tool</h3>
+        <ul class="footer-links">
+          <li><a href="/#generator">AI Generator</a></li>
+          <li><a href="/#showcase">Gallery</a></li>
+          <li><a href="/#pricing">Pricing</a></li>
+          <li><a href="/#faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-links-group">
+        <h3 class="footer-heading">Legal</h3>
+        <ul class="footer-links">
+          <li><a href="/privacy">Privacy Policy</a></li>
+          <li><a href="/terms">Terms of Service</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p class="footer-copyright">
+        &copy; {year} FacePaint.top — All rights reserved.
+      </p>
+      <p class="footer-note">
+        AI-powered face paint ideas for everyone
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--foreground);
+    color: #94a3b8;
+    padding: 4rem 0 2rem;
+    margin-top: 0;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+  }
+
+  .footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 1.25rem;
+    font-weight: 800;
+    font-family: 'Outfit', sans-serif;
+    color: white;
+    margin-bottom: 1rem;
+    text-decoration: none;
+    letter-spacing: -0.02em;
+  }
+
+  .footer-logo-img {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+  }
+
+  .footer-logo strong {
+    color: var(--primary-light);
+  }
+
+  .footer-tagline {
+    font-size: 0.875rem;
+    line-height: 1.7;
+    color: #64748b;
+    max-width: 280px;
+  }
+
+  .footer-heading {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #cbd5e1;
+    margin-bottom: 1rem;
+  }
+
+  .footer-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+  }
+
+  .footer-links a {
+    font-size: 0.875rem;
+    color: #64748b;
+    transition: color 0.15s ease;
+  }
+
+  .footer-links a:hover {
+    color: var(--primary-light);
+  }
+
+  .footer-bottom {
+    border-top: 1px solid #1e293b;
+    padding-top: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .footer-copyright,
+  .footer-note {
+    font-size: 0.8125rem;
+    color: #475569;
+  }
+
+  @media (max-width: 768px) {
+    .footer-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .footer-brand {
+      grid-column: 1 / -1;
+    }
+
+    .footer-bottom {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .footer-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

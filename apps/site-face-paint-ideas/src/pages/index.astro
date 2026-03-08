@@ -1,0 +1,834 @@
+---
+// src/pages/index.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import FacePaintGenerator from '../components/FacePaintGenerator';
+import { Palette, Sparkles, Wand2, PartyPopper, Smartphone, Gift, Image as ImageIcon, Zap, Library, Baby, Ghost, ChevronDown } from 'lucide-react';
+
+const showcaseItems = [
+  { src: '/showcase/face_paint_snake_boy.jpg', alt: 'Reptile snake face paint idea for a young boy with green scales and yellow eyes', label: 'Reptile Snake', prompt: 'Face paint of a green snake scales, reptile skin texture, yellow snake eyes on forehead, realistic style, on a boy\'s face' },
+  { src: '/showcase/face_paint_fox_boy.jpg',   alt: 'Playful fox easy face painting design on a boy with blue swirls and red cheeks',   label: 'Playful Fox',   prompt: 'Face paint of a cute fox, blue swirls on forehead, red cheeks, black nose tip, whiskers, on a boy\'s face' },
+  { src: '/showcase/face_paint_skeleton_boy.jpg', alt: 'Skeleton skull halloween face paint on a boy with white base and black eye sockets', label: 'Skeleton Skull', prompt: 'Face paint of a skeleton skull, white base, black eye sockets, halloween style, on a boy\'s face' },
+  { src: '/showcase/face_paint_dragon.jpg',    alt: 'Green dragon face paint ideas for kids featuring scales and horns',     label: 'Dragon',        prompt: 'Face paint of a green dragon, scales texture, horns on forehead, vibrant green colors, on a child\'s face' },
+  { src: '/showcase/face_paint_clown.jpg',     alt: 'Colorful clown face painting on a woman with diamond eye shapes and red nose', label: 'Clown',     prompt: 'Face paint of a colorful clown, diamond shapes around eyes, red nose, happy expression, on a woman\'s face' },
+  { src: '/showcase/face_paint_floral.jpg',    alt: 'Floral fairy face paint design for a child with delicate pink flowers and vines', label: 'Floral Fairy', prompt: 'Face paint of delicate pink flowers and vines, fairy style, glitter details, soft pastel colors, on a child\'s face' },
+  { src: '/showcase/face_paint_pirate_kid.jpg', alt: 'Pirate face paint for boys with black eye patch and cheek tattoo',   label: 'Pirate Boy',   prompt: 'Face paint of a pirate, black eye patch, painted beard, ship tattoo on cheek, on a child\'s face' },
+  { src: '/showcase/face_paint_pirate_woman.jpg', alt: 'Realistic pirate woman face painting idea with eye patch and battle scars', label: 'Pirate Woman',  prompt: 'Face paint of a pirate, eye patch, battle scars, rugged look, realistic texture, on a woman\'s face' },
+];
+
+const faqs = [
+  { q: 'How do I find easy face paint ideas here?', a: 'Simply select a category or describe what you want. Our AI generates visual <strong>face paint ideas</strong> you can use as a reference immediately.' },
+  { q: 'Are these face paint ideas safe for kids?', a: 'Yes! Our digital <strong>face paint ideas</strong> require no physical paint to preview. When you do paint, always use cosmetic-grade products suitable for sensitive skin.' },
+  { q: 'Can I use these face paint ideas for commercial events?', a: 'Absolutely. Our lifetime plan allows you to generate and download high-resolution <strong>face paint ideas</strong> for professional face painting businesses.' },
+  { q: 'Do you add new face paint ideas regularly?', a: 'Yes, our AI system is constantly learning, meaning fresh and trendy <strong>face paint ideas</strong> are available every single day.' },
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'Face Paint Ideas Generator',
+  description: 'AI-powered tool to generate and preview face paint ideas for kids, parties, and Halloween.',
+  applicationCategory: 'WebApplication',
+  operatingSystem: 'All',
+  url: 'https://facepaint.top',
+  image: 'https://facepaint.top/og.png',
+  offers: [
+    { '@type': 'Offer', price: '0', priceCurrency: 'USD', name: 'Free Plan', description: '5 free generations per day' },
+    { '@type': 'Offer', price: '4.99', priceCurrency: 'USD', name: 'Lifetime Plan', description: 'Unlimited generations, no watermark' },
+  ],
+  aggregateRating: { '@type': 'AggregateRating', ratingValue: '4.8', ratingCount: '1250' },
+};
+---
+
+<BaseLayout
+  title="Face Paint Ideas | Free AI Generator & Easy Designs | FacePaint.top"
+  description="Discover endless easy face paint ideas for kids, parties, and Halloween. Use our free AI generator to preview stunning face paint ideas instantly. Try it now!"
+  canonicalUrl="/"
+  jsonLd={jsonLd}
+>
+  <Navbar />
+
+  <!-- ====================== HERO ====================== -->
+  <section class="hero">
+    <div class="hero-bg-blobs" aria-hidden="true">
+      <div class="blob blob-1"></div>
+      <div class="blob blob-2"></div>
+      <div class="blob blob-3"></div>
+    </div>
+    <div class="container">
+      <div class="hero-content">
+        <a href="/#generator" class="hero-badge badge badge-primary">
+          <Sparkles size={14} className="badge-icon" /> Free AI Face Paint Ideas Generator
+        </a>
+        <h1 class="hero-title">
+          The Ultimate AI Generator for<br />
+          <span class="gradient-text">Face Paint Ideas</span>
+        </h1>
+        <p class="hero-subtitle">
+          Stop guessing and start creating. Explore endless easy <strong>face paint ideas</strong>, preview them on your own photo with our free AI tool, and find the perfect look for your next event.
+        </p>
+        <div class="hero-actions">
+          <a href="/#generator" class="btn btn-primary btn-lg">
+            <Sparkles size={18} /> Try Free — No Sign Up
+          </a>
+          <a href="/#showcase" class="btn btn-ghost btn-lg">
+            View Gallery →
+          </a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat">
+            <span class="stat-num">10K+</span>
+            <span class="stat-label">Designs Generated</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat">
+            <span class="stat-num">4.8★</span>
+            <span class="stat-label">User Rating</span>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat">
+            <span class="stat-num">Free</span>
+            <span class="stat-label">No Sign Up Needed</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================== SHOWCASE GALLERY ================== -->
+  <section id="showcase" class="section-showcase">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Community Showcase</h2>
+        <p class="section-subtitle">
+          Explore creative face painting designs made with our AI. Click any image to use its prompt!
+        </p>
+      </div>
+      <div class="showcase-grid" id="showcase-grid">
+        {showcaseItems.map(item => (
+          <button
+            class="showcase-item"
+            data-prompt={item.prompt}
+            aria-label={`Use prompt: ${item.label}`}
+          >
+            <img src={item.src} alt={item.alt} width="280" height="280" loading="lazy" class="showcase-img" />
+            <div class="showcase-overlay">
+              <span class="showcase-label">{item.label}</span>
+              <span class="showcase-try">Try this →</span>
+            </div>
+          </button>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== GENERATOR ==================== -->
+  <section id="generator" class="section-generator">
+    <div class="container">
+      <div class="section-header">
+        <div class="badge badge-primary" style="margin:0 auto 1rem;"><Sparkles size={14} className="badge-icon" /> AI Powered</div>
+        <h2 class="section-title">Generate Your Face Paint Design</h2>
+        <p class="section-subtitle">
+          Upload a photo or generate a design from scratch. 5 free designs per day — no account needed.
+        </p>
+      </div>
+      <div class="generator-wrapper">
+        <FacePaintGenerator client:load />
+      </div>
+    </div>
+  </section>
+
+  <!-- ================== SEO CONTENT ================== -->
+  <section class="section-seo">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Why You Need the Best Face Paint Ideas</h2>
+        <p class="section-subtitle">Finding the perfect inspiration is now easier than ever.</p>
+      </div>
+      <div class="seo-grid">
+        <div class="seo-card card glass-card">
+          <div class="seo-card-icon"><Palette size={32} /></div>
+          <h3>Endless Face Paint Ideas</h3>
+          <p>
+            Whether you are a parent preparing for a birthday party or an adult getting ready for Halloween, having access to impressive <strong>face paint ideas</strong> is essential. Our platform provides thousands of <strong>face paint ideas</strong> that you can customize.
+          </p>
+        </div>
+        <div class="seo-card card glass-card">
+          <div class="seo-card-icon"><PartyPopper size={32} /></div>
+          <h3>Test Face Paint Ideas Digitally</h3>
+          <p>
+            Unlike static image galleries, our application allows you to try on different <strong>face paint ideas</strong> digitally. You can upload a photo and watch as the AI applies breathtaking <strong>face paint ideas</strong> directly to your own face.
+          </p>
+        </div>
+        <div class="seo-card card glass-card">
+          <div class="seo-card-icon"><Smartphone size={32} /></div>
+          <h3>How to Generate Face Paint Ideas</h3>
+          <p>
+            Using our tool is incredibly simple. <strong>1.</strong> Upload your photo. <strong>2.</strong> Browse through our text prompts to select the <strong>face paint ideas</strong> you want to try. <strong>3.</strong> Generate and download your new <strong>face paint ideas</strong> instantly.
+          </p>
+        </div>
+        <div class="seo-card card glass-card">
+          <div class="seo-card-icon"><Gift size={32} /></div>
+          <h3>Free To Try Face Paint Ideas</h3>
+          <p>
+            We believe exploring <strong>face paint ideas</strong> should be free. You get five free generations daily to explore different <strong>face paint ideas</strong> without wasting real makeup. Test your favorite <strong>face paint ideas</strong> completely risk-free!
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== FEATURES =================== -->
+  <section class="section-features">
+    <div class="container">
+      <div class="section-header" style="margin-bottom: 2rem;">
+        <h2 class="section-title">The Core Advantages of Our Face Paint Ideas Generator</h2>
+      </div>
+      <div class="features-grid">
+        <div class="feature-item">
+          <div class="feature-icon feature-icon-blue"><ImageIcon size={32} color="#00e5ff" /></div>
+          <h3>Realistic Face Paint Ideas</h3>
+          <p>Our AI ensures that all generated <strong>face paint ideas</strong> contour naturally to your specific facial geometry. It looks just like real hand-painting by a professional artist.</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon feature-icon-purple"><Zap size={32} color="#ff007f" /></div>
+          <h3>Instant Face Paint Ideas</h3>
+          <p>Try dozens of <strong>face paint ideas</strong> in seconds. No professional skills required — just describe the <strong>face paint ideas</strong> you want and watch them appear.</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon feature-icon-green"><Library size={32} color="#7000ff" /></div>
+          <h3>Massive Library of Face Paint Ideas</h3>
+          <p>With over 10,000 <strong>face paint ideas</strong> in our database, including tigers, superheroes, butterflies, and Halloween styles, you will never run out of fresh inspiration.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== INNER PAGES CTA =================== -->
+  <section class="section-inner-pages">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Explore More Face Paint Ideas</h2>
+        <p class="section-subtitle">Browse our curated collections by category</p>
+      </div>
+      <div class="inner-pages-grid">
+        <a href="/face-paint-ideas-for-kids" class="inner-page-card card group">
+          <div class="inner-page-icon-wrapper bg-pink-50 text-pink-500"><Baby size={40} /></div>
+          <h3>Face Paint Ideas for Kids</h3>
+          <p>Safe, fun, and adorable face painting designs perfect for children's birthday parties and school events.</p>
+          <span class="inner-page-link">Browse Kids Ideas →</span>
+        </a>
+        <a href="/easy-face-paint-ideas" class="inner-page-card card group">
+          <div class="inner-page-icon-wrapper bg-cyan-50 text-cyan-500"><Wand2 size={40} /></div>
+          <h3>Easy Face Paint Ideas</h3>
+          <p>Simple beginner-friendly designs that are quick to recreate with basic face paints. Ideal for parents with no prior <strong>face painting</strong> artistic skill required!</p>
+          <span class="inner-page-link">Browse Easy Ideas →</span>
+        </a>
+        <a href="/halloween-face-paint-ideas" class="inner-page-card card group">
+          <div class="inner-page-icon-wrapper bg-purple-50 text-purple-500"><Ghost size={40} /></div>
+          <h3>Halloween Face Paint Ideas</h3>
+          <p>Spooky, scary, and creative <strong>Halloween face paint looks</strong> — from classic skeletons to spooky witches to playful vampires.</p>
+          <span class="inner-page-link">Browse Halloween Ideas →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- =================== PRICING =================== -->
+  <section id="pricing" class="section-pricing">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Simple, Honest Pricing</h2>
+        <p class="section-subtitle">Start free, upgrade when you're ready</p>
+      </div>
+      <div class="pricing-grid">
+        <!-- Free plan -->
+        <div class="pricing-card card">
+          <div class="pricing-plan-name">Free</div>
+          <div class="pricing-price">
+            <span class="price-amount">$0</span>
+            <span class="price-period">/forever</span>
+          </div>
+          <p class="pricing-desc">Perfect for exploring face paint ideas</p>
+          <ul class="pricing-features">
+            <li class="feat-yes">✓ 5 free generations per day</li>
+            <li class="feat-yes">✓ All styles available</li>
+            <li class="feat-yes">✓ Download designs</li>
+            <li class="feat-yes">✓ No sign-up required</li>
+            <li class="feat-no">✗ Watermark on images</li>
+            <li class="feat-no">✗ Unlimited generations</li>
+          </ul>
+          <a href="/#generator" class="btn btn-outline pricing-btn">Start Free</a>
+        </div>
+
+        <!-- Lifetime plan -->
+        <div class="pricing-card card pricing-card-popular">
+          <div class="popular-badge">🔥 Most Popular</div>
+          <div class="pricing-plan-name">Lifetime</div>
+          <div class="pricing-price">
+            <span class="price-amount">$4.99</span>
+            <span class="price-period">one-time</span>
+          </div>
+          <p class="pricing-desc">Pay once, create face paint ideas forever</p>
+          <ul class="pricing-features">
+            <li class="feat-yes">✓ Unlimited generations</li>
+            <li class="feat-yes">✓ No watermark</li>
+            <li class="feat-yes">✓ 2K high-resolution download</li>
+            <li class="feat-yes">✓ Commercial license</li>
+            <li class="feat-yes">✓ Priority support</li>
+            <li class="feat-yes">✓ Early access to new styles</li>
+          </ul>
+          <a href="/#generator" class="btn btn-primary pricing-btn">Get Lifetime Access</a>
+          <p class="pricing-guarantee">30-day money back guarantee</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== FAQ ====================== -->
+  <section id="faq" class="section-faq">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="section-subtitle">Common questions about face paint ideas and our tool</p>
+      </div>
+      <div class="faq-list">
+        {faqs.map((faq, i) => (
+          <details class="faq-item card" id={`faq-${i + 1}`}>
+            <summary class="faq-question">
+              <h3>{faq.q}</h3>
+              <ChevronDown className="faq-chevron" size={20} aria-hidden="true" />
+            </summary>
+            <div class="faq-answer">
+              <p set:html={faq.a}></p>
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== CTA ====================== -->
+  <section class="section-cta">
+    <div class="cta-bg" aria-hidden="true">
+      <div class="cta-blob cta-blob-1"></div>
+      <div class="cta-blob cta-blob-2"></div>
+    </div>
+    <div class="container">
+      <div class="cta-content">
+        <h2 class="cta-title">Ready to Bring Your Face Paint Ideas to Life?</h2>
+        <p class="cta-text">
+          Do not settle for boring designs. Join thousands of users who trust our generator to visualize their <strong>face paint ideas</strong> perfectly. Test your favorite <strong>face paint ideas</strong> today and unleash your inner artist for free!
+        </p>
+        <div class="cta-actions">
+          <a href="/#generator" class="btn btn-primary btn-lg">
+            <Sparkles size={18} /> Generate Face Paint Ideas Free
+          </a>
+          <a href="/face-paint-ideas-for-kids" class="btn btn-ghost btn-lg">
+            Browse Kids Ideas →
+          </a>
+        </div>
+        <p class="cta-footnote">5 free designs per day • No credit card • No account required</p>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</BaseLayout>
+
+<!-- Showcase click-to-fill behavior -->
+<script>
+  document.getElementById('showcase-grid')?.addEventListener('click', (e) => {
+    const btn = (e.target as HTMLElement).closest('[data-prompt]') as HTMLButtonElement | null;
+    if (!btn) return;
+    const prompt = btn.dataset.prompt;
+    if (!prompt) return;
+
+    // Scroll to generator
+    const genSection = document.getElementById('generator');
+    genSection?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    // Fill the textarea after scroll
+    setTimeout(() => {
+      const textarea = document.querySelector('.prompt-input') as HTMLTextAreaElement | null;
+      if (textarea) {
+        textarea.value = prompt;
+        textarea.dispatchEvent(new Event('input', { bubbles: true }));
+        textarea.focus();
+      }
+    }, 700);
+  });
+</script>
+
+<style>
+  /* ---- Hero ---- */
+  .hero {
+    position: relative;
+    padding: 6rem 0 4rem;
+    overflow: hidden;
+    background: linear-gradient(180deg, var(--primary-bg) 0%, white 100%);
+  }
+
+  .hero-bg-blobs { position: absolute; inset: 0; pointer-events: none; }
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: 0.25;
+  }
+  .blob-1 { width: 500px; height: 500px; background: #ec4899; top: -100px; left: -100px; }
+  .blob-2 { width: 400px; height: 400px; background: #8b5cf6; bottom: -50px; right: -80px; }
+  .blob-3 { width: 300px; height: 300px; background: #f59e0b; top: 40%; left: 60%; }
+
+  .hero-content {
+    max-width: 860px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .hero-title {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    color: var(--foreground);
+    text-wrap: balance;
+  }
+
+  .gradient-text {
+    background: linear-gradient(135deg, #ec4899, #8b5cf6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .hero-subtitle {
+    font-size: 1.125rem;
+    color: var(--muted-foreground);
+    max-width: 640px;
+    line-height: 1.7;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .btn-lg { padding: 0.875rem 2rem; font-size: 1.0625rem; }
+
+  .hero-stats {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.25rem 2.5rem;
+    background: rgba(255,255,255,0.6);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.8);
+    border-radius: 9999px;
+    box-shadow: 0 4px 24px -6px rgba(0,0,0,0.05);
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 1rem;
+  }
+
+  .stat { text-align: center; }
+  .stat-num { display: block; font-size: 1.125rem; font-weight: 800; color: var(--primary); line-height: 1.2; }
+  .stat-label { font-size: 0.6875rem; color: var(--muted-foreground); font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; }
+  .stat-divider { width: 1px; height: 30px; background: var(--border); }
+
+  /* ---- Section shared ---- */
+  .section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  /* ---- Showcase ---- */
+  .section-showcase {
+    padding: 5rem 0;
+    background: var(--muted);
+  }
+
+  .showcase-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+
+  .showcase-item {
+    position: relative;
+    aspect-ratio: 1;
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: pointer;
+    border: none;
+    padding: 0;
+    background: var(--muted);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .showcase-item:hover {
+    transform: scale(1.03);
+    box-shadow: var(--shadow-xl);
+    z-index: 2;
+  }
+
+  .showcase-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+
+  .showcase-item:hover .showcase-img { transform: scale(1.08); }
+
+  .showcase-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 1rem;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+
+  .showcase-item:hover .showcase-overlay { opacity: 1; }
+
+  .showcase-label { color: white; font-size: 0.875rem; font-weight: 700; line-height: 1.2; }
+  .showcase-try { color: rgba(255,255,255,0.8); font-size: 0.75rem; margin-top: 0.25rem; }
+
+  /* ---- Generator ---- */
+  .section-generator {
+    padding: 5rem 0;
+    background: white;
+  }
+
+  .generator-wrapper {
+    display: flex;
+    justify-content: center;
+  }
+
+  /* ---- SEO ---- */
+  .section-seo {
+    padding: 5rem 0;
+    background: var(--muted);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .seo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+
+  .seo-card {
+    padding: 2.5rem;
+  }
+  
+  .glass-card {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.03);
+  }
+
+  .seo-card-icon {
+    font-size: 2rem; 
+    margin-bottom: 1.25rem; 
+    color: var(--primary);
+    background: var(--primary-bg);
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 16px;
+  }
+  .seo-card h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: 0.75rem; color: var(--foreground); }
+  .seo-card p { color: var(--muted-foreground); line-height: 1.7; font-size: 0.9375rem; }
+  .seo-card strong { color: var(--foreground); font-weight: 600; }
+
+  /* ---- Features ---- */
+  .section-features {
+    padding: 5rem 0;
+    background: white;
+  }
+
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+    text-align: center;
+  }
+
+  .feature-item { display: flex; flex-direction: column; align-items: center; gap: 1rem; }
+
+  .feature-icon {
+    width: 72px; height: 72px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+  }
+
+  .feature-icon-blue { background: #eff6ff; }
+  .feature-icon-purple { background: #f5f3ff; }
+  .feature-icon-green { background: #f0fdf4; }
+
+  .feature-item h3 { font-size: 1.125rem; font-weight: 700; color: var(--foreground); }
+  .feature-item p { color: var(--muted-foreground); line-height: 1.7; font-size: 0.9375rem; max-width: 280px; }
+
+  /* ---- Inner pages ---- */
+  .section-inner-pages {
+    padding: 5rem 0;
+    background: var(--muted);
+    border-top: 1px solid var(--border);
+  }
+
+  .inner-pages-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .inner-page-card {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .inner-page-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-xl);
+  }
+
+  .inner-page-icon-wrapper {
+    margin-bottom: 1rem;
+    transition: transform 0.3s ease;
+  }
+  
+  .bg-pink-50 { color: #ec4899; }
+  .bg-cyan-50 { color: #06b6d4; }
+  .bg-purple-50 { color: #8b5cf6; }
+  
+  .inner-page-card:hover .inner-page-icon-wrapper {
+    transform: scale(1.1) rotate(5deg);
+  }
+
+  .inner-page-card h3 { font-size: 1.25rem; font-weight: 800; color: var(--foreground); }
+  .inner-page-card p { font-size: 0.875rem; color: var(--muted-foreground); line-height: 1.6; flex: 1; }
+  .inner-page-link { font-size: 0.875rem; font-weight: 600; color: var(--primary); }
+
+  /* ---- Pricing ---- */
+  .section-pricing {
+    padding: 5rem 0;
+    background: white;
+  }
+
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    max-width: 760px;
+    margin: 0 auto;
+  }
+
+  .pricing-card {
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    position: relative;
+  }
+
+  .pricing-card-popular {
+    border: 2px solid var(--primary);
+    box-shadow: 0 8px 30px rgba(236,72,153,0.15);
+  }
+
+  .popular-badge {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--foreground);
+    color: white;
+    padding: 0.3rem 1.25rem;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    white-space: nowrap;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .pricing-plan-name { font-size: 0.875rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--primary); }
+
+  .pricing-price { display: flex; align-items: baseline; gap: 0.25rem; }
+  .price-amount { font-size: 2.5rem; font-weight: 900; color: var(--foreground); line-height: 1; }
+  .price-period { font-size: 0.875rem; color: var(--muted-foreground); }
+
+  .pricing-desc { color: var(--muted-foreground); font-size: 0.875rem; }
+
+  .pricing-features { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; flex: 1; }
+  .pricing-features li { font-size: 0.875rem; }
+  .feat-yes { color: var(--foreground); }
+  .feat-no { color: var(--muted-foreground); opacity: 0.6; }
+
+  .pricing-btn { text-align: center; }
+  .pricing-guarantee { font-size: 0.75rem; color: var(--muted-foreground); text-align: center; }
+
+  /* ---- FAQ ---- */
+  .section-faq {
+    padding: 5rem 0;
+    background: var(--muted);
+    border-top: 1px solid var(--border);
+  }
+
+  .faq-list {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .faq-item {
+    padding: 0;
+    overflow: hidden;
+  }
+
+  .faq-question {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    transition: background 0.15s ease;
+  }
+
+  .faq-question:hover { background: var(--primary-bg); }
+  .faq-question::-webkit-details-marker { display: none; }
+
+  details[open] .faq-question { color: var(--primary); }
+  details[open] .faq-chevron { transform: rotate(180deg); }
+
+  .faq-chevron {
+    transition: transform 0.2s ease;
+    color: var(--muted-foreground);
+    flex-shrink: 0;
+    font-size: 1.125rem;
+  }
+
+  .faq-answer {
+    padding: 0 1.5rem 1.25rem;
+    color: var(--muted-foreground);
+    font-size: 0.9rem;
+    line-height: 1.75;
+    border-top: 1px solid var(--border);
+  }
+
+  /* ---- CTA ---- */
+  .section-cta {
+    padding: 6rem 0;
+    background: linear-gradient(135deg, #1e0a20 0%, #0f0b2e 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-bg { position: absolute; inset: 0; pointer-events: none; }
+  .cta-blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.2; }
+  .cta-blob-1 { width: 500px; height: 500px; background: #ec4899; top: -100px; left: -100px; }
+  .cta-blob-2 { width: 400px; height: 400px; background: #8b5cf6; bottom: -100px; right: -100px; }
+
+  .cta-content {
+    max-width: 680px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .cta-title {
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    font-weight: 900;
+    color: white;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+  }
+
+  .cta-text {
+    color: rgba(255,255,255,0.7);
+    font-size: 1.0625rem;
+    line-height: 1.7;
+  }
+
+  .cta-actions {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .cta-actions .btn-ghost {
+    color: white;
+    border-color: rgba(255,255,255,0.3);
+  }
+
+  .cta-actions .btn-ghost:hover { background: rgba(255,255,255,0.1); }
+
+  .cta-footnote {
+    font-size: 0.8125rem;
+    color: rgba(255,255,255,0.4);
+  }
+
+  /* ---- Responsive ---- */
+  @media (max-width: 1024px) {
+    .showcase-grid { grid-template-columns: repeat(4, 1fr); }
+  }
+
+  @media (max-width: 768px) {
+    .showcase-grid { grid-template-columns: repeat(2, 1fr); }
+    .seo-grid { grid-template-columns: 1fr; }
+    .features-grid { grid-template-columns: 1fr; text-align: left; }
+    .feature-item { align-items: flex-start; flex-direction: row; }
+    .feature-icon { flex-shrink: 0; width: 56px; height: 56px; }
+    .inner-pages-grid { grid-template-columns: 1fr; }
+    .pricing-grid { grid-template-columns: 1fr; max-width: 420px; }
+  }
+
+  @media (max-width: 480px) {
+    .hero { padding: 4rem 0 3rem; }
+    .showcase-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+    .hero-stats { gap: 1rem; padding: 0.875rem 1.25rem; }
+  }
+</style>

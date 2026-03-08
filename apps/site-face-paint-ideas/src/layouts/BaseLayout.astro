@@ -1,0 +1,282 @@
+---
+// src/layouts/BaseLayout.astro
+export interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  canonicalUrl?: string;
+  keywords?: string;
+  jsonLd?: object;
+}
+
+const {
+  title = "Face Paint Ideas for Kids & Beginners – Easy Designs to Try Online",
+  description = "Explore easy face paint ideas for kids and beginners. Preview cute face painting designs on photos and find simple styles for parties, Halloween, and fun events.",
+  ogImage = "/og.png",
+  canonicalUrl,
+  keywords = "face paint ideas, easy face painting, face paint for kids, halloween face paint, kids face paint designs",
+  jsonLd,
+} = Astro.props;
+
+const siteUrl = "https://facepaint.top";
+const canonical = canonicalUrl ? `${siteUrl}${canonicalUrl}` : siteUrl;
+const fullOgImage = `${siteUrl}${ogImage}`;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="index, follow" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="keywords" content={keywords} />
+    <link rel="canonical" href={canonical} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={fullOgImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="Face Paint Ideas" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={fullOgImage} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/logo.png" />
+    <link rel="apple-touch-icon" href="/logo.png" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Structured Data -->
+    {jsonLd && (
+      <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    )}
+
+    <style is:global>
+      :root {
+        /* Vibrant Neon Palette */
+        --primary: #ff007f;       /* Neon Pink */
+        --primary-light: #ff66b2;
+        --primary-dark: #cc0066;
+        --primary-bg: #fff0f5;
+        --secondary: #7000ff;     /* Vibrant Purple */
+        --accent: #00e5ff;        /* Bright Cyan */
+        
+        --background: #ffffff;
+        --foreground: #09090b;
+        --muted: #f4f4f5;
+        --muted-foreground: #71717a;
+        --border: #e4e4e7;
+        --card: #ffffff;
+        
+        --radius: 16px;           /* Softer, more modern corners */
+        
+        /* Glassmorphic Shadows */
+        --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        --shadow: 0 4px 14px 0 rgb(0 0 0 / 0.05);
+        --shadow-lg: 0 10px 30px -5px rgb(0 0 0 / 0.08);
+        --shadow-xl: 0 24px 50px -12px rgb(0 0 0 / 0.12);
+        
+        /* Gradients */
+        --gradient-primary: linear-gradient(135deg, var(--primary), var(--secondary));
+        --gradient-text: linear-gradient(135deg, var(--primary), var(--secondary));
+      }
+
+      *, *::before, *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        background: var(--background);
+        color: var(--foreground);
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      h1, h2, h3, h4, h5, h6 {
+        font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .container {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.75rem 1.75rem;
+        border-radius: calc(var(--radius) - 2px);
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        border: 2px solid transparent;
+        transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+        text-decoration: none;
+        white-space: nowrap;
+        font-family: 'Outfit', sans-serif;
+      }
+
+      .btn-primary {
+        background: var(--gradient-primary);
+        color: white;
+        border-color: transparent;
+        box-shadow: 0 4px 15px rgba(255, 0, 127, 0.35);
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(255, 0, 127, 0.45);
+      }
+
+      .btn-outline {
+        background: transparent;
+        color: var(--primary);
+        border-color: var(--primary);
+      }
+
+      .btn-outline:hover {
+        background: var(--primary-bg);
+      }
+
+      .btn-ghost {
+        background: transparent;
+        color: var(--foreground);
+        border-color: var(--border);
+      }
+
+      .btn-ghost:hover {
+        background: var(--muted);
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.25rem 0.75rem;
+        border-radius: 9999px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+      }
+
+      .badge-primary {
+        background: var(--primary-bg);
+        color: var(--primary-dark);
+      }
+
+      /* Animations */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-8px); }
+      }
+
+      @keyframes shimmer {
+        0% { background-position: -200% center; }
+        100% { background-position: 200% center; }
+      }
+
+      .animate-fade-in-up {
+        animation: fadeInUp 0.6s ease forwards;
+      }
+
+      /* Section headings */
+      .section-title {
+        font-size: clamp(2rem, 5vw, 3rem);
+        font-weight: 800;
+        line-height: 1.15;
+        letter-spacing: -0.02em;
+        color: var(--foreground);
+      }
+
+      .section-subtitle {
+        font-size: 1.125rem;
+        color: var(--muted-foreground);
+        max-width: 600px;
+        margin: 0 auto;
+        line-height: 1.7;
+        font-weight: 400;
+      }
+
+      /* Card */
+      .card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        transition: box-shadow 0.2s ease, transform 0.2s ease;
+      }
+
+      .card:hover {
+        box-shadow: var(--shadow-lg);
+      }
+
+      /* Responsive Mobile Tweaks for SEO & UX */
+      @media (max-width: 640px) {
+        .container {
+          padding: 0 1rem;
+        }
+        .section-title {
+          font-size: clamp(1.75rem, 8vw, 2.25rem);
+        }
+        .btn {
+          width: 100%;
+          min-height: 48px; /* Google recommended touch target size */
+          padding: 0.875rem 1.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

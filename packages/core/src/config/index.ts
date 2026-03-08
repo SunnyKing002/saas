@@ -48,6 +48,14 @@ export const SITE_REGISTRY: SiteConfig[] = [
             github: "https://github.com/yourtool",
         },
     },
+    {
+        key: "face-paint-ideas",
+        domain: "facepaint.top",
+        title: "Face Paint Ideas",
+        description: "Creative face painting ideas and tutorials for kids and parties.",
+        primaryColor: "#ec4899",
+        locale: "en",
+    },
     // TODO: 在此添加新站点配置，例如：
     // {
     //   key: "mytool2",

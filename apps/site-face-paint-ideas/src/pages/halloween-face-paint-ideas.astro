@@ -1,0 +1,313 @@
+---
+// src/pages/halloween-face-paint-ideas.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import { Sparkles, Palette, Baby, Ghost, Flower, Wand2, Star, Hexagon, Skull, Flame } from 'lucide-react';
+
+const halloweenIdeas = [
+  { icon: 'Skull', color: '#64748b', title: 'Classic Skeleton', desc: 'White base, black eye sockets, cracked jawline. The ultimate Halloween look.' },
+  { icon: 'Ghost', color: '#dc2626', title: 'Vampire', desc: 'Pale face, blood drips from the mouth, dark under-eyes. Classic and creepy.' },
+  { icon: 'Wand2', color: '#16a34a', title: 'Witch', desc: 'Green skin, warts, dark eyes. Easy with sponge and a thin brush.' },
+  { icon: 'Flame', color: '#ea580c', title: 'Jack-o-Lantern', desc: 'Orange base, triangle eyes and a toothy grin. Carved pumpkin on your face!' },
+  { icon: 'Hexagon', color: '#4f46e5', title: 'Spider Web', desc: 'White webs on a black or dark blue base. A spider in the corner for effect.' },
+  { icon: 'Skull', color: '#65a30d', title: 'Zombie', desc: 'Gray skin, tattered wounds, dark circles. Great for older kids and adults.' },
+  { icon: 'Flame', color: '#b91c1c', title: 'Devil', desc: 'Red base, black horns outline, and dark eyebrows. Bold and striking.' },
+  { icon: 'Flame', color: '#15803d', title: 'Scary Dragon', desc: 'Green scales, red eyes, sharp teeth. Goes well with a costume.' },
+  { icon: 'Flower', color: '#db2777', title: 'Día de los Muertos', desc: 'White base with delicate floral patterns in bold colors. Stunning!' },
+];
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Halloween Face Paint Ideas — 20+ Scary & Spooky Designs for 2025',
+  description: 'Discover the best Halloween face paint ideas including skeletons, vampires, witches, and zombies. Easy to recreate at home — perfect for kids and adults!',
+  url: 'https://facepaint.top/halloween-face-paint-ideas',
+  image: 'https://facepaint.top/og.png',
+  author: {
+    '@type': 'Organization',
+    name: 'Face Paint Ideas'
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'Face Paint Ideas',
+    logo: {
+      '@type': 'ImageObject',
+      url: 'https://facepaint.top/logo.png'
+    }
+  },
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': 'https://facepaint.top/halloween-face-paint-ideas'
+  }
+};
+---
+
+<BaseLayout
+  title="Halloween Face Paint Ideas — 20+ Scary & Spooky Designs for 2025"
+  description="Discover the best Halloween face paint ideas including skeletons, vampires, witches, and zombies. Easy to recreate at home — perfect for kids and adults!"
+  canonicalUrl="/halloween-face-paint-ideas"
+  keywords="halloween face paint ideas, halloween face painting, scary face paint, skull face paint, vampire face paint"
+  jsonLd={jsonLd}
+>
+  <Navbar />
+
+  <section class="page-hero">
+    <div class="container">
+      <div class="breadcrumb"><a href="/">Home</a> → <span>Halloween Face Paint Ideas</span></div>
+      <div class="page-hero-content">
+        <div class="page-badge badge badge-primary"><Ghost size={16} style={{marginRight: '0.5rem'}}/> Halloween Special</div>
+        <h1 class="page-title"><strong>Halloween Face Paint Ideas</strong></h1>
+        <p class="page-subtitle">
+          Spooky, scary, and spectacular <strong>Halloween face painting designs</strong> for kids and adults. From classic skeletons to witches and vampires — find your perfect Halloween look!
+        </p>
+        <div class="page-actions">
+          <a href="/#generator" class="btn btn-primary btn-lg"><Sparkles size={18}/> Generate Halloween Design Free</a>
+          <a href="/#showcase" class="btn btn-outline btn-lg">View Gallery</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-content">
+    <div class="container content-container">
+      <div class="content-block">
+        <h2>Best Halloween Face Paint Ideas for 2025</h2>
+        <p>
+          <strong>Halloween face paint</strong> is one of the most fun and creative traditions of the season. Whether you're heading to a Halloween party, trick-or-treating with kids, or going all-out for a costume contest, the right <strong>scary face paint</strong> can complete your look without the need for an uncomfortable mask.
+        </p>
+        <p>
+          The best Halloween designs range from an <strong>easy skeleton face paint</strong> (achievable by beginners in under 15 minutes) to elaborate Día de los Muertos artwork. Use our AI generator above to preview any <strong>Halloween makeup</strong> outline on a real photo before you commit!
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-ideas">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">20+ Spooky Halloween Face Paint Ideas</h2>
+        <p class="section-subtitle">For kids, teens, and adults — sorted from easy to elaborate</p>
+      </div>
+      <div class="ideas-grid">
+        {halloweenIdeas.map(idea => (
+          <div class="idea-card card">
+            <div class="idea-icon" style={`background: ${idea.color}20; color: ${idea.color}`}>
+              {idea.icon === 'Skull' && <Skull size={28} />}
+              {idea.icon === 'Ghost' && <Ghost size={28} />}
+              {idea.icon === 'Wand2' && <Wand2 size={28} />}
+              {idea.icon === 'Flame' && <Flame size={28} />}
+              {idea.icon === 'Hexagon' && <Hexagon size={28} />}
+              {idea.icon === 'Flower' && <Flower size={28} />}
+            </div>
+            <div class="idea-content">
+              <h3>{idea.title}</h3>
+              <p>{idea.desc}</p>
+            </div>
+          </div>
+        ))}
+        <a href="/#generator" class="idea-card idea-card-cta">
+          <div class="idea-icon" style="background: rgba(239, 68, 68, 0.15); color: #ef4444;"><Sparkles size={28} /></div>
+          <div class="idea-content">
+            <h3>Generate Your Halloween Look</h3>
+            <p>Preview any Halloween design on your photo with AI — instantly!</p>
+            <span class="cta-link">Try for free →</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-gallery">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Halloween Face Paint Gallery</h2>
+        <p class="section-subtitle">AI-generated Halloween face paint designs for inspiration</p>
+      </div>
+      <div class="gallery-grid">
+        <div class="gallery-item">
+          <img src="/showcase/face_paint_skeleton_boy.jpg" alt="Scary skeleton skull Halloween face paint idea for trick or treat" width="280" height="280" loading="lazy" />
+          <p>Skeleton — Easy</p>
+        </div>
+        <div class="gallery-item">
+          <img src="/showcase/face_paint_dragon.jpg" alt="Green dragon Halloween face painting design for kids" width="280" height="280" loading="lazy" />
+          <p>Dragon — Medium</p>
+        </div>
+        <div class="gallery-item">
+          <img src="/showcase/face_paint_pirate_woman.jpg" alt="Realistic pirate woman Halloween face paint and makeup" width="280" height="280" loading="lazy" />
+          <p>Pirate — Medium</p>
+        </div>
+        <div class="gallery-item">
+          <img src="/showcase/face_paint_clown.jpg" alt="Creepy or colorful clown face paint for Halloween parties" width="280" height="280" loading="lazy" />
+          <p>Clown — Easy</p>
+        </div>
+      </div>
+      <div class="gallery-cta">
+        <a href="/#generator" class="btn btn-primary">Generate Your Halloween Design Free →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-content-dark">
+    <div class="container content-container">
+      <div class="content-block">
+        <h2>Halloween Face Paint Tips & Tricks</h2>
+        <ul class="tips-list">
+          <li><Palette size={16} color="var(--primary)"/> <strong>Use black as your foundation color</strong> for dramatic Halloween looks — it makes all other colors pop</li>
+          <li><Wand2 size={16} color="var(--primary)"/> <strong>Fake blood effects</strong> are easy with dark red and a sponge — dab, don't stroke</li>
+          <li><Skull size={16} color="var(--primary)"/> <strong>Skeleton face paint</strong>: start with a solid white base, then use black to shade the hollow areas</li>
+          <li><Sparkles size={16} color="var(--primary)"/> <strong>Glitter adds drama</strong> — use cosmetic glitter around eyes and brow bones</li>
+          <li><Star size={16} color="var(--primary)"/> <strong>Preview first</strong> — use our AI generator to see how your design will look before applying</li>
+          <li><Ghost size={16} color="var(--primary)"/> <strong>Use latex or prosthetics</strong> for added 3D horror effects beyond just face paint</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-related">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">More Face Paint Ideas</h2>
+      </div>
+      <div class="discover-grid">
+        <a href="/face-paint-ideas-for-kids" class="discover-card card group">
+          <div class="inner-page-icon-wrapper bg-pink-50 text-pink-500"><Baby size={40} /></div>
+          <h3>Kids Face Paint Ideas</h3>
+          <p>Safe, fun designs for children</p>
+          <span class="discover-link">Explore Kids Ideas →</span>
+        </a>
+        <a href="/easy-face-paint-ideas" class="discover-card card group">
+          <div class="inner-page-icon-wrapper bg-cyan-50 text-cyan-500"><Wand2 size={40} /></div>
+          <h3>Easy Face Paint Ideas</h3>
+          <p>Simple beginner-friendly designs</p>
+          <span class="discover-link">Explore Easy Ideas →</span>
+        </a>
+        <a href="/#generator" class="discover-card card group">
+          <div class="inner-page-icon-wrapper bg-purple-50 text-purple-500"><Sparkles size={40} /></div>
+          <h3>AI Face Paint Generator</h3>
+          <p>Preview any design on your photo</p>
+          <span class="discover-link">Try Free Now →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    padding: 4rem 0 3rem;
+    background: linear-gradient(180deg, #1a0a0a 0%, #2d1515 40%, white 100%);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .breadcrumb { font-size: 0.8125rem; color: #aaa; margin-bottom: 1.5rem; }
+  .breadcrumb a { color: var(--primary); }
+  .breadcrumb a:hover { text-decoration: underline; }
+
+  .page-hero-content { max-width: 740px; display: flex; flex-direction: column; gap: 1.25rem; }
+  .page-badge { width: fit-content; }
+
+  .page-title {
+    font-size: clamp(2rem, 5vw, 3.25rem);
+    font-weight: 900; line-height: 1.15;
+    letter-spacing: -0.02em; color: white;
+  }
+
+  .page-subtitle { font-size: 1.0625rem; color: rgba(255,255,255,0.75); line-height: 1.7; max-width: 640px; }
+  .page-subtitle strong { color: white; }
+  .page-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .page-actions .btn-outline { color: white; border-color: rgba(255,255,255,0.4); }
+  .page-actions .btn-outline:hover { background: rgba(255,255,255,0.1); }
+  .btn-lg { padding: 0.875rem 2rem; font-size: 1.0625rem; }
+
+  .section-content { padding: 4rem 0; background: white; }
+  .content-container { max-width: 800px; display: flex; flex-direction: column; gap: 2.5rem; }
+  .content-block h2 { font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; }
+  .content-block p { color: var(--muted-foreground); line-height: 1.8; margin-bottom: 0.75rem; }
+  .content-block p strong { color: var(--foreground); }
+
+  .section-ideas { padding: 5rem 0; background: #0d0d0d; }
+  .section-ideas .section-header .section-title { color: white; }
+  .section-ideas .section-header .section-subtitle { color: #888; }
+
+  .section-header { text-align: center; margin-bottom: 3rem; }
+
+  .ideas-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+  .idea-card { padding: 1.5rem; display: flex; gap: 1rem; align-items: flex-start; background: #1a1a1a; border: 1px solid #333; transition: transform 0.2s ease, box-shadow 0.2s ease; border-radius: 16px;}
+  .idea-card:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+  .idea-card h3 { color: white; font-size: 1.125rem; font-weight: 700; margin-bottom: 0.375rem; }
+  .idea-card p { font-size: 0.875rem; color: #999; line-height: 1.6; }
+
+  .idea-card-cta {
+    text-decoration: none; color: inherit;
+    background: linear-gradient(135deg, #1a0a0a, #2d1515);
+    border: 2px dashed #ef4444;
+    cursor: pointer; transition: all 0.2s ease;
+  }
+  .idea-card-cta:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(239,68,68,0.2); }
+  .idea-card-cta h3 { color: white; }
+
+  .idea-icon {
+    width: 48px; height: 48px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .idea-content { flex: 1; }
+  .cta-link { font-size: 0.875rem; font-weight: 600; color: #ef4444; margin-top: 0.5rem; display: block; }
+
+  .section-gallery { padding: 5rem 0; background: var(--muted); border-top: 1px solid var(--border); }
+
+  .gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2.5rem; }
+  .gallery-item { text-align: center; }
+  .gallery-item img {
+    width: 100%; aspect-ratio: 1; object-fit: cover;
+    border-radius: 16px; margin-bottom: 0.5rem;
+    border: 2px solid var(--border);
+  }
+  .gallery-item p { font-size: 0.875rem; font-weight: 600; color: var(--muted-foreground); }
+  .gallery-cta { text-align: center; }
+
+  .section-content-dark { padding: 4rem 0; background: white; border-top: 1px solid var(--border); }
+
+  .tips-list { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; margin-top: 1rem; }
+  .tips-list li { display: flex; gap: 0.5rem; font-size: 0.9375rem; color: var(--muted-foreground); line-height: 1.6; align-items:flex-start;}
+  .tips-list li strong { color: var(--foreground); }
+
+  .section-related { padding: 5rem 0; background: var(--muted); border-top: 1px solid var(--border); }
+
+  .discover-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .discover-card {
+    padding: 2rem; text-decoration: none; color: inherit;
+    display: flex; flex-direction: column; gap: 0.625rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .discover-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-xl); }
+  
+  .inner-page-icon-wrapper {
+    margin-bottom: 0.5rem;
+    transition: transform 0.3s ease;
+  }
+  
+  .bg-pink-50 { color: var(--primary); }
+  .bg-cyan-50 { color: #06b6d4; }
+  .bg-purple-50 { color: var(--secondary); }
+  
+  .discover-card:hover .inner-page-icon-wrapper {
+    transform: scale(1.1) rotate(5deg);
+  }
+
+  .discover-card h3 { font-size: 1.125rem; font-weight: 800; }
+  .discover-card p { font-size: 0.875rem; color: var(--muted-foreground); flex: 1; }
+  .discover-link { font-size: 0.875rem; font-weight: 600; color: var(--primary); }
+
+  @media (max-width: 768px) {
+    .ideas-grid { grid-template-columns: 1fr; }
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    .discover-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 480px) {
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    .page-actions { flex-direction: column; }
+  }
+</style>

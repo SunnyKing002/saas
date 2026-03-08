@@ -1,0 +1,428 @@
+---
+// src/pages/face-paint-ideas-for-kids.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import { Sparkles, Palette, Baby, Ghost, PawPrint, Bug, Flower, Wand2, Star, Hexagon, Gem } from 'lucide-react';
+
+const kidIdeas = [
+  { icon: 'PawPrint', color: '#eab308', title: 'Lion', desc: 'Yellow and brown mane with a cute nose. Easy to do in 10 minutes!', difficulty: 'Easy' },
+  { icon: 'Bug', color: '#06b6d4', title: 'Butterfly', desc: 'Colorful wings across the eyes with glitter. Kids absolutely love this one!', difficulty: 'Easy' },
+  { icon: 'PawPrint', color: '#8b5cf6', title: 'Puppy Dog', desc: 'Floppy ears, a wet nose, and whiskers. Perfect for animal lovers.', difficulty: 'Easy' },
+  { icon: 'Hexagon', color: '#ef4444', title: 'Spiderman', desc: 'Classic red base with black web lines. Every superhero fan wants this!', difficulty: 'Medium' },
+  { icon: 'Flower', color: '#ec4899', title: 'Flower Garden', desc: 'Pink petals on cheeks with green stem. Simple and adorable for little girls.', difficulty: 'Easy' },
+  { icon: 'PawPrint', color: '#f97316', title: 'Tiger', desc: 'Orange and black stripes that go across the face. Wild and fun!', difficulty: 'Medium' },
+  { icon: 'Star', color: '#facc15', title: 'Starry Princess', desc: 'Gold stars on cheeks with a tiara outline. For little royals!', difficulty: 'Easy' },
+  { icon: 'PawPrint', color: '#f97316', title: 'Fox', desc: 'Orange cheeks, white snout, and black ears. Super cute for boys and girls.', difficulty: 'Easy' },
+  { icon: 'Wand2', color: '#d946ef', title: 'Fairy', desc: 'Pastel swirls with a star wand mark. Magical and perfect for parties!', difficulty: 'Medium' },
+];
+
+const safetyTips = [
+  'Always use face paints labeled "cosmetic grade" or "face-paint safe"',
+  'Do a patch test on the inner wrist 24 hours before applying',
+  'Avoid the eye area with bright or glitter paints',
+  'Make removal easy — use a damp cloth and gentle soap',
+  'Never use acrylic craft paint on skin — it\'s not safe!',
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Face Paint Ideas for Kids — Easy & Fun Designs for Parties',
+  description: 'Discover the best face paint ideas for kids including lion, butterfly, puppy, and superhero designs. Safe, easy, and perfect for birthday parties.',
+  url: 'https://facepaint.top/face-paint-ideas-for-kids',
+  image: 'https://facepaint.top/og.png',
+  author: {
+    '@type': 'Organization',
+    name: 'Face Paint Ideas'
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'Face Paint Ideas',
+    logo: {
+      '@type': 'ImageObject',
+      url: 'https://facepaint.top/logo.png'
+    }
+  },
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': 'https://facepaint.top/face-paint-ideas-for-kids'
+  }
+};
+---
+
+<BaseLayout
+  title="Face Paint Ideas for Kids — 20+ Easy & Fun Designs for Parties 2025"
+  description="Discover safe and easy face paint ideas for kids including lion, butterfly, puppy, and superhero designs. Perfect for birthday parties, school events, and fun at home."
+  canonicalUrl="/face-paint-ideas-for-kids"
+  keywords="face paint ideas for kids, kids face paint designs, easy face paint for kids, face paint birthday party, simple kids face painting"
+  jsonLd={jsonLd}
+>
+  <Navbar />
+
+  <!-- Hero -->
+  <section class="page-hero">
+    <div class="container">
+      <div class="breadcrumb">
+        <a href="/">Home</a> → <span>Face Paint Ideas for Kids</span>
+      </div>
+      <div class="page-hero-content">
+        <div class="page-badge badge badge-primary"><Baby size={16} style={{marginRight: '0.5rem'}}/> Kids Special</div>
+        <h1 class="page-title">
+          <strong>Face Paint Ideas for Kids</strong>
+        </h1>
+        <p class="page-subtitle">
+          Safe, fun, and adorable <strong>kids face paint</strong> designs perfect for birthday parties, school events, and Halloween. Find easy <strong>face painting designs</strong> your child will love — from animals to superheroes!
+        </p>
+        <div class="page-actions">
+          <a href="/#generator" class="btn btn-primary btn-lg"><Sparkles size={18}/> Try AI Generator Free</a>
+          <a href="/#showcase" class="btn btn-outline btn-lg">View Gallery</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Intro Content -->
+  <section class="section-content">
+    <div class="container content-container">
+      <div class="content-block">
+        <h2>The Best Face Paint Ideas for Kids in 2025</h2>
+        <p>
+          Whether you're planning a <strong>kids birthday party</strong>, a school fair, or just a fun afternoon at home, <strong>face paint ideas for kids</strong> are a guaranteed hit. The right <strong>face painting design</strong> can transform any child into their favorite animal, superhero, or magical creature in minutes.
+        </p>
+        <p>
+          The key to great <strong>kids face paint</strong> is keeping it simple, safe, and quick. Kids won't sit still for long, so designs that take under 10 minutes are usually the best choice. Below we've rounded up the most popular <strong>easy face paint ideas</strong> that children actually love.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ideas Grid -->
+  <section class="section-ideas">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">20+ Fun Face Paint Ideas for Kids</h2>
+        <p class="section-subtitle">From easy beginner designs to more detailed looks — sorted by difficulty</p>
+      </div>
+      <div class="ideas-grid">
+        {kidIdeas.map(idea => (
+          <div class="idea-card card">
+            <div class="idea-icon" style={`background: ${idea.color}15; color: ${idea.color}`}>
+              {idea.icon === 'PawPrint' && <PawPrint size={28} />}
+              {idea.icon === 'Bug' && <Bug size={28} />}
+              {idea.icon === 'Hexagon' && <Hexagon size={28} />}
+              {idea.icon === 'Flower' && <Flower size={28} />}
+              {idea.icon === 'Star' && <Star size={28} />}
+              {idea.icon === 'Wand2' && <Wand2 size={28} />}
+            </div>
+            <div class="idea-content">
+              <div class="idea-header">
+                <h3>{idea.title}</h3>
+                <span class={`difficulty-badge ${idea.difficulty.toLowerCase()}`}>{idea.difficulty}</span>
+              </div>
+              <p>{idea.desc}</p>
+            </div>
+          </div>
+        ))}
+        <!-- Try it card -->
+        <a href="/#generator" class="idea-card idea-card-cta">
+          <div class="idea-icon" style="background: #e0e7ff; color: #4f46e5;"><Sparkles size={28} /></div>
+          <div class="idea-content">
+            <h3>Generate Custom Design</h3>
+            <p>Use our AI tool to create any face paint idea on a photo instantly!</p>
+            <span class="cta-link">Try for free →</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Showcase Images -->
+  <section class="section-showcase-kids">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Kids Face Paint Gallery</h2>
+        <p class="section-subtitle">Real AI-generated kids face paint designs for inspiration</p>
+      </div>
+      <div class="showcase-row">
+        <div class="showcase-kid">
+          <img src="/showcase/face_paint_snake_boy.jpg" alt="Green reptile snake face paint idea for kids on a young boy" width="250" height="250" loading="lazy" />
+          <p>Reptile Snake</p>
+        </div>
+        <div class="showcase-kid">
+          <img src="/showcase/face_paint_fox_boy.jpg" alt="Cute playful fox face paint design for kids birthday party" width="250" height="250" loading="lazy" />
+          <p>Playful Fox</p>
+        </div>
+        <div class="showcase-kid">
+          <img src="/showcase/face_paint_skeleton_boy.jpg" alt="Scary skeleton skull face paint for kids Halloween trick or treat" width="250" height="250" loading="lazy" />
+          <p>Skeleton</p>
+        </div>
+        <div class="showcase-kid">
+          <img src="/showcase/face_paint_dragon.jpg" alt="Vibrant green dragon face paint ideas for kids with scales and horns" width="250" height="250" loading="lazy" />
+          <p>Dragon</p>
+        </div>
+      </div>
+      <div class="showcase-cta">
+        <a href="/#generator" class="btn btn-primary">Generate Your Kids Design Free →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Safety Tips -->
+  <section class="section-safety">
+    <div class="container">
+      <div class="content-container">
+        <div class="safety-card card">
+          <h2>⚠️ Safety Tips for Kids Face Paint</h2>
+          <p>Before you pick up that paintbrush, here are some important safety tips:</p>
+          <ul class="safety-list">
+            {safetyTips.map(tip => (
+              <li>✓ {tip}</li>
+            ))}
+          </ul>
+        </div>
+
+        <div class="content-block">
+          <h2>How to Choose the Right Face Paint for Kids</h2>
+          <p>
+            When shopping for <strong>kids face paint</strong>, look for products that are:
+          </p>
+          <ul class="content-list">
+            <li><strong>Non-toxic and hypoallergenic</strong> — especially important for children with sensitive skin</li>
+            <li><strong>Water-activated</strong> — much easier to apply and remove than oil-based paints</li>
+            <li><strong>FDA-compliant</strong> — check the label for cosmetic-grade certification</li>
+            <li><strong>Glitter-free near eyes</strong> — use cosmetic-grade glitter sparingly</li>
+          </ul>
+          <p>
+            Popular brands trusted for kids include Snazaroo, Mehron Paradise, and TAG Body Art — all widely available online and in craft stores.
+          </p>
+        </div>
+
+        <div class="content-block">
+          <h2>How to Remove Kids Face Paint Easily</h2>
+          <p>
+            After the fun is over, removing <strong>face paint</strong> is easy with the right approach. Use a <strong>wet cloth or baby wipe</strong> to gently wipe off most of the paint, then wash with a mild soap and warm water. For stubborn <strong>face painting designs</strong> near the hairline, a small amount of baby oil or coconut oil can help dissolve it without irritating the skin.
+          </p>
+          <p>
+            Avoid using harsh scrubbing, which can irritate kids' sensitive skin. If the <strong>face paint</strong> was water-activated, it should come off in one wash!
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Internal Links -->
+  <section class="section-discover">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">More Face Paint Ideas</h2>
+      </div>
+      <div class="discover-grid">
+        <a href="/easy-face-paint-ideas" class="discover-card card group">
+          <div class="inner-page-icon-wrapper bg-cyan-50 text-cyan-500"><Wand2 size={40} /></div>
+          <h3>Easy Face Paint Ideas</h3>
+          <p>Beginner-friendly designs that anyone can recreate</p>
+          <span class="discover-link">View Easy Ideas →</span>
+        </a>
+        <a href="/halloween-face-paint-ideas" class="discover-card card group">
+          <div class="inner-page-icon-wrapper bg-purple-50 text-purple-500"><Ghost size={40} /></div>
+          <h3>Halloween Face Paint</h3>
+          <p>Spooky Halloween looks kids will love</p>
+          <span class="discover-link">View Halloween Ideas →</span>
+        </a>
+        <a href="/#generator" class="discover-card card group">
+          <div class="inner-page-icon-wrapper bg-pink-50 text-pink-500"><Sparkles size={40} /></div>
+          <h3>AI Face Paint Generator</h3>
+          <p>Generate any face paint design on a photo instantly</p>
+          <span class="discover-link">Try Free Now →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    padding: 4rem 0 3rem;
+    background: linear-gradient(180deg, #fdf2f8 0%, white 100%);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .breadcrumb {
+    font-size: 0.8125rem;
+    color: var(--muted-foreground);
+    margin-bottom: 1.5rem;
+  }
+  .breadcrumb a { color: var(--primary); }
+  .breadcrumb a:hover { text-decoration: underline; }
+
+  .page-hero-content {
+    max-width: 740px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .page-badge { width: fit-content; }
+
+  .page-title {
+    font-size: clamp(2rem, 5vw, 3.25rem);
+    font-weight: 900;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--foreground);
+  }
+
+  .page-subtitle {
+    font-size: 1.0625rem;
+    color: var(--muted-foreground);
+    line-height: 1.7;
+    max-width: 640px;
+  }
+
+  .page-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-lg { padding: 0.875rem 2rem; font-size: 1.0625rem; }
+
+  .section-content { padding: 4rem 0; background: white; }
+  .content-container { max-width: 800px; display: flex; flex-direction: column; gap: 2.5rem; }
+  .content-block h2 { font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; }
+  .content-block p { color: var(--muted-foreground); line-height: 1.8; margin-bottom: 0.75rem; }
+  .content-block p strong { color: var(--foreground); }
+  .content-list { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; padding: 0; margin: 0.75rem 0; }
+  .content-list li { padding-left: 0; color: var(--muted-foreground); font-size: 0.9375rem; line-height: 1.6; }
+  .content-list li strong { color: var(--foreground); }
+
+  .section-ideas { padding: 5rem 0; background: var(--muted); }
+  .section-header { text-align: center; margin-bottom: 3rem; }
+
+  .ideas-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+  }
+
+  .idea-card {
+    padding: 1.5rem;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .idea-card-cta {
+    text-decoration: none;
+    color: inherit;
+    background: linear-gradient(135deg, #fdf4ff, #faf5ff);
+    border: 2px dashed var(--primary-light);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .idea-card-cta:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); border-color: var(--primary); }
+
+  .idea-icon {
+    width: 48px; height: 48px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .idea-content { flex: 1; }
+  .idea-header { display: flex; align-items: center; gap: 0.625rem; margin-bottom: 0.375rem; flex-wrap: wrap; }
+  .idea-header h3 { font-size: 1.125rem; font-weight: 700; color: var(--foreground); }
+  .idea-content p { font-size: 0.875rem; color: var(--muted-foreground); line-height: 1.6; }
+
+  .difficulty-badge {
+    font-size: 0.6875rem;
+    font-weight: 700;
+    padding: 0.125rem 0.5rem;
+    border-radius: 9999px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .difficulty-badge.easy { background: #dcfce7; color: #166534; }
+  .difficulty-badge.medium { background: #fef9c3; color: #854d0e; }
+
+  .cta-link { font-size: 0.875rem; font-weight: 600; color: var(--primary); margin-top: 0.5rem; display: block; }
+
+  .section-showcase-kids { padding: 5rem 0; background: white; border-top: 1px solid var(--border); }
+
+  .showcase-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .showcase-kid { text-align: center; }
+  .showcase-kid img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 16px;
+    margin-bottom: 0.5rem;
+    border: 2px solid var(--border);
+  }
+  .showcase-kid p { font-size: 0.875rem; font-weight: 600; color: var(--muted-foreground); }
+
+  .showcase-cta { text-align: center; }
+
+  .section-safety { padding: 5rem 0; background: var(--muted); border-top: 1px solid var(--border); }
+
+  .safety-card {
+    padding: 2rem;
+    margin-bottom: 2.5rem;
+    border-left: 4px solid #f59e0b;
+  }
+  .safety-card h2 { font-size: 1.25rem; font-weight: 700; margin-bottom: 0.75rem; }
+  .safety-card p { color: var(--muted-foreground); margin-bottom: 1rem; }
+
+  .safety-list { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+  .safety-list li { font-size: 0.9375rem; color: var(--foreground); padding: 0.5rem 0; border-bottom: 1px solid var(--border); }
+  .safety-list li:last-child { border-bottom: none; }
+
+  .section-discover { padding: 5rem 0; background: white; border-top: 1px solid var(--border); }
+
+  .discover-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .discover-card {
+    padding: 2rem;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .discover-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-xl); }
+
+  .inner-page-icon-wrapper {
+    margin-bottom: 0.5rem;
+    transition: transform 0.3s ease;
+  }
+  
+  .bg-pink-50 { color: var(--primary); }
+  .bg-cyan-50 { color: #06b6d4; }
+  .bg-purple-50 { color: var(--secondary); }
+  
+  .discover-card:hover .inner-page-icon-wrapper {
+    transform: scale(1.1) rotate(5deg);
+  }
+
+  .discover-card h3 { font-size: 1.125rem; font-weight: 800; }
+  .discover-card p { font-size: 0.875rem; color: var(--muted-foreground); line-height: 1.6; flex: 1; }
+  .discover-link { font-size: 0.875rem; font-weight: 600; color: var(--primary); }
+
+  @media (max-width: 768px) {
+    .ideas-grid { grid-template-columns: 1fr; }
+    .showcase-row { grid-template-columns: repeat(2, 1fr); }
+    .discover-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 480px) {
+    .page-actions { flex-direction: column; }
+    .showcase-row { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>

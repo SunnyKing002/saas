@@ -1,0 +1,352 @@
+---
+// src/pages/easy-face-paint-ideas.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.astro';
+import { Sparkles, Palette, Baby, Ghost, Paintbrush, Wand2, Star, Hexagon } from 'lucide-react';
+
+const easyIdeas = [
+  { icon: 'Palette', color: '#ec4899', title: 'Rainbow & Clouds', desc: 'Three rainbow stripes on one cheek, a small cloud on the other. Under 5 minutes!', time: '5 min' },
+  { icon: 'Star', color: '#eab308', title: 'Stars & Sparkles', desc: 'Gold stars scattered across the cheeks. Just a star stamp and done.', time: '3 min' },
+  { icon: 'Sparkles', color: '#d946ef', title: 'Simple Flower', desc: 'Five petal flower on the cheek using a flat brush and four strokes.', time: '5 min' },
+  { icon: 'Wand2', color: '#06b6d4', title: 'Basic Butterfly', desc: 'Two wing shapes above the eyes with dots below. Simple and beautiful.', time: '8 min' },
+  { icon: 'Baby', color: '#f97316', title: 'Cat Nose & Whiskers', desc: 'Pink nose, three whiskers on each cheek. The easiest and most popular!', time: '3 min' },
+  { icon: 'Zap', color: '#eab308', title: 'Lightning Bolt', desc: 'Yellow bolt on cheek — fast and bold. Perfect superhero touch.', time: '2 min' },
+  { icon: 'Ghost', color: '#64748b', title: 'Half Skull', desc: 'White base and black dots for eye sockets on one side. Great for Halloween.', time: '10 min' },
+  { icon: 'Hexagon', color: '#8b5cf6', title: 'Moon & Stars', desc: 'Crescent moon on forehead with stars. Magical and minimalist.', time: '5 min' },
+  { icon: 'Paintbrush', color: '#ef4444', title: 'Tropical Flower', desc: 'Bright hibiscus with 5 petals using bold pink or orange.', time: '8 min' },
+];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Easy Face Paint Ideas for Beginners: Simple Designs to Try at Home',
+  description: 'Discover easy face paint ideas that require zero artistic skill. Step-by-step simple face painting designs for parents and beginners.',
+  image: 'https://facepaint.top/og.png',
+  author: {
+    '@type': 'Organization',
+    name: 'Face Paint Ideas'
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'Face Paint Ideas',
+    logo: {
+      '@type': 'ImageObject',
+      url: 'https://facepaint.top/logo.png'
+    }
+  },
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': 'https://facepaint.top/easy-face-paint-ideas'
+  }
+};
+---
+
+<BaseLayout
+  title="Easy Face Paint Ideas for Beginners: Simple Designs to Try at Home"
+  description="Discover easy face paint ideas that require zero artistic skill. Step-by-step simple face painting designs for parents and beginners."
+  canonicalUrl="/easy-face-paint-ideas"
+  keywords="easy face paint ideas, simple face painting, beginner face paint, easy face painting designs, quick face paint"
+  jsonLd={jsonLd}
+>
+  <Navbar />
+
+  <section class="page-hero">
+    <div class="container">
+      <div class="breadcrumb"><a href="/">Home</a> → <span>Easy Face Paint Ideas</span></div>
+      <div class="page-hero-content">
+        <div class="page-badge badge badge-primary"><Wand2 size={16} style={{marginRight: '0.5rem'}}/> Beginner Friendly</div>
+        <h1 class="page-title"><strong>Easy Face Paint Ideas</strong> for Beginners</h1>
+        <p class="hero-subtitle">You don't need to be a professional artist to create magic. Discover simple, step-by-step <strong>face painting designs</strong> that anyone can master in minutes.</p>
+        <div class="hero-actions">
+          <a href="/#generator" class="btn btn-primary"><Sparkles size={18}/> Try AI Generator Free</a>
+          <a href="/#showcase" class="btn btn-outline btn-lg">View Gallery</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-content">
+    <div class="container content-container">
+      <div class="content-section">
+        <h2>Why Start with Easy Face Paint Ideas?</h2>
+        <p>When you're painting a wiggly toddler or trying to get ready for a Halloween party at the last minute, complex designs just aren't practical. <strong>Simple face paint ideas</strong> focus on bold colors, minimal linework, and high impact.</p>
+        
+        <p>The best part about <strong>easy face painting</strong> is that you only need a few basic colors and a couple of brushes or sponges. Designs like a basic puppy, a colorful rainbow, or a speedy superhero mask can be completed in under 5 minutes.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-ideas">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Easy Face Paint Ideas (Under 10 Minutes!)</h2>
+        <p class="section-subtitle">Sorted by time to complete — perfect for beginners</p>
+      </div>
+      <div class="ideas-grid">
+        {easyIdeas.map(idea => (
+          <div class="idea-card card">
+            <div class="idea-icon" style={`background: ${idea.color}15; color: ${idea.color}`}>
+              {idea.icon === 'Palette' && <Palette size={28} />}
+              {idea.icon === 'Star' && <Star size={28} />}
+              {idea.icon === 'Sparkles' && <Sparkles size={28} />}
+              {idea.icon === 'Wand2' && <Wand2 size={28} />}
+              {idea.icon === 'Baby' && <Baby size={28} />}
+              {idea.icon === 'Ghost' && <Ghost size={28} />}
+              {idea.icon === 'Paintbrush' && <Paintbrush size={28} />}
+              {idea.icon === 'Hexagon' && <Hexagon size={28} />}
+            </div>
+            <div class="idea-content">
+              <div class="idea-header">
+                <h3>{idea.title}</h3>
+                <span class="time-badge">⏱ {idea.time}</span>
+              </div>
+              <p>{idea.desc}</p>
+            </div>
+          </div>
+        ))}
+        <a href="/#generator" class="idea-card idea-card-cta">
+          <div class="idea-icon" style="background: #e0e7ff; color: #4f46e5;"><Sparkles size={28} /></div>
+          <div class="idea-content">
+            <h3>Can't Decide?</h3>
+            <p>Let our AI generate an easy face paint design based on your description!</p>
+            <span class="cta-link">Generate for free →</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-steps">
+    <div class="container content-container">
+      <div class="content-block">
+        <h2>How to Do Easy Face Painting: Step-by-Step</h2>
+        <div class="idea-image">
+          <img src="/showcase/face_paint_fox_boy.jpg" alt="Easy fox face paint idea for beginners on a boy's face" width="400" height="400" loading="lazy" />
+        </div>
+        <div class="idea-content">
+          <h3>1. The Quick &amp; Cute Fox</h3>
+          <p>This playful fox design is incredibly forgiving. Instead of a full face, it focuses on the forehead and nose area.</p>
+          <ul>
+            <li><strong>Colors needed:</strong> Orange, white, black.</li>
+            <li><strong>The trick:</strong> Use a sponge to quickly dab the orange base across the nose and forehead. Don't worry about perfect edges—fur is supposed to be fluffy!</li>
+            <li><strong>Final touch:</strong> Three quick black whiskers on each cheek and a black dot on the nose completely sell the look.</li>
+          </ul>
+        </div>
+        <div class="steps-list">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+              <h3>Prepare Your Supplies</h3>
+              <p>Wet a sponge and dip it into your primary color. Face paints should be slightly moist — not soaking wet, not dry.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+              <h3>Apply the Base Color</h3>
+              <p>Use the sponge to apply a smooth base. Work in circular motions for even coverage. Let dry 30 seconds.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+              <h3>Add Details with a Brush</h3>
+              <p>Use a thin round brush for outlines, dots, and thin lines. A small brush makes detailed work much easier.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+              <h3>Set with Setting Spray (Optional)</h3>
+              <p>For longer lasting results, lightly mist with setting spray or translucent powder to prevent smearing.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-block">
+        <h2>Pro Tips for Easy Face Painting Success</h2>
+        <ul class="tips-list">
+          <li><Palette size={16} color="var(--primary)"/> <strong>Use water-activated paints</strong> — easier to blend and much easier to remove</li>
+          <li><Wand2 size={16} color="var(--primary)"/> <strong>Work in thin layers</strong> — build up color gradually for vibrant results</li>
+          <li><Sparkles size={16} color="var(--primary)"/> <strong>Preview first</strong> — use our AI generator to see design before you paint</li>
+          <li><Paintbrush size={16} color="var(--primary)"/> <strong>Keep wipes nearby</strong> — quick fixes are part of the process!</li>
+          <li><Star size={16} color="var(--primary)"/> <strong>Start with outline</strong> — trace the design first, then fill in color</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-gallery">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Easy Face Paint Gallery</h2>
+        <p class="section-subtitle">AI-generated easy face paint ideas for inspiration</p>
+      </div>
+      <div class="gallery-grid">
+        <div class="gallery-item">
+          <img src="/showcase/face_paint_floral.jpg" alt="easy floral face paint ideas" loading="lazy" />
+          <p>Floral Fairy — Easy</p>
+        </div>
+        <div class="gallery-item">
+          <img src="/showcase/face_paint_pirate_kid.jpg" alt="easy pirate face paint for kids" loading="lazy" />
+          <p>Pirate — Medium</p>
+        </div>
+        <div class="gallery-item">
+          <img src="/showcase/face_paint_clown.jpg" alt="easy clown face paint ideas" loading="lazy" />
+          <p>Happy Clown — Easy</p>
+        </div>
+        <div class="gallery-item">
+          <img src="/showcase/face_paint_fox_boy.jpg" alt="easy fox face paint for beginners" loading="lazy" />
+          <p>Cute Fox — Easy</p>
+        </div>
+      </div>
+      <div class="gallery-cta">
+        <a href="/#generator" class="btn btn-primary">Generate Your Easy Design Free →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-related">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">More Face Paint Ideas</h2>
+      </div>
+      <div class="discover-grid">
+        <a href="/face-paint-ideas-for-kids" class="discover-card card group">
+          <div class="inner-page-icon-wrapper bg-pink-50 text-pink-500"><Baby size={40} /></div>
+          <h3>Kids Face Paint Ideas</h3>
+          <p>Safe designs loved by children</p>
+          <span class="discover-link">Explore Kids Ideas →</span>
+        </a>
+        <a href="/halloween-face-paint-ideas" class="discover-card card group">
+          <div class="inner-page-icon-wrapper bg-purple-50 text-purple-500"><Ghost size={40} /></div>
+          <h3>Halloween Face Paint</h3>
+          <p>Spooky designs for Halloween</p>
+          <span class="discover-link">Explore Halloween →</span>
+        </a>
+        <a href="/#generator" class="discover-card card group">
+          <div class="inner-page-icon-wrapper bg-cyan-50 text-cyan-500"><Sparkles size={40} /></div>
+          <h3>AI Face Paint Generator</h3>
+          <p>Generate any design on a photo</p>
+          <span class="discover-link">Try Free Now →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .page-hero {
+    padding: 4rem 0 3rem;
+    background: linear-gradient(180deg, #f0fdf4 0%, white 100%);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .breadcrumb { font-size: 0.8125rem; color: var(--muted-foreground); margin-bottom: 1.5rem; }
+  .breadcrumb a { color: var(--primary); }
+  .breadcrumb a:hover { text-decoration: underline; }
+
+  .page-hero-content { max-width: 740px; display: flex; flex-direction: column; gap: 1.25rem; }
+  .page-badge { width: fit-content; }
+  .page-title { font-size: clamp(2rem, 5vw, 3.25rem); font-weight: 900; line-height: 1.15; letter-spacing: -0.02em; }
+  .page-subtitle { font-size: 1.0625rem; color: var(--muted-foreground); line-height: 1.7; max-width: 640px; }
+  .page-subtitle strong { color: var(--foreground); }
+  .page-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-lg { padding: 0.875rem 2rem; font-size: 1.0625rem; }
+
+  .section-content { padding: 4rem 0; background: white; }
+  .content-container { max-width: 800px; display: flex; flex-direction: column; gap: 2.5rem; }
+  .content-block h2 { font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; }
+  .content-block p { color: var(--muted-foreground); line-height: 1.8; margin-bottom: 0.75rem; }
+  .content-block p strong { color: var(--foreground); }
+
+  .section-ideas { padding: 5rem 0; background: var(--muted); }
+  .section-header { text-align: center; margin-bottom: 3rem; }
+
+  .ideas-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+  .idea-card { padding: 1.5rem; display: flex; gap: 1rem; align-items: flex-start; }
+  .idea-card-cta {
+    text-decoration: none; color: inherit;
+    background: linear-gradient(135deg, #fdf4ff, #faf5ff);
+    border: 2px dashed var(--primary-light);
+    cursor: pointer; transition: all 0.2s ease;
+  }
+  .idea-card-cta:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); border-color: var(--primary); }
+
+  .idea-icon {
+    width: 48px; height: 48px; border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .idea-content { flex: 1; }
+  .idea-header { display: flex; align-items: center; gap: 0.625rem; margin-bottom: 0.375rem; flex-wrap: wrap; }
+  .idea-header h3 { font-size: 1.125rem; font-weight: 700; color: var(--foreground); }
+  .idea-content p { font-size: 0.875rem; color: var(--muted-foreground); line-height: 1.6; }
+
+  .time-badge { font-size: 0.6875rem; font-weight: 700; padding: 0.125rem 0.5rem; border-radius: 9999px; background: #e0f2fe; color: #0369a1; }
+  .cta-link { font-size: 0.875rem; font-weight: 600; color: #22c55e; margin-top: 0.5rem; display: block; }
+
+  .section-steps { padding: 5rem 0; background: white; border-top: 1px solid var(--border); }
+  .steps-list { display: flex; flex-direction: column; gap: 1.25rem; margin-top: 1.25rem; }
+  .step { display: flex; gap: 1rem; align-items: flex-start; }
+  .step-num {
+    width: 36px; height: 36px; flex-shrink: 0;
+    background: var(--gradient-primary);
+    color: white; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 0.9375rem;
+  }
+  .step-content h3 { font-size: 1.125rem; font-weight: 700; margin-bottom: 0.375rem; }
+  .step-content p { font-size: 0.9rem; color: var(--muted-foreground); line-height: 1.6; }
+
+  .tips-list { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; margin-top: 1rem; }
+  .tips-list li { display: flex; gap: 0.5rem; font-size: 0.9375rem; color: var(--muted-foreground); line-height: 1.6; align-items:flex-start;}
+  .tips-list li strong { color: var(--foreground); }
+
+  .section-gallery { padding: 5rem 0; background: var(--muted); border-top: 1px solid var(--border); }
+  .gallery-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2.5rem; }
+  .gallery-item { text-align: center; }
+  .gallery-item img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 16px; margin-bottom: 0.5rem; border: 2px solid var(--border); }
+  .gallery-item p { font-size: 0.875rem; font-weight: 600; color: var(--muted-foreground); }
+  .gallery-cta { text-align: center; }
+
+  .section-related { padding: 5rem 0; background: white; border-top: 1px solid var(--border); }
+  .discover-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .discover-card {
+    padding: 2rem; text-decoration: none; color: inherit;
+    display: flex; flex-direction: column; gap: 0.625rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .discover-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-xl); }
+  
+  .inner-page-icon-wrapper {
+    margin-bottom: 0.5rem;
+    transition: transform 0.3s ease;
+  }
+  
+  .bg-pink-50 { color: var(--primary); }
+  .bg-cyan-50 { color: #06b6d4; }
+  .bg-purple-50 { color: var(--secondary); }
+  
+  .discover-card:hover .inner-page-icon-wrapper {
+    transform: scale(1.1) rotate(5deg);
+  }
+
+  .discover-card h3 { font-size: 1.125rem; font-weight: 800; }
+  .discover-card p { font-size: 0.875rem; color: var(--muted-foreground); flex: 1; }
+  .discover-link { font-size: 0.875rem; font-weight: 600; color: var(--primary); }
+
+  @media (max-width: 768px) {
+    .ideas-grid { grid-template-columns: 1fr; }
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    .discover-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 480px) {
+    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    .page-actions { flex-direction: column; }
+  }
+</style>

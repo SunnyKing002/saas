@@ -94,6 +94,61 @@ importers:
         specifier: ^3.57.0
         version: 3.114.17(@cloudflare/workers-types@4.20260301.1)
 
+  apps/site-face-paint-ideas:
+    dependencies:
+      '@astrojs/react':
+        specifier: ^4.4.2
+        version: 4.4.2(@types/node@22.19.15)(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)(tsx@4.21.0)(yaml@2.8.2)
+      '@astrojs/sitemap':
+        specifier: ^3.7.0
+        version: 3.7.0
+      '@saas-matrix/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+      '@saas-matrix/ui':
+        specifier: workspace:*
+        version: link:../../packages/ui
+      astro:
+        specifier: ^5.18.0
+        version: 5.18.0(@types/node@22.19.15)(rollup@4.59.0)(tsx@4.21.0)(typescript@5.9.3)(yaml@2.8.2)
+      lucide-react:
+        specifier: ^0.577.0
+        version: 0.577.0(react@19.2.4)
+      marked:
+        specifier: ^12.0.0
+        version: 12.0.2
+      react:
+        specifier: ^19.2.4
+        version: 19.2.4
+      react-dom:
+        specifier: ^19.2.4
+        version: 19.2.4(react@19.2.4)
+    devDependencies:
+      '@astrojs/check':
+        specifier: ^0.7.0
+        version: 0.7.0(prettier-plugin-astro@0.13.0)(prettier@3.8.1)(typescript@5.9.3)
+      '@cloudflare/workers-types':
+        specifier: ^4.20240524.0
+        version: 4.20260301.1
+      '@types/node':
+        specifier: ^22.0.0
+        version: 22.19.15
+      '@types/react':
+        specifier: ^19.2.14
+        version: 19.2.14
+      '@types/react-dom':
+        specifier: ^19.2.3
+        version: 19.2.3(@types/react@19.2.14)
+      typescript:
+        specifier: ^5.4.5
+        version: 5.9.3
+      vite-tsconfig-paths:
+        specifier: ^6.1.1
+        version: 6.1.1(typescript@5.9.3)(vite@6.4.1(@types/node@22.19.15)(tsx@4.21.0)(yaml@2.8.2))
+      wrangler:
+        specifier: ^3.57.0
+        version: 3.114.17(@cloudflare/workers-types@4.20260301.1)
+
   apps/site-template:
     dependencies:
       '@astrojs/react':
