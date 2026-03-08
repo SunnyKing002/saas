@@ -30,12 +30,18 @@ const navLinks = [
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <SEO seo={seo} site={siteConfig} />
+    <!-- Google AdSense Placeholder -->
+    <!-- <meta name="google-adsense-account" content="ca-pub-XXXXXXXXXXXXXXXX" /> -->
+    <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
+
     <!-- TODO: 填写 gaId 后取消注释以启用 Google Analytics -->
     <!-- {siteConfig.gaId && <script async src={`https://www.googletagmanager.com/gtag/js?id=${siteConfig.gaId}`} />} -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap"
       rel="stylesheet"
     />
     <style is:global>
@@ -44,13 +50,22 @@ const navLinks = [
         --font-sans: "Inter", system-ui, sans-serif;
       }
       *, *::before, *::after { box-sizing: border-box; }
-      html { scroll-behavior: smooth; }
+      html { 
+        scroll-behavior: smooth; 
+        touch-action: manipulation;
+        -webkit-tap-highlight-color: transparent;
+      }
       body {
         margin: 0;
         font-family: var(--font-sans);
         background: #0a0a0f;
         color: #e2e8f0;
         line-height: 1.6;
+      }
+      /* INP / Mobile UX: Enforce minimum touch targets */
+      a, button, [role="button"] {
+        min-height: 44px;
+        min-width: 44px;
       }
       a { color: inherit; }
       img { max-width: 100%; }

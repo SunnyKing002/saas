@@ -1,0 +1,18 @@
+# Cloudflare Pages Custom Caching Headers
+# Document: https://developers.cloudflare.com/pages/configuration/headers/
+
+# Aggressively cache static assets (fonts, images, scripts)
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# TODO: Add specific image folders as needed, e.g., /assets/*, /images/*
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Standard caching for HTML pages to ensure updates propagate reasonably
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
