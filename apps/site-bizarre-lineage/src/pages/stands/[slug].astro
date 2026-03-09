@@ -4,7 +4,7 @@ import Layout from "../../layouts/Layout.astro";
 import TierBadge from "../../components/TierBadge.astro";
 import { stands, type Stand } from "../../data/stands";
 import { getStyleBySlug } from "../../data/fighting-styles";
-import { Zap, Dumbbell, ChevronRight, Swords, Star } from "lucide-react";
+import { Zap, Dumbbell, ChevronRight, Swords, Star, Youtube } from "lucide-react";
 
 export function getStaticPaths() {
   return stands.map((stand) => ({
@@ -141,7 +141,7 @@ const itemSchema = {
               <div class="progress-bg">
                 <div
                   class="progress-fill"
-                  style={`width: ${Number(stand[stat.objKey as keyof Stand]) * 10}%; background: ${stat.color}; box-shadow: 0 0 10px ${stat.color};`}
+                  style={`width: ${Number(stand[stat.objKey as keyof Stand]) * 10}%; background: ${stat.color}; box-shadow: 0 0 12px ${stat.color};`}
                 ></div>
               </div>
             </div>
@@ -181,13 +181,17 @@ const itemSchema = {
         <!-- Recommended Build -->
         <div class="glass-panel mb-6 recommend-panel">
           <h2 class="panel-title">Best Build for {stand.name} in Bizarre Lineage</h2>
-          <div class="rec-card">
-            <div class="rec-icon"><Dumbbell size={32} /></div>
-            <div class="rec-content">
-              <h4>Best Fighting Style: <span>{bestStyle?.name || "Boxing"}</span></h4>
-              <p>{bestStyle?.description || "Provides excellent durability and combo extenders that pair perfectly with this Stand's moveset."}</p>
+          <div class="rec-card-wrapper">
+            <div class="rec-card">
+              <div class="rec-icon"><Dumbbell size={32} /></div>
+              <div class="rec-content">
+                <h4>Best Fighting Style: <span>{bestStyle?.name || "Boxing"}</span></h4>
+                <p>{bestStyle?.description || "Provides excellent durability and combo extenders that pair perfectly with this Stand's moveset."}</p>
+              </div>
             </div>
-            <a href={`/fighting-styles/${bestStyle?.slug || "boxing"}`} class="rec-link">View Style Guide →</a>
+            <div class="rec-link-box">
+              <a href={`/fighting-styles/${bestStyle?.slug || "boxing"}`} class="rec-link">View Full Style Guide →</a>
+            </div>
           </div>
         </div>
 
@@ -224,6 +228,31 @@ const itemSchema = {
         )}
       </div>
     </div>
+
+    <!-- Video Guide Section -->
+    {stand.videoGuide && (
+      <section class="video-guide-section section mt-8 mb-6">
+        <div class="glass-panel video-panel">
+          <div class="video-header mb-4 flex items-center gap-3">
+            <div class="video-icon"><Youtube size={28} /></div>
+            <div>
+              <h2 class="section-heading mb-1" style="font-size: 1.4rem; margin:0;">{stand.name} Gameplay & Guide Showcase</h2>
+              <p class="text-sm text-gray-400 m-0">Watch this premium top-tier gameplay tutorial to master this Stand.</p>
+            </div>
+          </div>
+          <div class="video-wrapper">
+            <iframe 
+              src={stand.videoGuide} 
+              title={`${stand.name} Showcase Bizarre Lineage`}
+              frameborder="0" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+              referrerpolicy="strict-origin-when-cross-origin" 
+              allowfullscreen
+            ></iframe>
+          </div>
+        </div>
+      </section>
+    )}
 
     <!-- FAQ Section with JSON-LD -->
     <section class="faq-section-stand section">
@@ -410,12 +439,13 @@ const itemSchema = {
   }
 
   .stat-value {
-    font-weight: 700;
-    font-size: 0.9rem;
+    font-weight: 800;
+    font-size: 1rem;
+    font-family: var(--font-heading);
   }
 
   .progress-bg {
-    height: 6px;
+    height: 10px;
     background: rgba(255,255,255,0.06);
     border-radius: 99px;
     overflow: hidden;
@@ -516,16 +546,25 @@ const itemSchema = {
   .rec-content h4 span { color: var(--color-primary); }
   .rec-content p { font-size: 0.85rem; color: var(--color-text-secondary); line-height: 1.5; margin: 0; }
 
-  .rec-link {
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: var(--color-primary);
-    text-decoration: none;
-    white-space: nowrap;
-    align-self: center;
+  .rec-link-box {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    justify-content: flex-end;
   }
 
-  .rec-link:hover { text-decoration: underline; }
+  .rec-link {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .rec-link:hover { color: #a855f7; text-decoration: underline; }
 
   /* Passive / Awakening */
   .passive-box {
@@ -631,6 +670,43 @@ const itemSchema = {
     color: var(--color-text-secondary);
     margin: 0;
     line-height: 1.5;
+  }
+
+  /* Video Guide */
+  .video-panel {
+    padding: 1.5rem;
+  }
+  
+  .video-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ef4444; /* YouTube Red */
+    flex-shrink: 0;
+  }
+
+  .video-wrapper {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+    height: 0;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .video-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
   }
 
   /* FAQ */

@@ -100,10 +100,19 @@ const faqs = [
     <div class="container">
       <h2 class="section-title">Explore Bizarre Lineage Tools & Guides</h2>
       <div class="bento-grid">
-        <a href="/tier-list" class="bento-card bento-large glass-card align-bottom">
-          <Trophy size={40} className="bento-icon" />
-          <h3>Bizarre Lineage Tier List</h3>
-          <p>Current meta rankings for PvP and PvE. All 17 Stands graded from S+ to B by top-ranked players.</p>
+        <a href="/tier-list" class="bento-card bento-large glass-card align-bottom relative group">
+          <div class="absolute top-6 right-6 opacity-20 group-hover:opacity-40 transition-opacity">
+            <Trophy size={120} />
+          </div>
+          <div class="relative z-10 w-full max-w-[85%]">
+            <Trophy size={40} className="bento-icon text-accent mb-4" />
+            <div class="bento-badges flex gap-2 mb-3">
+              <span class="badge badge-s">S+ Tier</span>
+              <span class="badge badge-meta">Meta</span>
+            </div>
+            <h3>Bizarre Lineage Tier List</h3>
+            <p>Current meta rankings for PvP and PvE. All 17 Stands graded from S+ to B by top-ranked players. See who dominates the leaderboard this patch.</p>
+          </div>
         </a>
         <a href="/codes" class="bento-card glass-card">
           <Gift size={40} className="bento-icon text-accent" />
@@ -131,10 +140,14 @@ const faqs = [
 
   <!-- TOP STANDS SECTION -->
   <section class="top-stands-section section">
-    <div class="container">
+    <div class="container text-center">
       <h2 class="section-title">Top Bizarre Lineage Stands This Meta</h2>
-      <p class="section-subtitle">The dominant picks controlling the current Bizarre Lineage PvP ladder. These Stands deliver overwhelming damage, crowd control, and mobility.</p>
-      <div class="stands-grid">
+      <p class="section-subtitle">
+        The dominant picks controlling the current Bizarre Lineage PvP ladder. 
+        These Stands deliver overwhelming damage, crowd control, and mobility.
+      </p>
+      
+      <div class="stands-grid text-left mt-8">
         {topStands.map((stand) => (
           <StandCard stand={stand} />
         ))}
@@ -424,16 +437,45 @@ const faqs = [
 }
 
 .bento-card h3 {
-  font-size: 1.5rem;
+  font-size: 1.6rem;
+  font-weight: 800;
   color: var(--color-text-primary);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.6rem;
+  letter-spacing: -0.02em;
 }
 
 .bento-card p {
   color: var(--color-text-secondary);
-  font-size: 0.95rem;
+  font-size: 1rem;
   margin: 0;
-  line-height: 1.5;
+  line-height: 1.6;
+}
+
+.bento-badges {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.8rem;
+}
+
+.badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.badge-s {
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+.badge-meta {
+  background: rgba(139, 92, 246, 0.15);
+  color: var(--color-primary);
+  border: 1px solid rgba(139, 92, 246, 0.3);
 }
 
 .arrow-right {

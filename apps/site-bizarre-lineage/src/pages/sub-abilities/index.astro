@@ -3,45 +3,557 @@
 import Layout from "../../layouts/Layout.astro";
 import { subAbilities } from "../../data/sub-abilities";
 import { getStandBySlug } from "../../data/stands";
+import { Shield, Zap, Star, HelpCircle, ChevronRight, ArrowRight, Clock, Swords } from "lucide-react";
+
+const seoTitle = "Bizarre Lineage Sub Abilities — Complete Guide (Hamon, Cyborg & Vampire) 2026";
+const seoDesc = "Master every Bizarre Lineage Sub Ability with our updated March 2026 guide. Compare Hamon, Cyborg, and Vampire — stats, abilities, how to get them, and the best Stand pairings.";
+
+// FAQPage schema — captures long-tail question traffic
+const faqs = [
+  {
+    question: "What are all the Bizarre Lineage Sub Abilities?",
+    answer: "As of March 2026, the active Bizarre Lineage Sub Abilities are Hamon (The Ripple), Cyborg, and Vampire. A fourth sub-ability, Spin, was briefly available during early testing but is currently not in the game and is expected to return in a future update."
+  },
+  {
+    question: "Which Bizarre Lineage Sub Ability is best for PvP?",
+    answer: "For PvP, the Hamon and Vampire Sub Abilities are the strongest options. Hamon provides three stun/ragdoll moves that all deal extra damage to Vampire users. Vampire offers a ranged beam (Space Ripper Stingy Eyes), a lifesteal grab, and a guaranteed combo starter (Flash Freeze). When Spin is added, it will be rated highest for PvP due to its block-bypass mechanic."
+  },
+  {
+    question: "How do I get the Vampire Sub Ability in Bizarre Lineage?",
+    answer: "To unlock the Vampire Sub Ability in Bizarre Lineage, you must first obtain a Vampire Mask (which drops randomly or from specific bosses) and use it to reject your humanity. After that, locate the Elder Vampire NPC inside Dio's Chapel and complete his quest to unlock all three Vampire abilities: Space Ripper Stingy Eyes, Leeching Terror, and Flash Freeze."
+  },
+  {
+    question: "How do I get Hamon in Bizarre Lineage?",
+    answer: "To get the Hamon Sub Ability in Bizarre Lineage, speak to the Ancient Ghost NPC near Bus Stop 13 and complete its initiation quest. Unlike some other sub-abilities, Hamon does not require any in-game currency — only completing the questline."
+  },
+  {
+    question: "Is Spin available in Bizarre Lineage?",
+    answer: "Spin is currently NOT available in Bizarre Lineage. It was present in early testing but was removed before the full release. The developers are expected to add Spin in a future update. Check the official Trello for announcements."
+  }
+];
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map(f => ({
+    "@type": "Question",
+    "name": f.question,
+    "acceptedAnswer": { "@type": "Answer", "text": f.answer }
+  }))
+};
+
+// Separate active vs coming soon
+const activeSubs = subAbilities.filter(s => !s.comingSoon);
+const upcomingSubs = subAbilities.filter(s => s.comingSoon);
 ---
+
 <Layout
-  title="Bizarre Lineage Sub Abilities — Hamon, Spin, Cyborg & Vampire Guide"
-  description="Complete guide to all bizarre lineage sub abilities. Compare Hamon, Spin, Cyborg, and Vampire for PvP value, PvE power, and best Stand pairings."
+  title={seoTitle}
+  description={seoDesc}
   canonicalPath="/sub-abilities"
 >
-  <section class="section"><div class="container">
-    <h1 class="section-title">Bizarre Lineage Sub Abilities</h1>
-    <p class="section-subtitle">Sub Abilities in Bizarre Lineage provide passive bonuses, powerful utility skills, and alter your core gameplay loop. Pick the right Bizarre Lineage sub ability to complement your Stand and fighting style build.</p>
-    <div class="subs-grid">
-      {subAbilities.map((sub) => (
-        <a href={`/sub-abilities/${sub.slug}`} class="sub-card">
-          <span class="sub-part">{sub.part}</span>
-          <h2 class="sub-name">{sub.name}</h2>
-          <p class="sub-desc">{sub.description.substring(0, 100)}...</p>
-          <div class="sub-passive"><strong>Passive:</strong> {sub.passive}</div>
-          <div class="sub-stats">
-            <div><span class="sl">PvP</span><span class="sv">{sub.pvpValue}</span></div>
-            <div><span class="sl">PvE</span><span class="sv">{sub.pveValue}</span></div>
-            <div><span class="sl">Survival</span><span class="sv">{sub.survival}</span></div>
-          </div>
-        </a>
-      ))}
+  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+  <!-- HERO -->
+  <header class="sub-hero">
+    <div class="hero-glow"></div>
+    <div class="container relative z-10 text-center">
+      <span class="hero-kicker">Updated March 2026 · Verified Game Data</span>
+      <h1 class="hero-h1">Bizarre Lineage Sub Abilities: <br />The Complete 2026 Guide</h1>
+      <p class="hero-sub">
+        <strong>Bizarre Lineage Sub Abilities</strong> layer powerful passive bonuses and active combat skills on top of your Stand and Fighting Style. Mastering the right sub-ability is the difference between winning close fights and getting outclassed by opponents who chose a better setup.
+      </p>
+      <div class="hero-chips">
+        <span class="chip chip-green">3 Active Sub-Abilities</span>
+        <span class="chip chip-yellow">1 Coming Soon</span>
+        <span class="chip chip-blue">Verified Locations</span>
+      </div>
+      <a href="#active-subs" class="hero-cta">Explore All Sub Abilities</a>
     </div>
-  </div></section>
+  </header>
+
+  <div class="container page-body">
+
+    <!-- Why Sub Abilities Matter -->
+    <section class="section mb-16">
+      <h2 class="h2-title">Why Bizarre Lineage Sub Abilities Change Everything</h2>
+      <div class="glass-panel p-content">
+        <p class="body-text mb-6">
+          In Bizarre Lineage, your Stand determines your primary damage type and ultimate abilities. But <strong>Bizarre Lineage Sub Abilities</strong> define your passive identity in combat. Each sub-ability unlocks three unique active moves (T, Y, U keys) plus a permanent passive effect that is always active — even while your Stand is on cooldown.
+        </p>
+        <p class="body-text mb-8">
+          Choosing the wrong <strong>Bizarre Lineage Sub Ability</strong> can cripple an otherwise excellent Stand build. For example, Vampire-style players who equip Hamon as their sub-ability receive constant healing, while their opponents using Vampire as their sub-ability are hard-countered by every single Hamon move. Understanding these counter relationships is fundamental to climbing the PvP leaderboard.
+        </p>
+        <div class="three-boxes">
+          <div class="info-box">
+            <Zap className="box-icon text-yellow-400" />
+            <h4>Passive Buffs</h4>
+            <p>Sub abilities grant permanent passive effects that activate automatically, like HP regen or damage reduction.</p>
+          </div>
+          <div class="info-box">
+            <Shield className="box-icon text-blue-400" />
+            <h4>Three Active Moves</h4>
+            <p>Each Bizarre Lineage sub-ability adds 3 new T/Y/U keybind skills that extend your combat toolkit substantially.</p>
+          </div>
+          <div class="info-box">
+            <Swords className="box-icon text-purple-400" />
+            <h4>Counter Matrix</h4>
+            <p>Hamon hard-counters Vampire. Cyborg's UV move punishes Vampire. Know the counter chart to win matchups.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Active Sub Abilities List -->
+    <section id="active-subs" class="mb-16">
+      <h2 class="h2-title">All Active Bizarre Lineage Sub Abilities (March 2026)</h2>
+      <p class="section-desc">Below are the three currently available <strong>Bizarre Lineage Sub Abilities</strong>. Review the passive effects, active movesets, and how to unlock each one before committing your time to the questline.</p>
+
+      <div class="subs-stack">
+        {activeSubs.map((sub) => (
+          <article class="sub-article glass-panel" id={`sub-${sub.slug}`}>
+            <div class="sub-left">
+              <div class="sub-title-row">
+                <div class="sub-part-badge">{sub.part}</div>
+                <h3 class="sub-h3">{sub.name} — Bizarre Lineage Sub Ability</h3>
+              </div>
+              <p class="body-text mb-6">{sub.description}</p>
+
+              <div class="passive-box">
+                <Star className="passive-icon text-yellow-400" />
+                <div>
+                  <span class="passive-label">Passive Effect</span>
+                  <p class="passive-text">{sub.passive}</p>
+                </div>
+              </div>
+
+              <div class="stat-grid">
+                <div class="stat-cell">
+                  <span class="stat-label">PvP Value</span>
+                  <span class="stat-val pvp-col">{sub.pvpValue}/10</span>
+                </div>
+                <div class="stat-cell">
+                  <span class="stat-label">PvE Value</span>
+                  <span class="stat-val pve-col">{sub.pveValue}/10</span>
+                </div>
+                <div class="stat-cell">
+                  <span class="stat-label">Survival</span>
+                  <span class="stat-val surv-col">{sub.survival}/10</span>
+                </div>
+              </div>
+
+              <h4 class="moveset-heading">Ability Moveset (T / Y / U)</h4>
+              <div class="move-list">
+                {sub.moves.map(move => (
+                  <div class="move-item">
+                    <span class="move-key">{move.key}</span>
+                    <div>
+                      <strong class="move-name">{move.name}</strong>
+                      <p class="move-desc">{move.description}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <div class="obtain-box">
+                <span class="obtain-label">🗺️ How to Get</span>
+                <p class="obtain-text">{sub.howToGet}</p>
+              </div>
+            </div>
+
+            <div class="sub-right">
+              <h4 class="pros-cons-heading">Pros & Cons</h4>
+              <div class="pros-block">
+                <strong class="pros-label">Advantages</strong>
+                <ul class="pros-list">
+                  {sub.pros.map(p => <li>✓ {p}</li>)}
+                </ul>
+              </div>
+              <div class="cons-block">
+                <strong class="cons-label">Weaknesses</strong>
+                <ul class="cons-list">
+                  {sub.cons.map(c => <li>✗ {c}</li>)}
+                </ul>
+              </div>
+
+              <h4 class="pairings-heading">Best Stand Pairings</h4>
+              <div class="pairings-grid">
+                {sub.bestStands.map(slug => {
+                  const s = getStandBySlug(slug);
+                  return s ? (
+                    <a href={`/stands/${s.slug}`} class="pairing-chip">{s.name}</a>
+                  ) : null;
+                })}
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <!-- Coming Soon -->
+    {upcomingSubs.length > 0 && (
+      <section class="mb-16">
+        <h2 class="h2-title">Upcoming Bizarre Lineage Sub Abilities</h2>
+        <p class="section-desc">The following sub-abilities are confirmed to be added in a future update but are not yet available in-game.</p>
+        {upcomingSubs.map(sub => (
+          <div class="coming-soon-card glass-panel">
+            <div class="coming-tag">
+              <Clock className="inline-block mr-1 text-yellow-400" size={16} /> Coming Soon
+            </div>
+            <h3 class="sub-h3 mb-2">{sub.name} — Bizarre Lineage Sub Ability (Upcoming)</h3>
+            <p class="body-text mb-4">{sub.description}</p>
+            <div class="stat-grid">
+              <div class="stat-cell">
+                <span class="stat-label">Projected PvP</span>
+                <span class="stat-val pvp-col">{sub.pvpValue}/10</span>
+              </div>
+              <div class="stat-cell">
+                <span class="stat-label">Projected PvE</span>
+                <span class="stat-val pve-col">{sub.pveValue}/10</span>
+              </div>
+              <div class="stat-cell">
+                <span class="stat-label">Survival</span>
+                <span class="stat-val surv-col">{sub.survival}/10</span>
+              </div>
+            </div>
+          </div>
+        ))}
+      </section>
+    )}
+
+    <!-- FAQ + How-To Grid -->
+    <div class="two-col-grid mb-16">
+      <section class="glass-panel p-content">
+        <h2 class="h2-small flex items-center gap-2">
+          <HelpCircle className="text-accent" size={22} /> Sub Abilities FAQ
+        </h2>
+        <div class="faq-list">
+          {faqs.map(faq => (
+            <details class="faq-item">
+              <summary class="faq-q">
+                {faq.question}
+                <ChevronRight className="faq-icon" size={18} />
+              </summary>
+              <p class="faq-a">{faq.answer}</p>
+            </details>
+          ))}
+        </div>
+      </section>
+
+      <section class="glass-panel p-content">
+        <h2 class="h2-small">How to Equip Bizarre Lineage Sub Abilities</h2>
+        <p class="body-text mb-6">Follow these steps to efficiently unlock your desired sub-ability on your first attempt.</p>
+        <div class="steps-list">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div>
+              <strong>Check the Counter Chart</strong>
+              <p class="step-text">Before spending time on a questline, identify if your Stand's weakness can be covered by a specific sub-ability. Vampire Stands benefit most from Hamon sub to get an anti-counter option.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div>
+              <strong>Locate the NPC</strong>
+              <p class="step-text">All Bizarre Lineage Sub Ability NPCs are tied to specific bus stops. Hamon: Bus Stop 13. Cyborg: Bus Stop 3. Vampire: Use a Vampire Mask first, then head to Dio's Chapel.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div>
+              <strong>Complete the Quest</strong>
+              <p class="step-text">Each NPC provides a short quest. Complete it to unlock the sub-ability permanently. Hamon requires no currency; Vampire requires a Vampire Mask item beforehand.</p>
+            </div>
+          </div>
+          <div class="step">
+            <div class="step-num">4</div>
+            <div>
+              <strong>Bind & Practice</strong>
+              <p class="step-text">Your new T, Y, U keys now perform your sub-ability moves. Spend time in a low-risk zone practicing the timing before jumping into ranked PvP with other Bizarre Lineage players.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- CTA -->
+    <section class="cta-section mb-20">
+      <h2 class="cta-title">Pair the Right Bizarre Lineage Sub Ability with the Perfect Stand</h2>
+      <p class="cta-body">Now that you're a sub-ability expert, maximize your damage potential by pairing your choice with a top-tier Stand. Check our full tier list and code database to find the optimal combo.</p>
+      <div class="cta-buttons">
+        <a href="/tier-list" class="btn-primary">
+          View Tier List <ArrowRight size={18} />
+        </a>
+        <a href="/stands" class="btn-secondary">
+          Browse All Stands
+        </a>
+      </div>
+    </section>
+  </div>
 </Layout>
 
 <style>
-  .subs-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
-  .sub-card { background: var(--color-card); border: 1px solid var(--color-border); border-radius: 16px; padding: 1.5rem; text-decoration: none; color: inherit; transition: all 0.25s; display: flex; flex-direction: column; gap: 0.6rem; }
-  .sub-card:hover { border-color: rgba(124,58,237,0.35); transform: translateY(-2px); }
-  .sub-part { font-size: 0.7rem; color: #f59e0b; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
-  .sub-name { margin: 0; font-size: 1.15rem; font-weight: 700; color: #e2e8f0; }
-  .sub-desc { margin: 0; font-size: 0.82rem; color: #94a3b8; line-height: 1.45; }
-  .sub-passive { font-size: 0.78rem; color: #94a3b8; background: rgba(124,58,237,0.05); padding: 0.5rem 0.8rem; border-radius: 8px; }
-  .sub-passive strong { color: #a855f7; }
-  .sub-stats { display: flex; gap: 1rem; }
-  .sub-stats div { display: flex; flex-direction: column; gap: 0.1rem; }
-  .sl { font-size: 0.65rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.06em; }
-  .sv { font-size: 0.9rem; font-weight: 700; color: #a855f7; }
-  @media (max-width: 640px) { .subs-grid { grid-template-columns: 1fr; } }
+  /* Hero */
+  .sub-hero {
+    position: relative;
+    padding: 5rem 0 4rem;
+    border-bottom: 1px solid var(--color-glass-border);
+    overflow: hidden;
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+  .hero-glow {
+    position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+    width: 900px; height: 100%;
+    background: radial-gradient(ellipse at top, rgba(168,85,247,0.15) 0%, transparent 65%);
+    z-index: 0; pointer-events: none;
+  }
+  .hero-kicker {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--color-accent);
+    margin-bottom: 1.2rem;
+  }
+  .hero-h1 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 900;
+    color: #fff;
+    line-height: 1.15;
+    margin: 0 auto 1.5rem;
+    max-width: 900px;
+  }
+  .hero-sub {
+    font-size: 1.1rem;
+    color: var(--color-text-secondary);
+    max-width: 780px;
+    margin: 0 auto 2rem;
+    line-height: 1.7;
+  }
+  .hero-chips { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; margin-bottom: 2rem; }
+  .chip {
+    font-size: 0.78rem; font-weight: 700; padding: 0.3rem 0.85rem;
+    border-radius: 99px; border: 1px solid;
+  }
+  .chip-green { color: #4ade80; border-color: rgba(74,222,128,0.3); background: rgba(74,222,128,0.08); }
+  .chip-yellow { color: #f59e0b; border-color: rgba(245,158,11,0.3); background: rgba(245,158,11,0.08); }
+  .chip-blue { color: #60a5fa; border-color: rgba(96,165,250,0.3); background: rgba(96,165,250,0.08); }
+  .hero-cta {
+    display: inline-block;
+    background: var(--color-primary);
+    color: #fff;
+    font-weight: 800;
+    padding: 0.9rem 2.2rem;
+    border-radius: 99px;
+    text-decoration: none;
+    transition: all 0.2s;
+    box-shadow: 0 0 24px rgba(139,92,246,0.35);
+  }
+  .hero-cta:hover { background: #a855f7; transform: translateY(-2px); }
+
+  /* Layout */
+  .page-body { max-width: 1100px; margin: 0 auto; padding: 0 1rem; }
+  .glass-panel {
+    background: var(--color-glass-bg);
+    border: 1px solid var(--color-glass-border);
+    border-radius: 20px;
+  }
+  .p-content { padding: 2rem; }
+
+  /* Typography */
+  .h2-title {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--color-text-primary);
+    margin: 0 0 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--color-glass-border);
+  }
+  .h2-small {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    margin: 0 0 1.2rem;
+  }
+  .section-desc {
+    color: var(--color-text-secondary);
+    margin-bottom: 2rem;
+    max-width: 750px;
+    line-height: 1.65;
+  }
+  .body-text { color: var(--color-text-secondary); line-height: 1.72; font-size: 1rem; }
+
+  /* Why section boxes */
+  .three-boxes { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.2rem; }
+  .info-box {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 14px;
+    padding: 1.4rem;
+    text-align: center;
+  }
+  .box-icon { width: 36px; height: 36px; margin: 0 auto 0.75rem; }
+  .info-box h4 { font-size: 0.95rem; font-weight: 700; color: var(--color-text-primary); margin: 0 0 0.4rem; }
+  .info-box p { font-size: 0.82rem; color: var(--color-text-secondary); margin: 0; line-height: 1.5; }
+
+  /* Sub Article */
+  .subs-stack { display: flex; flex-direction: column; gap: 2rem; }
+  .sub-article {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    overflow: hidden;
+    border-radius: 20px;
+    transition: border-color 0.25s;
+  }
+  .sub-article:hover { border-color: rgba(139,92,246,0.4); }
+  .sub-left {
+    padding: 2rem 2rem 2rem;
+    border-right: 1px solid var(--color-glass-border);
+  }
+  .sub-right { padding: 2rem; background: rgba(0,0,0,0.2); }
+
+  .sub-title-row { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.2rem; flex-wrap: wrap; }
+  .sub-part-badge {
+    font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--color-accent); background: rgba(245,158,11,0.1);
+    border: 1px solid rgba(245,158,11,0.25); border-radius: 6px; padding: 0.2rem 0.6rem;
+    white-space: nowrap;
+  }
+  .sub-h3 { font-size: 1.3rem; font-weight: 800; color: #fff; margin: 0; }
+
+  .passive-box {
+    display: flex; align-items: flex-start; gap: 0.8rem;
+    background: rgba(245,158,11,0.06); border: 1px solid rgba(245,158,11,0.15);
+    border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 1.5rem;
+  }
+  .passive-icon { width: 20px; height: 20px; flex-shrink: 0; margin-top: 2px; }
+  .passive-label { display: block; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-accent); margin-bottom: 0.25rem; }
+  .passive-text { font-size: 0.85rem; color: var(--color-text-secondary); margin: 0; line-height: 1.5; }
+
+  .stat-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 0.75rem; margin-bottom: 1.5rem; }
+  .stat-cell { background: rgba(0,0,0,0.25); border-radius: 10px; padding: 0.85rem; text-align: center; }
+  .stat-label { display: block; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-text-muted); margin-bottom: 0.3rem; }
+  .stat-val { font-size: 1.4rem; font-weight: 900; font-family: var(--font-heading); }
+  .pvp-col { color: #8b5cf6; }
+  .pve-col { color: #f59e0b; }
+  .surv-col { color: #4ade80; }
+
+  .moveset-heading { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-text-muted); margin: 0 0 0.75rem; }
+  .move-list { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1.5rem; }
+  .move-item { display: flex; align-items: flex-start; gap: 0.75rem; background: rgba(255,255,255,0.04); padding: 0.75rem 1rem; border-radius: 10px; }
+  .move-key {
+    background: rgba(139,92,246,0.15); color: var(--color-primary);
+    border: 1px solid rgba(139,92,246,0.3); border-radius: 6px;
+    width: 28px; height: 28px; display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 0.8rem; font-family: var(--font-heading); flex-shrink: 0;
+  }
+  .move-name { font-size: 0.88rem; font-weight: 700; color: var(--color-text-primary); display: block; margin-bottom: 0.2rem; }
+  .move-desc { font-size: 0.78rem; color: var(--color-text-secondary); margin: 0; line-height: 1.45; }
+
+  .obtain-box {
+    background: rgba(0,0,0, 0.3); border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px; padding: 1rem 1.2rem;
+  }
+  .obtain-label { display: block; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--color-text-muted); margin-bottom: 0.4rem; }
+  .obtain-text { font-size: 0.85rem; color: var(--color-text-secondary); margin: 0; line-height: 1.55; }
+
+  /* Pros/Cons */
+  .pros-cons-heading { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-text-muted); margin: 0 0 1rem; text-align: center; }
+  .pros-block, .cons-block { margin-bottom: 1.25rem; }
+  .pros-label { display: block; font-size: 0.8rem; font-weight: 700; color: #4ade80; margin-bottom: 0.5rem; }
+  .cons-label { display: block; font-size: 0.8rem; font-weight: 700; color: #f87171; margin-bottom: 0.5rem; }
+  .pros-list, .cons-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.4rem; }
+  .pros-list li { font-size: 0.8rem; color: var(--color-text-secondary); padding-left: 0.25rem; }
+  .cons-list li { font-size: 0.8rem; color: var(--color-text-secondary); padding-left: 0.25rem; }
+
+  .pairings-heading { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--color-text-muted); margin: 1.5rem 0 0.75rem; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 1.25rem; }
+  .pairings-grid { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .pairing-chip {
+    font-size: 0.72rem; font-weight: 700; color: #fff;
+    background: rgba(139,92,246,0.15); border: 1px solid rgba(139,92,246,0.3);
+    padding: 0.25rem 0.65rem; border-radius: 99px; text-decoration: none;
+    transition: background 0.2s;
+  }
+  .pairing-chip:hover { background: var(--color-primary); }
+
+  /* Coming Soon Card */
+  .coming-soon-card { padding: 2rem; position: relative; border-color: rgba(245,158,11,0.25); }
+  .coming-tag {
+    display: inline-flex; align-items: center;
+    font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+    color: var(--color-accent); background: rgba(245,158,11,0.1);
+    border: 1px solid rgba(245,158,11,0.2); border-radius: 6px;
+    padding: 0.25rem 0.7rem; margin-bottom: 1rem;
+  }
+
+  /* Two-col grid */
+  .two-col-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+
+  /* FAQ */
+  .faq-list { display: flex; flex-direction: column; gap: 0.75rem; }
+  .faq-item {
+    background: rgba(0,0,0,0.2); border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 12px; overflow: hidden;
+  }
+  .faq-q {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1rem 1.25rem; cursor: pointer; font-weight: 600;
+    color: var(--color-text-primary); font-size: 0.9rem;
+    list-style: none; transition: background 0.2s;
+  }
+  .faq-q:hover { background: rgba(255,255,255,0.04); }
+  .faq-q::-webkit-details-marker { display: none; }
+  .faq-icon { color: var(--color-text-muted); flex-shrink: 0; transition: transform 0.2s; }
+  details[open] .faq-icon { transform: rotate(90deg); }
+  .faq-a { font-size: 0.85rem; color: var(--color-text-secondary); padding: 0 1.25rem 1rem; margin: 0; line-height: 1.65; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 0.75rem; }
+
+  /* Steps */
+  .steps-list { display: flex; flex-direction: column; gap: 1.2rem; }
+  .step { display: flex; gap: 1rem; align-items: flex-start; }
+  .step-num {
+    width: 32px; height: 32px; border-radius: 50%; background: var(--color-primary);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; color: #fff; font-size: 0.9rem; flex-shrink: 0;
+  }
+  .step strong { display: block; font-size: 0.9rem; color: var(--color-text-primary); margin-bottom: 0.3rem; }
+  .step-text { font-size: 0.82rem; color: var(--color-text-secondary); margin: 0; line-height: 1.55; }
+
+  /* CTA */
+  .cta-section {
+    text-align: center; padding: 4rem 2rem;
+    background: radial-gradient(ellipse at center, rgba(139,92,246,0.1) 0%, transparent 70%);
+    border: 1px solid rgba(255,255,255,0.05); border-radius: 24px;
+  }
+  .cta-title { font-size: clamp(1.5rem, 3vw, 2.2rem); font-weight: 900; color: #fff; margin: 0 0 1rem; }
+  .cta-body { color: var(--color-text-secondary); max-width: 650px; margin: 0 auto 2rem; font-size: 1rem; line-height: 1.65; }
+  .cta-buttons { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: #fff; color: #0f0a1e; font-weight: 800; padding: 0.9rem 2rem;
+    border-radius: 99px; text-decoration: none; transition: all 0.2s;
+    box-shadow: 0 0 20px rgba(255,255,255,0.15);
+  }
+  .btn-primary:hover { background: #e9d5ff; transform: translateY(-2px); }
+  .btn-secondary {
+    display: inline-flex; align-items: center;
+    background: rgba(255,255,255,0.07); color: var(--color-text-primary); font-weight: 700;
+    padding: 0.9rem 2rem; border-radius: 99px; text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.12); transition: all 0.2s;
+  }
+  .btn-secondary:hover { background: rgba(255,255,255,0.12); }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    .sub-article { grid-template-columns: 1fr; }
+    .sub-left { border-right: none; border-bottom: 1px solid var(--color-glass-border); }
+    .two-col-grid { grid-template-columns: 1fr; }
+    .three-boxes { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 640px) {
+    .stat-grid { grid-template-columns: 1fr 1fr; }
+  }
 </style>

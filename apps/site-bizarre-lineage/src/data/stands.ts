@@ -19,6 +19,7 @@ export interface Stand {
     awakening?: string;   // awakening ability description
     obtainMethod: string;
     tips: string[];
+    videoGuide?: string;  // Optional YouTube video URL for specific stands
 }
 
 export interface Ability {
@@ -312,6 +313,7 @@ export const stands: Stand[] = [
             { key: "V", name: "Fog", description: "Create a fog zone reducing enemy visibility.", cooldown: "15s" },
         ],
         obtainMethod: "Stand Arrow (Legendary rarity, ~5% chance).",
+        videoGuide: "https://www.youtube.com/embed/N0bhlrp3G8A",
         tips: [
             "Tornado provides excellent crowd control in group fights",
             "Rain + Lightning Strike combo controls areas effectively",
