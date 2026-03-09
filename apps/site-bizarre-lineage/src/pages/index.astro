@@ -100,13 +100,13 @@ const faqs = [
     <div class="container">
       <h2 class="section-title">Explore Bizarre Lineage Tools & Guides</h2>
       <div class="bento-grid">
-        <a href="/tier-list" class="bento-card bento-large glass-card align-bottom relative group">
-          <div class="absolute top-6 right-6 opacity-20 group-hover:opacity-40 transition-opacity">
+        <a href="/tier-list" class="bento-card bento-large glass-card align-bottom">
+          <div class="bento-watermark">
             <Trophy size={120} />
           </div>
-          <div class="relative z-10 w-full max-w-[85%]">
-            <Trophy size={40} className="bento-icon text-accent mb-4" />
-            <div class="bento-badges flex gap-2 mb-3">
+          <div class="bento-inner">
+            <Trophy size={40} className="bento-icon text-accent" />
+            <div class="bento-badges">
               <span class="badge badge-s">S+ Tier</span>
               <span class="badge badge-meta">Meta</span>
             </div>
@@ -140,14 +140,14 @@ const faqs = [
 
   <!-- TOP STANDS SECTION -->
   <section class="top-stands-section section">
-    <div class="container text-center">
+    <div class="container">
       <h2 class="section-title">Top Bizarre Lineage Stands This Meta</h2>
       <p class="section-subtitle">
-        The dominant picks controlling the current Bizarre Lineage PvP ladder. 
+        The dominant picks controlling the current Bizarre Lineage PvP ladder.
         These Stands deliver overwhelming damage, crowd control, and mobility.
       </p>
       
-      <div class="stands-grid text-left mt-8">
+      <div class="stands-grid">
         {topStands.map((stand) => (
           <StandCard stand={stand} />
         ))}
@@ -419,6 +419,26 @@ const faqs = [
   justify-content: flex-end;
 }
 
+.bento-watermark {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  opacity: 0.15;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.bento-large:hover .bento-watermark {
+  opacity: 0.3;
+}
+
+.bento-inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 85%;
+}
+
 .bento-wide {
   grid-column: span 2;
   display: flex;
@@ -490,12 +510,17 @@ const faqs = [
   transform: translateX(4px);
 }
 
+.text-purple { color: var(--color-primary); }
+.text-accent { color: var(--color-accent); }
+
 /* Stands Grid */
 .stands-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 1.5rem;
   margin-bottom: 3rem;
+  margin-top: 2rem;
+  text-align: left;
 }
 
 .link-with-arrow {
