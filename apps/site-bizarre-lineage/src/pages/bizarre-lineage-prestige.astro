@@ -1,0 +1,749 @@
+---
+// src/pages/bizarre-lineage-prestige.astro
+import Layout from "../layouts/Layout.astro";
+import { Zap, Shield, Gem, Package, Sparkles, Unlock, Mountain, Users, ArrowUpCircle, Sword } from "lucide-react";
+
+const faqs = [
+  {
+    question: "What is bizarre lineage prestige and how does it work?",
+    answer: "Bizarre lineage prestige is a progression system that resets your character's level in exchange for permanent stat multipliers, exclusive cosmetic rewards, and access to locked Prestige-only abilities. Each bizarre lineage prestige tier compounds the bonus, rewarding dedicated players who commit to grinding through the system."
+  },
+  {
+    question: "How many bizarre lineage prestige levels are there?",
+    answer: "There are currently 5 bizarre lineage prestige levels, each with a unique title, color aura, and bonus stat modifier. Reaching Prestige 5 awards a special permanent cosmetic aura and unlocks Prestige bonus multipliers that apply to all future leveling sessions."
+  },
+  {
+    question: "Do I lose my Stand when I do bizarre lineage prestige?",
+    answer: "No — your Stand is retained after bizarre lineage prestige. Only your character's base level and skill points are reset. Your inventory, Stands, cash, and cosmetics remain fully intact, making prestige a pure bonus system rather than a punishment."
+  },
+  {
+    question: "Is bizarre lineage prestige worth doing?",
+    answer: "Yes, for players who actively grind PvP, bizarre lineage prestige is strongly worth pursuing. The bonus stat multipliers from Prestige stack with Stand-specific passives, directly improving your damage output, health scaling, and EXP gain speed — often tipping close matchups in your favor."
+  },
+  {
+    question: "What is the fastest way to reach bizarre lineage prestige?",
+    answer: "Max-speed bizarre lineage prestige is achieved by grinding the highest-yield XP zones (Mountain Plateau and Boss Rush), stacking an EXP Boost code or item when available, using a high-tier Stand with wide AOE, and working with a party of 2–3 players for mob-clear bonuses."
+  },
+  {
+    question: "What are Prestige Shards and how do I get them?",
+    answer: "Prestige Shards are a special bizarre lineage prestige currency earned by completing quests, defeating boss enemies, and clearing daily missions after you have reached Prestige I or higher. You spend Prestige Shards in the Prestige Shop to purchase exclusive cosmetics, bonus Stand Arrows, and locked enhancements that are unavailable to non-prestige players."
+  },
+  {
+    question: "How do I get free Stand Storage in bizarre lineage prestige?",
+    answer: "Stand Storage slots can be unlocked for free by leveling your bizarre lineage prestige tier. Each prestige reset after Prestige II rewards you with one additional Stand Storage slot instantly credited to your account. You can also earn temporary Stand Storage expansions by spending Prestige Shards in the Prestige Shop."
+  },
+  {
+    question: "What is bizarre lineage prestige and how does it work?",
+    answer: "Bizarre lineage prestige is a progression system that resets your character's level in exchange for permanent stat multipliers, Prestige Shards, exclusive cosmetic rewards, and access to locked Prestige-only abilities. Each bizarre lineage prestige tier compounds the bonus, rewarding dedicated players who commit to grinding through the system."
+  },
+  {
+    question: "How many bizarre lineage prestige levels are there?",
+    answer: "There are currently 5 bizarre lineage prestige levels, each with a unique title, color aura, and bonus stat modifier. Reaching Prestige 5 awards a special permanent cosmetic aura and unlocks Prestige bonus multipliers that apply to all future leveling sessions."
+  },
+  {
+    question: "Do I lose my Stand when I do bizarre lineage prestige?",
+    answer: "No — your Stand is retained after bizarre lineage prestige. Only your character's base level and skill points are reset. Your inventory, Stands, cash, and cosmetics remain fully intact, making prestige a pure bonus system rather than a punishment."
+  },
+  {
+    question: "Is bizarre lineage prestige worth doing?",
+    answer: "Yes, for players who actively grind PvP, bizarre lineage prestige is strongly worth pursuing. The bonus stat multipliers from Prestige stack with Stand-specific passives, directly improving your damage output, health scaling, and EXP gain speed — often tipping close matchups in your favor."
+  },
+  {
+    question: "What is the fastest way to reach bizarre lineage prestige?",
+    answer: "Max-speed bizarre lineage prestige is achieved by grinding the highest-yield XP zones, stacking an EXP Boost code or item when available, using a high-tier Stand with wide AOE, and working with a party of 2–3 players for mob-clear bonuses."
+  },
+  {
+    question: "Can I prestige more than once in bizarre lineage?",
+    answer: "Yes, bizarre lineage prestige supports multiple resets. When you hit max level on a prestige tier, you can prestige again up to the current cap of Prestige 5. Each reset layers additional permanent bonuses that carry forward and never expire."
+  },
+];
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqs.map((f) => ({
+    "@type": "Question",
+    "name": f.question,
+    "acceptedAnswer": { "@type": "Answer", "text": f.answer },
+  })),
+};
+
+const prestigeSteps = [
+  {
+    step: "1",
+    title: "Reach Max Level",
+    desc: "Before you can access bizarre lineage prestige, you need to hit the current max level (Level 100). Use EXP Boosts and farm the Mountain Plateau zone for the most efficient XP per hour.",
+  },
+  {
+    step: "2",
+    title: "Open the Prestige Menu",
+    desc: "Press M to open the main menu, then select the Prestige tab — a gold star icon on the left sidebar. You'll see a preview of your bizarre lineage prestige rewards and the stat bonuses you'll gain.",
+  },
+  {
+    step: "3",
+    title: "Confirm Your Prestige Reset",
+    desc: "Click the Prestige button to reset your level. Your level resets to 1, but your bizarre lineage prestige tier increases by 1, and you receive your locked bonus multipliers immediately.",
+  },
+  {
+    step: "4",
+    title: "Collect Your Prestige Rewards",
+    desc: "After confirming bizarre lineage prestige, check your inventory. Exclusive cosmetics, a Prestige aura, one free Stand Arrow, and your permanent stat bonus are all instantly credited.",
+  },
+  {
+    step: "5",
+    title: "Grind Back to Max Level",
+    desc: "With your new bizarre lineage prestige multipliers active, your EXP gain is permanently faster. Use the same Mountain Plateau route, and you'll find the re-level loop significantly shorter each prestige cycle.",
+  },
+];
+
+const prestigeFeatures = [
+  {
+    icon: Zap,
+    title: "Permanent XP Multipliers",
+    desc: "Every bizarre lineage prestige tier adds a permanent EXP gain bonus that stacks. By Prestige 5, you level up to 50% faster than a non-prestige account — making every future grind session quicker and less punishing.",
+  },
+  {
+    icon: Shield,
+    title: "Prestige Stat Buffs",
+    desc: "Bizarre lineage prestige grants baseline permanent increases to health pool, base damage, and defense scaling — stats that compound with your Stand's individual kit.",
+  },
+  {
+    icon: Gem,
+    title: "Prestige Shards",
+    desc: "Each bizarre lineage prestige yields Prestige Shards — a special currency only accessible to players who have reached at least Prestige I. Use Shards in the Prestige Shop for exclusive items, Stand Arrows, and locked cosmetics unavailable to non-prestige players.",
+  },
+  {
+    icon: Package,
+    title: "Free Stand Storage",
+    desc: "A common pain point in the early game — bizarre lineage prestige rewards additional Stand Storage slots at higher tiers, letting you hoard multiple top-tier Stands simultaneously without spending Robux.",
+  },
+  {
+    icon: Sparkles,
+    title: "Exclusive Prestige Cosmetics",
+    desc: "Each bizarre lineage prestige level awards a unique aura, title badge, and character effect visible to all players in the server. Prestige cosmetics cannot be obtained any other way, making them the definitive status symbol in-game.",
+  },
+  {
+    icon: Unlock,
+    title: "Locked Ability Access",
+    desc: "Certain bizarre lineage prestige tiers unlock sealed sub-abilities and fighting style enhancements invisible to non-prestige players, giving you an immediate tactical edge in competitive PvP.",
+  },
+];
+---
+
+<Layout
+  title="Bizarre Lineage Prestige Guide — How to Prestige & Max Rewards"
+  description="Everything you need to know about bizarre lineage prestige: step-by-step guide, stat bonuses, prestige rewards, unlock tiers, and the fastest route to Prestige 5. Start prestiging now."
+  canonicalPath="/bizarre-lineage-prestige"
+>
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+  <!-- Hero Banner -->
+  <section class="prestige-hero">
+    <div class="container hero-inner">
+      <div class="hero-badge">Prestige System Guide</div>
+      <h1 class="hero-title">
+        Bizarre Lineage Prestige — Complete Guide to Every Tier & Reward
+      </h1>
+      <p class="hero-subtitle">
+        Bizarre lineage prestige is the endgame progression system that turns
+        max-level players into permanently buffed powerhouses. This guide covers
+        how the bizarre lineage prestige system works, what rewards you earn at
+        every tier, and the fastest path to Prestige 5.
+      </p>
+      <div class="hero-ctas">
+        <a href="#how-to-prestige" class="btn btn-primary">
+          How to Prestige ↓
+        </a>
+        <a href="#prestige-rewards" class="btn btn-outline">
+          View Prestige Rewards
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Intro SEO Block -->
+  <section class="section">
+    <div class="container">
+      <div class="intro-block glass-panel">
+        <p>
+          <strong>Bizarre lineage prestige</strong> is one of the most impactful decisions
+          you can make in Roblox Bizarre Lineage. The bizarre lineage prestige system
+          was designed to reward long-term players with compounding permanent buffs —
+          meaning the earlier you start prestiging, the greater your overall advantage.
+          Over 60,000 players are currently active in Bizarre Lineage, and the majority
+          of the top PvP leaderboard consists of players who have completed at least one
+          bizarre lineage prestige cycle.
+        </p>
+        <p>
+          Unlike most Roblox games, bizarre lineage prestige does not strip your
+          existing Stands or inventory. It is a net-positive reset that also grants you
+          <strong>Prestige Shards</strong> — a special in-game currency only accessible to
+          prestige players, used to buy exclusive items in the Prestige Shop. Higher tiers
+          also unlock extra <strong>free Stand Storage slots</strong>, so you can collect
+          multiple S-tier Stands without paying Robux. This guide covers every step — from
+          your very first prestige reset to Prestige 5 and the Prestige Shard economy.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Video Tutorial 1: How to Prestige -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">Bizarre Lineage Prestige Video Guide</h2>
+      <p class="section-subtitle">
+        Watch this community tutorial to see the exact bizarre lineage prestige process,
+        including every reward at each tier — so you know exactly what you're grinding for.
+      </p>
+      <div class="videos-grid">
+        <div class="video-card glass-panel">
+          <span class="video-label">How to Prestige + Every Prestige Reward Showcase</span>
+          <div class="video-wrapper">
+            <iframe
+              src="https://www.youtube.com/embed/pU43C_o6RjQ"
+              title="How to Prestige in Bizarre Lineage - Every Prestige Reward Showcase"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+              loading="lazy"
+              width="560"
+              height="315"
+            ></iframe>
+          </div>
+          <p class="video-desc">
+            A complete visual walkthrough of the bizarre lineage prestige process, showcasing every tier's cosmetic
+            and stat reward. Essential viewing before your first reset.
+          </p>
+        </div>
+        <div class="video-card glass-panel">
+          <span class="video-label">How to Get FREE Stand Storage, Prestige Shards & Level Fast</span>
+          <div class="video-wrapper">
+            <iframe
+              src="https://www.youtube.com/embed/clUZg5M-Go8"
+              title="Bizarre Lineage - How to Get FREE Stand Storage, Prestige Shards & Level Up Fast"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+              loading="lazy"
+              width="560"
+              height="315"
+            ></iframe>
+          </div>
+          <p class="video-desc">
+            A full guide covering the bizarre lineage prestige economy — how to earn Prestige Shards,
+            unlock free Stand Storage slots, and level up fast between each reset.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="section" id="prestige-rewards">
+    <div class="container">
+      <h2 class="section-title">What Bizarre Lineage Prestige Gives You</h2>
+      <p class="section-subtitle">
+        Four permanent categories of bonuses unlock across the bizarre lineage
+        prestige tier ladder.
+      </p>
+      <div class="features-grid">
+        {
+          prestigeFeatures.map((f) => {
+            const Icon = f.icon;
+            return (
+              <div class="feature-card glass-panel group">
+                <div class="feature-icon-wrapper">
+                  <Icon className="w-8 h-8 text-purple-400 group-hover:scale-110 transition-transform duration-300" strokeWidth={1.5} />
+                </div>
+                <h3>{f.title}</h3>
+                <p>{f.desc}</p>
+              </div>
+            );
+          })
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Prestige Tier Table -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">Bizarre Lineage Prestige Tier Breakdown</h2>
+      <p class="section-subtitle">
+        Each bizarre lineage prestige tier stacks on top of the previous one. All
+        bonuses are permanent and never reset.
+      </p>
+      <div class="table-wrapper glass-panel">
+        <table class="prestige-table" aria-label="Bizarre lineage prestige tier rewards table">
+          <thead>
+            <tr>
+              <th>Prestige Tier</th>
+              <th>Title Badge</th>
+              <th>Stat Bonus</th>
+              <th>Exclusive Reward</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="tier-badge p1">Prestige I</span></td>
+              <td>Awakened</td>
+              <td>+10% EXP · +5% HP</td>
+              <td>Silver Aura + Stand Arrow</td>
+            </tr>
+            <tr>
+              <td><span class="tier-badge p2">Prestige II</span></td>
+              <td>Rising Star</td>
+              <td>+20% EXP · +8% DMG</td>
+              <td>Gold Aura + Rokakaka Fruit</td>
+            </tr>
+            <tr>
+              <td><span class="tier-badge p3">Prestige III</span></td>
+              <td>Veteran</td>
+              <td>+30% EXP · +12% HP · +8% DMG</td>
+              <td>Violet Halo + Sealed Sub-Ability</td>
+            </tr>
+            <tr>
+              <td><span class="tier-badge p4">Prestige IV</span></td>
+              <td>Legend</td>
+              <td>+40% EXP · +15% HP · +12% DMG</td>
+              <td>Crimson Wing Aura + Secret Title</td>
+            </tr>
+            <tr>
+              <td><span class="tier-badge p5">Prestige V</span></td>
+              <td>Transcendent</td>
+              <td>+50% EXP · +20% HP · +18% DMG</td>
+              <td>Obsidian Halo + Prestige-Only Skin</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="table-note">
+        * Bizarre lineage prestige bonuses are cumulative — a Prestige V player
+        receives all Prestige I through V bonuses simultaneously.
+      </p>
+    </div>
+  </section>
+
+  <!-- How To Prestige Steps -->
+  <section class="section" id="how-to-prestige">
+    <div class="container">
+      <h2 class="section-title">How to Do Bizarre Lineage Prestige</h2>
+      <p class="section-subtitle">
+        Follow these five steps to complete your first bizarre lineage prestige
+        and collect your rewards instantly.
+      </p>
+      <div class="steps-grid">
+        {
+          prestigeSteps.map((s) => (
+            <div class="step-card glass-panel">
+              <span class="step-num">{s.step}</span>
+              <h3>{s.title}</h3>
+              <p>{s.desc}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Best Tips Block -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">Bizarre Lineage Prestige — Pro Tips for Fast Completion</h2>
+      <div class="tips-grid">
+        <div class="tip-card glass-panel group">
+          <div class="tip-header">
+            <Mountain className="w-5 h-5 text-amber-400" />
+            <h3>Farm Mountain Plateau</h3>
+          </div>
+          <p>
+            Mountain Plateau mobs yield roughly 35% more XP per kill than the
+            default spawn zones. For every bizarre lineage prestige cycle, this
+            zone alone cuts total grind time by an estimated 2–3 hours at Prestige levels 1–3.
+          </p>
+        </div>
+        <div class="tip-card glass-panel group">
+          <div class="tip-header">
+            <Users className="w-5 h-5 text-blue-400" />
+            <h3>Party Up for Mob-Clear Bonuses</h3>
+          </div>
+          <p>
+            Bizarre lineage prestige re-leveling benefits from party XP sharing
+            — a party of 3 players actively farming clears mobs 2–3× faster
+            than solo, keeping the XP-per-hour rate competitive with EXP Boosts.
+          </p>
+        </div>
+        <div class="tip-card glass-panel group">
+          <div class="tip-header">
+            <ArrowUpCircle className="w-5 h-5 text-emerald-400" />
+            <h3>Stack EXP Boosts</h3>
+          </div>
+          <p>
+            Before starting a bizarre lineage prestige loop, use any available
+            EXP Boost codes or items. The boost stacks multiplicatively with
+            your Prestige EXP multiplier, dramatically compressing the time to
+            hit max level on each new cycle.
+          </p>
+        </div>
+        <div class="tip-card glass-panel group">
+          <div class="tip-header">
+            <Sword className="w-5 h-5 text-rose-400" />
+            <h3>Keep S-Tier Stands Before Prestige</h3>
+          </div>
+          <p>
+            Since bizarre lineage prestige retains your Stand, always check our{" "}
+            <a href="/tier-list">Bizarre Lineage Tier List</a> before prestige
+            and only hold S or S+ Stands going into a reset — your buffed stats
+            will compound even harder on a top-tier Stand kit.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">Bizarre Lineage Prestige — Frequently Asked Questions</h2>
+      <div class="faq-list">
+        {
+          faqs.map((f) => (
+            <details class="faq-item">
+              <summary>{f.question}</summary>
+              <p>{f.answer}</p>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="section">
+    <div class="container">
+      <div class="cta-block glass-panel">
+        <h2>Ready to Start Your Bizarre Lineage Prestige Journey?</h2>
+        <p>
+          Check the tier list to pick the strongest Stand before you do bizarre lineage prestige,
+          then grab active codes for a free EXP Boost to speed up your first prestige re-level cycle.
+          Don't forget to track your Prestige Shards in the Prestige Shop.
+        </p>
+        <div class="cta-links">
+          <a href="/tier-list" class="btn btn-primary">View Prestige-Ready Stands</a>
+          <a href="/codes" class="btn btn-outline">Get Free EXP Boost Codes</a>
+          <a href="/skins" class="btn btn-outline">Browse Prestige Skins</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  /* Hero */
+  .prestige-hero {
+    position: relative;
+    overflow: hidden;
+    background: radial-gradient(circle at top center, rgba(124, 58, 237, 0.15) 0%, rgba(15, 23, 42, 0) 70%),
+                linear-gradient(135deg, rgba(15, 23, 42, 1) 0%, rgba(30, 41, 59, 0.5) 100%);
+    border-bottom: 1px solid var(--color-glass-border);
+    padding: 6rem 0 5rem;
+  }
+  .prestige-hero::before {
+    content: '';
+    position: absolute;
+    top: -50%; left: -10%;
+    width: 60%; height: 150%;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 60%);
+    filter: blur(80px);
+    z-index: 0;
+    pointer-events: none;
+  }
+  .hero-inner { position: relative; z-index: 1; text-align: center; }
+  .hero-badge {
+    display: inline-block;
+    background: rgba(139, 92, 246, 0.1);
+    color: #c084fc;
+    border: 1px solid rgba(139, 92, 246, 0.3);
+    border-radius: 9999px;
+    padding: 0.4rem 1.2rem;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.2);
+  }
+  .hero-title {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 900;
+    line-height: 1.1;
+    max-width: 900px;
+    margin: 0 auto 1.5rem;
+    background: linear-gradient(135deg, #ffffff 0%, #d8b4fe 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-shadow: 0 10px 30px rgba(139, 92, 246, 0.15);
+  }
+  .hero-subtitle {
+    color: #94a3b8;
+    font-size: 1.15rem;
+    max-width: 720px;
+    margin: 0 auto 2.5rem;
+    line-height: 1.8;
+  }
+  .hero-ctas { display: flex; gap: 1.2rem; justify-content: center; flex-wrap: wrap; }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.8rem 1.8rem;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    min-height: 48px;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, #7c3aed, #9333ea);
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(124, 58, 237, 0.3);
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(124, 58, 237, 0.5);
+    background: linear-gradient(135deg, #8b5cf6, #a855f7);
+  }
+  .btn-outline {
+    background: rgba(15, 23, 42, 0.5);
+    color: #e2e8f0;
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    backdrop-filter: blur(10px);
+  }
+  .btn-outline:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(148, 163, 184, 0.4);
+    color: #fff;
+  }
+
+  /* Glass Panel Formats */
+  .glass-panel {
+    background: rgba(15, 23, 42, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    padding: 2rem;
+    backdrop-filter: blur(16px);
+    transition: all 0.3s ease;
+  }
+  .intro-block p {
+    color: #cbd5e1;
+    line-height: 1.85;
+    margin: 0 0 1.2rem;
+    font-size: 1.05rem;
+  }
+  .intro-block p:last-child { margin-bottom: 0; }
+  .intro-block strong { color: #fff; font-weight: 600; }
+
+  /* Features */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  .feature-card {
+    position: relative;
+    overflow: hidden;
+  }
+  .feature-card:hover {
+    transform: translateY(-5px);
+    border-color: rgba(139, 92, 246, 0.3);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2), inset 0 0 20px rgba(139, 92, 246, 0.05);
+  }
+  .feature-icon-wrapper {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    border-radius: 14px;
+    background: rgba(139, 92, 246, 0.1);
+    border: 1px solid rgba(139, 92, 246, 0.2);
+    margin-bottom: 1.2rem;
+  }
+  .feature-card h3 { margin: 0 0 0.8rem; font-size: 1.1rem; font-weight: 700; color: #f8fafc; }
+  .feature-card p { margin: 0; font-size: 0.95rem; color: #94a3b8; line-height: 1.6; }
+
+  /* Table */
+  .table-wrapper { overflow-x: auto; border-radius: 16px; padding: 0; }
+  .prestige-table { width: 100%; border-collapse: collapse; font-size: 0.95rem; }
+  .prestige-table th {
+    text-align: left;
+    padding: 1.2rem;
+    color: #94a3b8;
+    font-weight: 600;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    background: rgba(0,0,0,0.2);
+    white-space: nowrap;
+  }
+  .prestige-table td {
+    padding: 1.2rem;
+    color: #cbd5e1;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  }
+  .prestige-table tr:last-child td { border-bottom: none; }
+  .prestige-table tr:hover td { background: rgba(255, 255, 255, 0.03); }
+  .tier-badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.3rem 0.8rem;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.02em;
+  }
+  .p1 { background: rgba(148,163,184,0.15); border: 1px solid rgba(148,163,184,0.3); color: #cbd5e1; }
+  .p2 { background: rgba(245,158,11,0.15); border: 1px solid rgba(245,158,11,0.3); color: #fbbf24; }
+  .p3 { background: rgba(168,85,247,0.15); border: 1px solid rgba(168,85,247,0.3); color: #c084fc; }
+  .p4 { background: rgba(239,68,68,0.15); border: 1px solid rgba(239,68,68,0.3); color: #f87171; }
+  .p5 { background: linear-gradient(135deg, rgba(168,85,247,0.2), rgba(245,158,11,0.2)); border: 1px solid rgba(245,158,11,0.4); color: #fcd34d; box-shadow: 0 0 15px rgba(245,158,11,0.15); }
+  .table-note { margin-top: 1.2rem; font-size: 0.85rem; color: #64748b; }
+
+  /* Steps */
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+  }
+  .step-card { padding: 1.8rem; position: relative; }
+  .step-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, #8b5cf6, transparent);
+    opacity: 0.5;
+  }
+  .step-card:hover { transform: translateY(-3px); border-color: rgba(139, 92, 246, 0.2); }
+  .step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(139,92,246,0.2), rgba(139,92,246,0.05));
+    border: 1px solid rgba(139,92,246,0.3);
+    color: #c084fc;
+    font-weight: 800;
+    font-size: 1.2rem;
+    margin-bottom: 1.2rem;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  }
+  .step-card h3 { margin: 0 0 0.6rem; font-size: 1.05rem; font-weight: 700; color: #f8fafc; }
+  .step-card p { margin: 0; font-size: 0.95rem; color: #94a3b8; line-height: 1.6; }
+
+  /* Tips */
+  .tips-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+  .tip-card { padding: 1.5rem 1.8rem; }
+  .tip-card:hover { transform: translateY(-3px); border-color: rgba(255,255,255,0.1); }
+  .tip-header { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.8rem; }
+  .tip-header h3 { margin: 0; font-size: 1.05rem; font-weight: 600; color: #f8fafc; }
+  .tip-card p { margin: 0; font-size: 0.95rem; color: #94a3b8; line-height: 1.6; }
+  .tip-card a { color: #c084fc; text-decoration: none; font-weight: 500; transition: color 0.2s; }
+  .tip-card a:hover { color: #d8b4fe; text-decoration: underline; }
+
+  /* FAQ */
+  .faq-list { max-width: 860px; margin: 0 auto; }
+  .faq-item {
+    background: rgba(15, 23, 42, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    margin-bottom: 1rem;
+    overflow: hidden;
+    transition: all 0.2s;
+  }
+  .faq-item:hover { background: rgba(15, 23, 42, 0.7); border-color: rgba(255, 255, 255, 0.1); }
+  .faq-item summary {
+    padding: 1.5rem;
+    cursor: pointer;
+    font-weight: 600;
+    color: #e2e8f0;
+    font-size: 1.05rem;
+    list-style: none;
+    position: relative;
+  }
+  .faq-item summary::-webkit-details-marker { display: none; }
+  .faq-item summary::after {
+    content: '+';
+    position: absolute;
+    right: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.5rem;
+    color: #64748b;
+    font-weight: 300;
+    transition: transform 0.3s ease;
+  }
+  .faq-item[open] summary::after { transform: translateY(-50%) rotate(45deg); }
+  .faq-item p { padding: 0 1.5rem 1.5rem; margin: 0; color: #94a3b8; line-height: 1.7; font-size: 0.95rem; }
+
+  /* CTA */
+  .cta-block {
+    text-align: center;
+    background: linear-gradient(135deg, rgba(124,58,237,0.15), rgba(15,23,42,0.8));
+    border: 1px solid rgba(139,92,246,0.2);
+    padding: 4rem 2rem;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  }
+  .cta-block h2 { margin: 0 0 1rem; font-size: 2rem; font-weight: 800; color: #fff; }
+  .cta-block p { margin: 0 auto 2rem; color: #cbd5e1; font-size: 1.1rem; max-width: 650px; line-height: 1.7; }
+  .cta-links { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+  /* Videos */
+  .videos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+  }
+  .video-card { display: flex; flex-direction: column; gap: 0.8rem; }
+  .video-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--color-primary);
+  }
+  .video-wrapper {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%; /* 16:9 */
+    height: 0;
+    overflow: hidden;
+    border-radius: 10px;
+    background: rgba(0,0,0,0.4);
+  }
+  .video-wrapper iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+  .video-desc {
+    margin: 0;
+    font-size: 0.84rem;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+  }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    .prestige-hero { padding: 3rem 0 2.5rem; }
+    .steps-grid { grid-template-columns: 1fr; }
+    .tips-grid { grid-template-columns: 1fr; }
+    .videos-grid { grid-template-columns: 1fr; }
+    .hero-ctas { flex-direction: column; align-items: center; }
+    .cta-links { flex-direction: column; align-items: center; }
+  }
+</style>
