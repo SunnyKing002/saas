@@ -1,6 +1,7 @@
 ---
 // src/layouts/Layout.astro
 import Navbar from "../components/Navbar.astro";
+import Sidebar from "../components/Sidebar.astro";
 import Footer from "../components/Footer.astro";
 import { siteConfig } from "../../site.config";
 
@@ -34,9 +35,8 @@ const canonicalUrl = new URL(canonicalPath, Astro.site || siteConfig.domain);
     <link rel="canonical" href={canonicalUrl} />
     <meta name="robots" content="index, follow" />
 
-    <!-- Monetag -->
-    <meta name="monetag" content="f6cbb276ddaf54531df97a4bbb99f532">
-    <script src="https://quge5.com/88/tag.min.js" data-zone="218115" async data-cfasync="false"></script>
+    <!-- Monetag / Vignette Ad -->
+    <script is:inline>(function(s){s.dataset.zone='10706691',s.src='https://gizokraijaw.net/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
 
     <!-- Google AdSense -->
     <meta name="google-adsense-account" content="ca-pub-5724967585602439" />
@@ -101,6 +101,15 @@ const canonicalUrl = new URL(canonicalPath, Astro.site || siteConfig.domain);
     <noscript>
       <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;600;800;900&display=swap">
     </noscript>
+    <!-- Sidebar State check to prevent FOUC -->
+    <script is:inline>
+      const sidebarState = localStorage.getItem('bizarre-lineage-sidebar');
+      if (sidebarState === 'collapsed') {
+        document.documentElement.classList.add('sidebar-collapsed');
+      } else {
+        document.documentElement.classList.add('sidebar-expanded');
+      }
+    </script>
   </head>
   <body>
     <!-- Ambient Background Glows -->
@@ -108,7 +117,8 @@ const canonicalUrl = new URL(canonicalPath, Astro.site || siteConfig.domain);
     <div class="ambient-glow glow-bottom-right"></div>
     
     <Navbar />
-    <main class="main-content">
+    <Sidebar />
+    <main class="main-content has-sidebar">
       <slot />
     </main>
     <Footer />
@@ -216,6 +226,28 @@ const canonicalUrl = new URL(canonicalPath, Astro.site || siteConfig.domain);
     flex: 1;
     min-height: calc(100vh - 140px); /* rough navbar + footer height */
     padding-bottom: 4rem;
+    transition: padding-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Accommodate Left Sidebar */
+  html.sidebar-expanded .has-sidebar {
+    padding-left: 280px; /* 240px sidebar + 40px gap */
+  }
+
+  html.sidebar-collapsed .has-sidebar {
+    padding-left: 112px; /* 72px compressed sidebar + 40px gap */
+  }
+
+  @media (max-width: 1300px) {
+    html.sidebar-expanded .has-sidebar, html.sidebar-collapsed .has-sidebar {
+      padding-left: 112px; 
+    }
+  }
+
+  @media (max-width: 1024px) {
+    html.sidebar-expanded .has-sidebar, html.sidebar-collapsed .has-sidebar {
+      padding-left: 0; 
+    }
   }
 
   /* Structural Classes */

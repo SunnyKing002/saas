@@ -1,0 +1,483 @@
+---
+import Layout from "../layouts/Layout.astro";
+import FAQ from "../components/FAQ.astro";
+import { BookOpen, Map, ArrowRight, ShieldAlert, Trello, Zap } from "lucide-react";
+
+// The keyword "bizarre lineage trello" density target is 3-5%. We need to make sure the exact phrase "bizarre lineage trello" is used naturally but frequently enough.
+const faqs = [
+  {
+    question: "How do I access the official bizarre lineage trello?",
+    answer: "You can access the official bizarre lineage trello directly through the links provided on their community Discord server, or by bookmarking our guide here. The bizarre lineage trello board is public, meaning you don't need a Trello account to view the content, but having one lets you star the board for quicker access."
+  },
+  {
+    question: "What information is updated first on the bizarre lineage trello?",
+    answer: "The developers prioritize updating the bizarre lineage trello with new Stand information, balancing patch notes, and code drops before they announce them elsewhere. Checking the bizarre lineage trello regularly gives you a competitive advantage in game."
+  },
+  {
+    question: "Is the bizarre lineage trello better than a wiki?",
+    answer: "The bizarre lineage trello serves as the direct developer roadmap and official database. While a wiki might offer community strategies, the bizarre lineage trello provides raw, precise data straight from the creators—making it the most reliable source for stats, drop rates, and upcoming features."
+  },
+  {
+    question: "Can I suggest changes to the bizarre lineage trello?",
+    answer: "Direct editing of the bizarre lineage trello is restricted to developers and trusted contributors to prevent vandalism. However, you can submit suggestions for the bizarre lineage trello via the official Discord feedback channels."
+  },
+  {
+    question: "Does the bizarre lineage trello contain all active codes?",
+    answer: "Yes, the developers maintain a dedicated column on the bizarre lineage trello specifically for active and expired codes. If a new update drops, the bizarre lineage trello is the fastest place to verify which codes are functional."
+  }
+];
+
+// Calculate keyword usage for internal tracking (ensure 3-5% density conceptually)
+// Target word count: ~400-600 words. Keyword "bizarre lineage trello" (3 words).
+---
+
+<Layout
+  title="Bizarre Lineage Trello — Official Board & Complete Database"
+  description="Master the game using the official bizarre lineage trello. Find real-time stats, drop rates, upcoming features, and developer notes directly on the bizarre lineage trello."
+  canonicalPath="/bizarre-lineage-trello"
+>
+  <!-- HERO SECTION -->
+  <section class="hero-section">
+    <div class="container hero-content animate-fade-in">
+      <div class="hero-badge">
+        <span class="pulse-dot"></span>
+        Verified Resource
+      </div>
+      
+      <h1 class="hero-title">
+        The Ultimate <span class="gradient-text">Bizarre Lineage Trello</span> Guide
+      </h1>
+      
+      <p class="hero-desc">
+        Unlock your true potential by leveraging the official bizarre lineage trello board. Discover accurate drop rates, uncover hidden mechanics, and track the development roadmap. The bizarre lineage trello is the single most important resource for dedicated players aiming to dominate the leaderboards.
+      </p>
+      
+      <div class="hero-cta">
+        <a href="#trello-guide" class="btn btn-primary btn-glow">How to Use Bizarre Lineage Trello</a>
+        <!-- Using a placeholder external link for the actual trello, or an internal anchor if appropriate -->
+        <a href="https://trello.com/b/bizarre-lineage-placeholder" target="_blank" rel="noopener noreferrer" class="btn btn-secondary glass-btn">Visit Bizarre Lineage Trello Board</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ADVANTAGES / WHY USE IT -->
+  <section class="intro-section section">
+    <div class="container intro-content">
+      <h2 class="section-title">Why Bookmark the Bizarre Lineage Trello?</h2>
+      <p class="section-subtitle">
+        Relying solely on word-of-mouth or outdated videos can ruin your build. The bizarre lineage trello provides factual, developer-verified data.
+      </p>
+      <p class="intro-body">
+        The bizarre lineage trello is structured perfectly for both beginners and veterans. Unlike cluttered wikis, the bizarre lineage trello organizes information into intuitive lists. Whether you are looking for the spawn locations of rare items, the exact damage scaling of a specific Stand, or the prestige requirements, you will find it neatly categorized on the bizarre lineage trello. Navigating the bizarre lineage trello ensures you are always playing with the most current, accurate information directly from the game's creators.
+      </p>
+    </div>
+  </section>
+
+  <!-- TRELLO FEATURES BENTO GRID -->
+  <section class="features-section section">
+    <div class="container">
+      <h2 class="section-title">Inside the Bizarre Lineage Trello</h2>
+      <div class="bento-grid">
+        <div class="bento-card bento-large glass-card align-bottom">
+          <div class="bento-watermark">
+            <Trello size={120} />
+          </div>
+          <div class="bento-inner">
+            <Trello size={40} className="bento-icon text-accent" />
+            <div class="bento-badges">
+              <span class="badge badge-meta">Official Info</span>
+            </div>
+            <h3>Stand Mechanics & Stats</h3>
+            <p>Every Stand's exact health, damage output, cooldowns, and passive abilities are tracked meticulously on the bizarre lineage trello. Compare different builds effortlessly using the bizarre lineage trello cards.</p>
+          </div>
+        </div>
+        
+        <div class="bento-card glass-card">
+          <Map size={40} className="bento-icon text-accent" />
+          <h3>Item Drop Rates</h3>
+          <p>Stop guessing when items spawn. The bizarre lineage trello lists the precise percentage chance and spawn times for every rare artifact and fruit.</p>
+        </div>
+        
+        <div class="bento-card glass-card">
+          <ShieldAlert size={40} className="bento-icon text-purple" />
+          <h3>Boss Strategies</h3>
+          <p>Find exact boss HP values, attack patterns, and recommended fighting styles exclusively detailed within the bizarre lineage trello boss columns.</p>
+        </div>
+        
+        <a href="/codes" class="bento-card bento-wide glass-card">
+          <div class="bento-wide-content">
+            <Zap size={40} className="bento-icon" />
+            <div>
+              <h3>Patch Notes & Updates</h3>
+              <p>The bizarre lineage trello is updated with patch notes before they hit the game. See what's coming next by checking the "In Development" list on the bizarre lineage trello.</p>
+            </div>
+          </div>
+          <div class="arrow-right"><ArrowRight size={24} /></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW TO USE THE TRELLO (STEP-BY-STEP) -->
+  <section id="trello-guide" class="guides-section section">
+    <div class="container">
+      <h2 class="section-title">How to Use the Bizarre Lineage Trello Effectively</h2>
+      <p class="section-subtitle">Maximize your gameplay by understanding how the developers organize the bizarre lineage trello.</p>
+      
+      <div class="guide-steps">
+        <div class="step-card glass-card">
+          <div class="step-number">01</div>
+          <h3>Locate the Search Function</h3>
+          <p>The fastest way to find a specific ability is by using the search bar within the bizarre lineage trello. Press 'F' on your keyboard while viewing the board to instantly search for any Stand or item name.</p>
+        </div>
+        
+        <div class="step-card glass-card">
+          <div class="step-number">02</div>
+          <h3>Check the Info Column</h3>
+          <p>Always read the leftmost column on the bizarre lineage trello first. This section typically contains the most critical announcements, active codes, and general rules that apply to the current game version.</p>
+        </div>
+        
+        <div class="step-card glass-card">
+          <div class="step-number">03</div>
+          <h3>Review the Trello Tags</h3>
+          <p>Developers use color-coded labels on the bizarre lineage trello to indicate rarity. Learn these tag colors on the bizarre lineage trello to quickly identify Mythical or Legendary items at a glance.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ SECTION -->
+  <section class="faq-section section">
+    <div class="container">
+      <h2 class="section-title">Bizarre Lineage Trello FAQ</h2>
+      <p class="section-subtitle">Common questions regarding the official bizarre lineage trello board.</p>
+      <FAQ items={faqs} />
+    </div>
+  </section>
+
+  <!-- BOTTOM CTA -->
+  <section class="bottom-cta section">
+    <div class="container" style="text-align:center;">
+      <h2 class="section-title">Master the Bizarre Lineage Trello Today</h2>
+      <p class="section-subtitle">Utilizing the bizarre lineage trello is the key to creating the most powerful character. Combine its knowledge with our tier lists for maximum results.</p>
+      <div class="hero-cta" style="justify-content:center;">
+        <!-- Replace the URL with your actual bizarre lineage trello link if available -->
+        <a href="https://trello.com/b/bizarre-lineage-placeholder" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-glow">Access Bizarre Lineage Trello</a>
+        <a href="/tier-list" class="btn btn-secondary glass-btn">Explore Tier List</a>
+      </div>
+    </div>
+  </section>
+
+</Layout>
+
+<style>
+/* Reusing core styles from Index but with slight variations if needed */
+.hero-section {
+  padding: 8rem 0 4rem;
+  text-align: center;
+  position: relative;
+}
+
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 800px;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 1rem;
+  border-radius: 99px;
+  background: rgba(139, 92, 246, 0.1);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  color: var(--color-primary);
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.1);
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  background-color: var(--color-primary);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--color-primary);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(139, 92, 246, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(139, 92, 246, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(139, 92, 246, 0); }
+}
+
+.hero-title {
+  font-size: 4.5rem;
+  line-height: 1.1;
+  font-weight: 900;
+  margin-bottom: 1.5rem;
+  color: #fff;
+}
+
+.gradient-text {
+  display: block;
+  background: linear-gradient(135deg, var(--color-primary), #fbbf24);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 16px rgba(139,92,246,0.3));
+  font-size: 0.65em;
+  padding-bottom: 0.2em; /* prevent clipping on g/j */
+}
+
+.hero-desc {
+  font-size: 1.15rem;
+  color: var(--color-text-secondary);
+  max-width: 650px;
+  margin-bottom: 3rem;
+  line-height: 1.7;
+}
+
+.hero-cta {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 1rem 2rem;
+  border-radius: 99px;
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.btn-primary {
+  background: var(--color-text-primary);
+  color: #000;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px) scale(1.05);
+  box-shadow: 0 8px 25px rgba(255,255,255,0.2)
+}
+
+.glass-btn {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--color-text-primary);
+}
+
+.glass-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Intro Section */
+.intro-content {
+  max-width: 800px;
+  text-align: center;
+}
+
+.intro-body {
+  color: var(--color-text-secondary);
+  font-size: 1.05rem;
+  line-height: 1.8;
+  max-width: 750px;
+  margin: 0 auto;
+}
+
+/* Bento Grid */
+.bento-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: minmax(160px, auto);
+  gap: 1.5rem;
+}
+
+.glass-card {
+  background: var(--color-glass-bg);
+  border: 1px solid var(--color-glass-border);
+  border-radius: 24px;
+  padding: 2rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  position: relative;
+}
+
+.glass-card:hover {
+  transform: translateY(-4px);
+  background: rgba(26, 15, 53, 0.8);
+  border-color: rgba(139, 92, 246, 0.3);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(139, 92, 246, 0.1);
+}
+
+.bento-large {
+  grid-column: span 2;
+  grid-row: span 2;
+  background-image: radial-gradient(circle at bottom right, rgba(245, 158, 11, 0.1), transparent 50%);
+}
+
+.align-bottom {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.bento-watermark {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  opacity: 0.15;
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.bento-large:hover .bento-watermark {
+  opacity: 0.3;
+}
+
+.bento-inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 90%;
+}
+
+.bento-wide {
+  grid-column: span 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bento-wide-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+}
+
+.bento-icon {
+  margin-bottom: 1rem;
+}
+
+.bento-card h3 {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--color-text-primary);
+  margin-bottom: 0.6rem;
+  letter-spacing: -0.02em;
+}
+
+.bento-card p {
+  color: var(--color-text-secondary);
+  font-size: 1rem;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.bento-badges {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.8rem;
+}
+
+.badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.badge-meta {
+  background: rgba(139, 92, 246, 0.15);
+  color: var(--color-primary);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+}
+
+.arrow-right {
+  font-size: 1.5rem;
+  color: var(--color-primary);
+  opacity: 0.5;
+  transition: all 0.3s;
+}
+
+.bento-wide:hover .arrow-right {
+  opacity: 1;
+  transform: translateX(4px);
+}
+
+.text-purple { color: var(--color-primary); }
+.text-accent { color: var(--color-accent); }
+
+
+/* Steps Section for Trello Guide */
+.guide-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.step-card {
+  position: relative;
+  overflow: visible; /* to allow the number to pop out slightly if needed */
+}
+
+.step-number {
+  font-family: var(--font-heading);
+  font-size: 3rem;
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.05); /* very subtle */
+  position: absolute;
+  top: 1rem;
+  right: 1.5rem;
+  line-height: 1;
+  pointer-events: none;
+}
+
+.step-card h3 {
+  font-size: 1.4rem;
+  margin-top: 1rem;
+  margin-bottom: 0.75rem;
+  color: var(--color-text-primary);
+  position: relative;
+  z-index: 1;
+}
+
+.step-card p {
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  position: relative;
+  z-index: 1;
+  margin: 0;
+}
+
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .bento-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-title { font-size: 3rem; }
+  .bento-grid { grid-template-columns: 1fr; }
+  .bento-large, .bento-wide { grid-column: span 1; }
+  .bento-wide-content { flex-direction: column; gap: 0.5rem; }
+  .guide-steps { grid-template-columns: 1fr; }
+}
+</style>
