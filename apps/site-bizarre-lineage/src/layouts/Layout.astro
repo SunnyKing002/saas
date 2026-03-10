@@ -30,7 +30,7 @@ const canonicalUrl = new URL(canonicalPath, Astro.site || siteConfig.domain);
     <meta name="generator" content={Astro.generator} />
 
     <!-- SEO Meta Tags -->
-    <title>{title}</title>
+    <title>{title} | {siteConfig.title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalUrl} />
     <meta name="robots" content="index, follow" />
@@ -55,7 +55,7 @@ const canonicalUrl = new URL(canonicalPath, Astro.site || siteConfig.domain);
     </script>
 
     <!-- Open Graph -->
-    <meta property="og:title" content={title} />
+    <meta property="og:title" content={`${title} | ${siteConfig.title}`} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:type" content="website" />
@@ -64,7 +64,7 @@ const canonicalUrl = new URL(canonicalPath, Astro.site || siteConfig.domain);
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content={title} />
+    <meta name="twitter:title" content={`${title} | ${siteConfig.title}`} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content="/logo.png" />
 

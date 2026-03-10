@@ -29,7 +29,8 @@ export interface SitemapUrl {
  * 格式：页面标题 | 站点名称
  */
 export function buildPageTitle(pageTitle: string | undefined, siteTitle: string): string {
-    return pageTitle || siteTitle;
+    if (!pageTitle || pageTitle === siteTitle) return siteTitle;
+    return `${pageTitle} | ${siteTitle}`;
 }
 
 /**
