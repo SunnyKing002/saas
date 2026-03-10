@@ -92,12 +92,14 @@ const itemSchema = {
   <header class="stand-header">
     <div class="header-glow"></div>
     <div class="container relative z-10">
-      <nav class="breadcrumbs" aria-label="breadcrumb">
-        <a href="/">Home</a>
-        <ChevronRight size={14} className="bc-sep" />
-        <a href="/stands">Bizarre Lineage Stands</a>
-        <ChevronRight size={14} className="bc-sep" />
-        <span>{stand.name}</span>
+      <nav aria-label="breadcrumb">
+        <ul class="breadcrumbs">
+          <li><a href="/">Home</a></li>
+          <li class="bc-sep">/</li>
+          <li><a href="/stands">Bizarre Lineage Stands</a></li>
+          <li class="bc-sep">/</li>
+          <li class="current-page" aria-current="page">{stand.name}</li>
+        </ul>
       </nav>
 
       <div class="title-area">
@@ -317,23 +319,32 @@ const itemSchema = {
   }
 
   .breadcrumbs {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    margin-bottom: 2rem;
+    list-style: none;
+    padding: 0;
+    margin: 0 0 2rem 0;
     font-size: 0.85rem;
     color: var(--color-text-muted);
+    font-family: var(--font-body);
   }
+
+  .breadcrumbs li { display: inline-block; vertical-align: middle; line-height: 1; }
 
   .breadcrumbs a {
     color: var(--color-primary);
     text-decoration: none;
     font-weight: 500;
-    transition: color 0.2s;
   }
 
-  .breadcrumbs a:hover { color: var(--color-text-primary); }
-  .bc-sep { opacity: 0.4; }
+  .breadcrumbs a:hover { color: var(--color-text-primary); text-decoration: underline; }
+  
+  .bc-sep { 
+    opacity: 0.4; 
+    margin: 0 0.4rem; 
+    user-select: none; 
+    font-size: 0.9rem;
+  }
+  
+  .current-page { color: var(--color-text-secondary); font-weight: 500; }
 
   .title-area {
     display: flex;
