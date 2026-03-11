@@ -61,19 +61,6 @@ const pageTitle = exactTitle ? title : `${title} | ${siteConfig.title}`;
         adsense.crossOrigin = 'anonymous';
         adsense.async = true;
         document.body.appendChild(adsense);
-
-        // 3. Monetag Vignette
-        const monetag1 = document.createElement('script');
-        monetag1.src = 'https://gizokraijaw.net/vignette.min.js';
-        monetag1.dataset.zone = '10706691';
-        document.body.appendChild(monetag1);
-
-        // 4. Monetag Tag
-        const monetag2 = document.createElement('script');
-        monetag2.src = 'https://5gvci.com/act/files/tag.min.js?z=10706888';
-        monetag2.dataset.cfasync = 'false';
-        monetag2.async = true;
-        document.body.appendChild(monetag2);
       };
 
       // Load on first interaction (improves mobile PageSpeed Insights drastically)
