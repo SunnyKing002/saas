@@ -61,7 +61,29 @@ const faqSchema = {
     </div>
   </div>
 
-  <div class="container flex-col-gap">
+  <!-- Ranking Methodology -->
+  <div class="container methodology-section">
+    <div class="glass-card methodology-card">
+      <h2 class="section-title text-left" style="margin-bottom: 0.5rem;">How We Rank This Tier List</h2>
+      <p class="section-subtitle text-left" style="max-width: 100%; margin-bottom: 2rem;">Our ranking criteria for the March 2026 Bizarre Lineage tier list focuses on three core pillars of gameplay:</p>
+      <div class="methodology-grid">
+        <div class="method-box">
+          <h3>💥 Damage & Combos</h3>
+          <p>We evaluate total burst damage and combo extension potential. Stands like <strong>Made In Heaven</strong> rank high on our tier list due to fast, unreactable combo strings.</p>
+        </div>
+        <div class="method-box">
+          <h3>🛡️ Crowd Control (CC)</h3>
+          <p>Stuns, freezes, and knockbacks dominate the PvP meta. <strong>White Snake</strong> and <strong>C-Moon</strong> claim top spots on the tier list because they can completely lock down opponents.</p>
+        </div>
+        <div class="method-box">
+          <h3>⚡ Mobility & Utility</h3>
+          <p>The ability to engage, escape, and control space. Time Stop (The World) and high-speed dashes heavily influence a Stand's placement on the Bizarre Lineage tier list.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container flex-col-gap" style="margin-top: 4rem;">
     {sPlusStands.length > 0 && (
       <section class="tier-section">
         <div class="tier-header">
@@ -121,6 +143,30 @@ const faqSchema = {
         </div>
       </section>
     )}
+  </div>
+
+  <!-- Best Combos Section -->
+  <div class="container section">
+    <h2 class="section-title">Best Tier List Combos (Meta Builds)</h2>
+    <p class="section-subtitle">A top-tier Stand isn't enough. You need the right Fighting Style and Sub-ability to hit S+ on the Bizarre Lineage tier list.</p>
+    
+    <div class="bento-grid combos-grid" style="margin-top: 3rem;">
+      <div class="bento-card glass-card md-bento">
+        <h3 class="text-accent" style="margin-bottom: 0.5rem;">🧛‍♂️ The Infinite Sustain</h3>
+        <p style="font-weight:bold; display:flex; align-items:center; gap:0.5rem; margin-bottom: 1rem;">White Snake + Vampire <span class="badge badge-splus" style="height:24px; min-width:30px; font-size:0.75rem;">S+</span></p>
+        <p class="text-sm">The most oppressive build on the current tier list. Vampire's lifesteal and freezes perfectly compliment White Snake's DoT (Damage over Time) and disc stealing, making you nearly unkillable in PvP.</p>
+      </div>
+      <div class="bento-card glass-card md-bento">
+        <h3 class="text-purple" style="margin-bottom: 0.5rem;">⚔️ The Speed Demon</h3>
+        <p style="font-weight:bold; display:flex; align-items:center; gap:0.5rem; margin-bottom: 1rem;">Made In Heaven + Kendo <span class="badge badge-splus" style="height:24px; min-width:30px; font-size:0.75rem;">S+</span></p>
+        <p class="text-sm">A terrifying hyper-offensive combo on our tier list. You use MIH's extreme mobility to close the gap, then drop Kendo's "god break" AoE combo enders to shred health bars before they can react.</p>
+      </div>
+      <div class="bento-card glass-card md-bento">
+        <h3 style="color: #60a5fa; margin-bottom: 0.5rem;">🥊 The Time Stopper</h3>
+        <p style="font-weight:bold; display:flex; align-items:center; gap:0.5rem; margin-bottom: 1rem;">The World + Karate <span class="badge badge-s" style="height:24px; min-width:30px; font-size:0.75rem;">S</span></p>
+        <p class="text-sm">A classic, high-burst staple of the Bizarre Lineage tier list. Karate provides the hard-to-block pressure needed to force mistakes, setting up an easy Time Stop followed by a Road Roller.</p>
+      </div>
+    </div>
   </div>
 
   <!-- Internal Links -->
@@ -213,7 +259,18 @@ const faqSchema = {
   .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(255,255,255,0.2); }
   .glass-btn { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: var(--color-text-primary); }
 
+  /* New Module Styles */
+  .methodology-card { padding: 3rem; margin-bottom: 2rem; }
+  .text-left { text-align: left; }
+  .methodology-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem; }
+  .method-box h3 { font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem; color: #fff; }
+  .method-box p { font-size: 0.95rem; color: var(--color-text-secondary); line-height: 1.6; margin: 0; }
+  .combos-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+  .md-bento h3 { font-size: 1.35rem; font-weight: 700; margin-top: 0; }
+  .text-sm { font-size: 0.9rem; color: var(--color-text-secondary); line-height: 1.6; margin: 0; }
+  
   @media (max-width: 768px) {
+    .methodology-card { padding: 2rem; }
     .page-title { font-size: 2.5rem; }
     .tier-desc { padding-left: 0; margin-top: 1rem; }
     .tier-name { font-size: 1.3rem; }

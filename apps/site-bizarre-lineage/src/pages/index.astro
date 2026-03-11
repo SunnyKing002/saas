@@ -164,6 +164,42 @@ const faqs = [
     </div>
   </section>
 
+  <!-- BEGINNER PROGRESSION WIKI SECTION -->
+  <section class="progression-wiki-section section">
+    <div class="container">
+      <h2 class="section-title">Bizarre Lineage Wiki: Beginner Progression Guide</h2>
+      <p class="section-subtitle">
+        Just joined Morioh Cho? Follow our wiki progression roadmap to quickly level up, obtain your first Stand, and prepare for high-level PvP combat in Bizarre Lineage.
+      </p>
+
+      <div class="progression-steps">
+        <div class="step-card glass-card">
+          <div class="step-number">1</div>
+          <h3>Complete the Tutorial & Level Up</h3>
+          <p>Talk to the Receptionist NPC at the Morioh Grand Hotel. Completing this grants an initial XP boost. Focus your early stats on <strong>Health</strong> for survivability, then grind quests to reach the max Level 50. Use our <a href="/guides/leveling" class="text-accent underline">Bizarre Lineage wiki leveling guide</a> for the fastest routes.</p>
+        </div>
+        
+        <div class="step-card glass-card">
+          <div class="step-number">2</div>
+          <h3>Obtain Your First Stand</h3>
+          <p>You cannot fight without a Stand. You receive your first <strong>Stand Arrow</strong> from the starting quest. Later, farm Stand Arrows by completing NPC quests, opening Legendary Chests, winning raids, or redeeming <a href="/codes" class="text-purple underline">Bizarre Lineage wiki codes</a>.</p>
+        </div>
+
+        <div class="step-card glass-card">
+          <div class="step-number">3</div>
+          <h3>Unlock Styles & Sub-Abilities</h3>
+          <p>Once you roll a top-tier Stand from our wiki tier list, you need a fighting style. Train Conjuration at the gym mat to max out your Stand abilities, then seek out NPCs in Morioh to learn styles like Boxing or Kendo. Sub-abilities like Vampire require rare drops like the Stone Mask.</p>
+        </div>
+
+        <div class="step-card glass-card">
+          <div class="step-number">4</div>
+          <h3>Awaken & Prestige</h3>
+          <p>At max level with 100 Conjuration, accept the quest from the Self NPC in the meditation realm. You'll need to defeat bosses like Jodo and Dio. Once awakened, you can <strong>Prestige</strong> to reset your level to 1, gaining permanent buffs, Extra Stand Storage, and Prestige shop shards. Consult the wiki for boss strategies.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- FEATURED VIDEO SECTION -->
   <section class="featured-video-section section">
     <div class="container">
@@ -611,7 +647,65 @@ const faqs = [
   border: none;
 }
 
+.progression-steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+  margin-top: 3rem;
+  padding: 0 2rem;
+}
+.step-card {
+  position: relative;
+  padding: 2.5rem 1.5rem 1.5rem;
+  border-radius: 16px;
+  background: var(--color-glass-bg);
+  border: 1px solid var(--color-glass-border);
+  transition: transform 0.3s;
+  overflow: visible !important;
+}
+.step-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+.step-number {
+  position: absolute;
+  top: -20px;
+  left: 20px;
+  width: 45px;
+  height: 45px;
+  background: var(--color-primary);
+  color: #000;
+  font-size: 1.5rem;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+  font-family: var(--font-heading);
+}
+.step-card h3 {
+  font-size: 1.25rem;
+  margin-bottom: 0.75rem;
+  color: var(--color-text-primary);
+}
+.step-card p {
+  font-size: 0.95rem;
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
 /* Responsive */
+@media (max-width: 1200px) {
+  .progression-wiki-section .container {
+    padding-left: 80px; /* Prevent sidebar overlap */
+  }
+  .progression-wiki-section .section-title {
+    font-size: 2rem;
+  }
+}
+
 @media (max-width: 1024px) {
   .bento-grid {
     grid-template-columns: repeat(2, 1fr);
