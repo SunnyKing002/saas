@@ -9,15 +9,18 @@ interface Props {
   title?: string;
   description?: string;
   canonicalPath?: string;
+  exactTitle?: boolean;
 }
 
 const {
   title = "Bizarre Lineage Wiki & Tools",
   description = "The ultimate wiki and tools for Roblox Bizarre Lineage. Find tier lists, Stand guides, builds, and codes.",
   canonicalPath = "",
+  exactTitle = false,
 } = Astro.props;
 
 const canonicalUrl = new URL(canonicalPath, Astro.site || siteConfig.domain);
+const pageTitle = exactTitle ? title : `${title} | ${siteConfig.title}`;
 ---
 
 <!doctype html>
@@ -30,7 +33,7 @@ const canonicalUrl = new URL(canonicalPath, Astro.site || siteConfig.domain);
     <meta name="generator" content={Astro.generator} />
 
     <!-- SEO Meta Tags -->
-    <title>{title} | {siteConfig.title}</title>
+    <title>{pageTitle}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalUrl} />
     <meta name="robots" content="index, follow" />
@@ -55,7 +58,7 @@ const canonicalUrl = new URL(canonicalPath, Astro.site || siteConfig.domain);
     </script>
 
     <!-- Open Graph -->
-    <meta property="og:title" content={`${title} | ${siteConfig.title}`} />
+    <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalUrl} />
     <meta property="og:type" content="website" />
@@ -64,7 +67,7 @@ const canonicalUrl = new URL(canonicalPath, Astro.site || siteConfig.domain);
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content={`${title} | ${siteConfig.title}`} />
+    <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content="/logo.png" />
 
@@ -120,7 +123,7 @@ const canonicalUrl = new URL(canonicalPath, Astro.site || siteConfig.domain);
     
     <Navbar />
     <Sidebar />
-    <main class="main-content has-sidebar">
+    <main class="main-content">
       <slot />
     </main>
     <Footer />
@@ -185,7 +188,7 @@ const canonicalUrl = new URL(canonicalPath, Astro.site || siteConfig.domain);
     display: flex;
     flex-direction: column;
     position: relative;
-    overflow-x: hidden;
+    overflow-x: clip;
   }
 
   /* Headings Typography */
@@ -228,28 +231,6 @@ const canonicalUrl = new URL(canonicalPath, Astro.site || siteConfig.domain);
     flex: 1;
     min-height: calc(100vh - 140px); /* rough navbar + footer height */
     padding-bottom: 4rem;
-    transition: padding-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  /* Accommodate Left Sidebar */
-  html.sidebar-expanded .has-sidebar {
-    padding-left: 280px; /* 240px sidebar + 40px gap */
-  }
-
-  html.sidebar-collapsed .has-sidebar {
-    padding-left: 112px; /* 72px compressed sidebar + 40px gap */
-  }
-
-  @media (max-width: 1300px) {
-    html.sidebar-expanded .has-sidebar, html.sidebar-collapsed .has-sidebar {
-      padding-left: 112px; 
-    }
-  }
-
-  @media (max-width: 1024px) {
-    html.sidebar-expanded .has-sidebar, html.sidebar-collapsed .has-sidebar {
-      padding-left: 0; 
-    }
   }
 
   /* Structural Classes */

@@ -13,23 +13,23 @@ const topStands = stands
 const faqs = [
   {
     question: "What is Bizarre Lineage on Roblox?",
-    answer: "Bizarre Lineage is a popular Roblox experience inspired by JoJo's Bizarre Adventure. Players collect and fight with Stands, equip fighting styles, and unlock sub-abilities to dominate PvP arenas and PvE quests. Our Bizarre Lineage wiki covers every mechanic in detail."
+    answer: "Bizarre Lineage is a popular Roblox experience inspired by JoJo's Bizarre Adventure. Players collect and fight with Stands, equip fighting styles, and unlock sub-abilities to dominate PvP arenas and PvE quests. Our Bizarre Lineage wiki covers every game mechanic in detail to help you succeed. It is updated daily."
   },
   {
     question: "When do new Bizarre Lineage codes drop?",
-    answer: "Developers typically release new Bizarre Lineage codes during major holidays, player milestones like 50k concurrent users, or large content updates. Bookmark our Bizarre Lineage codes page — we update it within minutes of every new drop."
+    answer: "Developers typically release new Bizarre Lineage codes during major holidays, player milestones like 50k concurrent users, or large content updates. Bookmark our Bizarre Lineage codes page — our editors update it within minutes of every new drop."
   },
   {
     question: "Which Bizarre Lineage Stand is best for leveling from 1-50?",
-    answer: "For fastest PvE leveling in Bizarre Lineage, choose a Stand with large AoE damage such as Whitesnake or Magician's Red. Pair them with Boxing or Vampire for maximum sustain. See our Bizarre Lineage leveling guide for the complete route."
+    answer: "For fastest PvE leveling in Bizarre Lineage, choose a Stand with large AoE damage such as Whitesnake or Magician's Red. Pair them with Boxing or Vampire for maximum sustain. See our Bizarre Lineage wiki leveling guide for the complete route."
   },
   {
     question: "How do I awaken my Stand in Bizarre Lineage?",
-    answer: "To awaken a Stand in Bizarre Lineage, reach max Level 50, obtain a Requiem Arrow from boss drops or redeem codes, and complete the final story quest. Our Bizarre Lineage awakening guide has step-by-step boss strategies."
+    answer: "To awaken a Stand in Bizarre Lineage, reach max Level 50, obtain a Requiem Arrow from boss drops or redeem codes, and complete the final story quest. Our Bizarre Lineage awakening guide has step-by-step boss strategies. The wiki is your best resource here."
   },
   {
     question: "How many Stands are in Bizarre Lineage?",
-    answer: "There are currently 17 unique Stands in Bizarre Lineage, ranging from Common rarity to Mythical. Each Stand has its own moveset, passive ability, and recommended fighting style pairing. Browse every Stand in our Bizarre Lineage stands database."
+    answer: "There are currently 17 unique Stands fully documented in Bizarre Lineage, ranging from Common rarity to Mythical. Each Stand has its own moveset, passive ability, and recommended fighting style pairing. Browse every Stand in our comprehensive Bizarre Lineage wiki database."
   }
 ];
 
@@ -38,11 +38,16 @@ const faqs = [
 
 <Layout
   title="Bizarre Lineage Wiki — Tier List, Codes & Stands Guide (2026)"
-  description="Bizarre Lineage hub for Roblox players. Get the latest tier list, active codes, all 17 stands, fighting styles, and leveling guides — updated daily."
+  exactTitle={true}
+  description="Bizarre Lineage Wiki - Latest tier lists, active codes, all stands ranked, builds & guides. Updated daily for Roblox PvP/PvE meta (March 2026)."
 >
   <!-- HERO SECTION -->
   <section class="hero-section">
-    <div class="container hero-content animate-fade-in">
+    <div class="hero-bg">
+      <img src="/bizarre/hq720.jpg" alt="Bizarre Lineage Background" loading="eager" decoding="async" />
+      <div class="hero-overlay"></div>
+    </div>
+    <div class="container hero-content animate-fade-in relative z-10">
       <div class="hero-badge">
         <span class="pulse-dot"></span>
         Updated March 2026
@@ -54,12 +59,12 @@ const faqs = [
       </h1>
       
       <p class="hero-desc">
-        Your one-stop Bizarre Lineage resource for Roblox. Discover the highest-ranked Stands, claim every active redeem code, explore optimal build combos, and master leveling routes — all verified by experienced players and updated daily.
+        Welcome to the ultimate Bizarre Lineage Wiki for Roblox. Discover the highest-ranked Stands on our tier list, claim every active redeem code from our tracker, explore optimal build combos, and master leveling routes. Verified by experienced players daily.
       </p>
       
       <div class="hero-cta">
-        <a href="/tier-list" class="btn btn-primary btn-glow">View Bizarre Lineage Tier List</a>
-        <a href="/codes" class="btn btn-secondary glass-btn">Check Bizarre Lineage Codes</a>
+        <a href="/tier-list" class="btn btn-primary btn-glow">View Bizarre Lineage Wiki Tier List</a>
+        <a href="/codes" class="btn btn-secondary glass-btn">Check Bizarre Lineage Wiki Codes</a>
       </div>
       
       <!-- Hero Stats Bar -->
@@ -87,10 +92,10 @@ const faqs = [
     <div class="container intro-content">
       <h2 class="section-title">Why Use This Bizarre Lineage Wiki?</h2>
       <p class="section-subtitle">
-        Most Bizarre Lineage guides online are buried in ads, outdated, or incomplete. We built this Bizarre Lineage wiki differently — every data point comes straight from in-game testing, every tier list ranking is backed by leaderboard statistics, and every page loads instantly with zero bloat.
+        Most wiki guides online are buried in ads, outdated, or incomplete. We built this Bizarre Lineage wiki differently — every data point comes straight from in-game testing, every wiki tier list ranking is backed by leaderboard statistics, and every page loads instantly.
       </p>
       <p class="intro-body">
-        Whether you just started playing Bizarre Lineage or you are grinding for your third <a href="/bizarre-lineage-prestige">bizarre lineage prestige</a>, this hub gives you the competitive edge. Browse our <a href="/stands">Bizarre Lineage stands database</a> for raw stats, check the <a href="/tier-list">Bizarre Lineage tier list</a> to pick the strongest Stand for your playstyle, and never miss a free reward with our <a href="/codes">Bizarre Lineage codes</a> tracker.
+        Whether you just started playing or you are grinding for your third <a href="/bizarre-lineage-prestige">bizarre lineage prestige</a>, this wiki gives you the competitive edge. Browse our <a href="/stands">Bizarre Lineage wiki stands database</a> for raw stats, check the official <a href="/tier-list">Bizarre Lineage wiki tier list</a> to pick the strongest Stand, and never miss a free reward with our <a href="/codes">Bizarre Lineage wiki codes</a> tracker.
       </p>
     </div>
   </section>
@@ -98,11 +103,12 @@ const faqs = [
   <!-- FEATURES BENTO GRID -->
   <section class="features-section section">
     <div class="container">
-      <h2 class="section-title">Explore Bizarre Lineage Tools & Guides</h2>
+      <h2 class="section-title">Explore Bizarre Lineage Wiki Tools & Guides</h2>
       <div class="bento-grid">
         <a href="/tier-list" class="bento-card bento-large glass-card align-bottom">
-          <div class="bento-watermark">
-            <Trophy size={120} />
+          <div class="bento-watermark-img">
+            <img src="/bizarre/Bizarre-Lineage-Tier-List.webp" alt="Bizarre Lineage Tier List Rankings" loading="lazy" decoding="async" />
+            <div class="bento-img-overlay"></div>
           </div>
           <div class="bento-inner">
             <Trophy size={40} className="bento-icon text-accent" />
@@ -110,26 +116,26 @@ const faqs = [
               <span class="badge badge-s">S+ Tier</span>
               <span class="badge badge-meta">Meta</span>
             </div>
-            <h3>Bizarre Lineage Tier List</h3>
-            <p>Current meta rankings for PvP and PvE. All 17 Stands graded from S+ to B by top-ranked players. See who dominates the leaderboard this patch.</p>
+            <h3>Bizarre Lineage Wiki Tier List</h3>
+            <p>Current meta rankings for PvP and PvE on our wiki. All 17 Stands graded from S+ to B by top-ranked players. Trust us to see who dominates the leaderboard this patch.</p>
           </div>
         </a>
         <a href="/codes" class="bento-card glass-card">
           <Gift size={40} className="bento-icon text-accent" />
-          <h3>Bizarre Lineage Codes</h3>
-          <p>Free Stand Arrows, Rokakaka Fruits, Cash, and EXP Boosts. Updated within minutes of every drop.</p>
+          <h3>Bizarre Lineage Wiki Codes</h3>
+          <p>Free Stand Arrows, Rokakaka Fruits, Cash, and EXP Boosts. The wiki is updated within minutes of every drop.</p>
         </a>
         <a href="/stands" class="bento-card glass-card">
           <Swords size={40} className="bento-icon text-purple" />
           <h3>Bizarre Lineage Stands</h3>
-          <p>Browse all 17 Stands with raw stats, passives, movesets, and best fighting style pairings.</p>
+          <p>Browse all 17 Stands on the wiki with raw stats, passives, movesets, and best fighting style pairings.</p>
         </a>
         <a href="/guides/leveling" class="bento-card bento-wide glass-card">
           <div class="bento-wide-content">
             <BookOpen size={40} className="bento-icon" />
             <div>
-              <h3>Bizarre Lineage Guides</h3>
-              <p>Optimal leveling routes from 1-50, <span class="text-purple font-semibold">bizarre lineage prestige</span> requirements, awakening walkthroughs, and stat allocation tips.</p>
+              <h3>Bizarre Lineage Wiki Guides</h3>
+              <p>Optimum wiki leveling routes from 1-50, <span class="text-purple font-semibold">bizarre lineage prestige</span> requirements, complete awakening walkthroughs, and stat allocation tips.</p>
             </div>
           </div>
           <div class="arrow-right"><ArrowRight size={24} /></div>
@@ -141,10 +147,10 @@ const faqs = [
   <!-- TOP STANDS SECTION -->
   <section class="top-stands-section section">
     <div class="container">
-      <h2 class="section-title">Top Bizarre Lineage Stands This Meta</h2>
+      <h2 class="section-title">Top Bizarre Lineage Wiki Stands This Meta</h2>
       <p class="section-subtitle">
-        The dominant picks controlling the current Bizarre Lineage PvP ladder.
-        These Stands deliver overwhelming damage, crowd control, and mobility.
+        The dominant picks controlling the current Bizarre Lineage PvP ladder according to wiki contributors.
+        These top wiki Stands deliver overwhelming damage, crowd control, and mobility.
       </p>
       
       <div class="stands-grid">
@@ -161,8 +167,8 @@ const faqs = [
   <!-- FEATURED VIDEO SECTION -->
   <section class="featured-video-section section">
     <div class="container">
-      <h2 class="section-title">Watch Bizarre Lineage in Action</h2>
-      <p class="section-subtitle">Check out the latest gameplay showcases, combo guides, and new Stand previews from the community.</p>
+      <h2 class="section-title">Watch Bizarre Lineage Wiki in Action</h2>
+      <p class="section-subtitle">Check out the latest gameplay showcases, wiki combo guides, and new Stand previews verified by the community.</p>
       
       <div class="video-container glass-card">
         <iframe 
@@ -182,8 +188,8 @@ const faqs = [
   <!-- FAQ SECTION -->
   <section class="faq-section section">
     <div class="container">
-      <h2 class="section-title">Bizarre Lineage FAQ</h2>
-      <p class="section-subtitle">Common questions from the Bizarre Lineage community — answered by experienced players.</p>
+      <h2 class="section-title">Bizarre Lineage Wiki FAQ</h2>
+      <p class="section-subtitle">Common questions from the Bizarre Lineage community — answered by experienced editors.</p>
       <FAQ items={faqs} />
     </div>
   </section>
@@ -191,12 +197,13 @@ const faqs = [
   <!-- BOTTOM CTA -->
   <section class="bottom-cta section">
     <div class="container" style="text-align:center;">
-      <h2 class="section-title">Ready to Dominate Bizarre Lineage?</h2>
+      <h2 class="section-title">Ready to Dominate with the Bizarre Lineage Wiki?</h2>
       <p class="section-subtitle">Pick your Stand, optimize your build, and start climbing the leaderboard today.</p>
       <div class="hero-cta" style="justify-content:center;">
-        <a href="/tier-list" class="btn btn-primary btn-glow">Browse Bizarre Lineage Tier List</a>
+        <a href="/tier-list" class="btn btn-primary btn-glow">Browse Bizarre Lineage Wiki Tier List</a>
         <a href="/guides/leveling" class="btn btn-secondary glass-btn">Read Bizarre Lineage Leveling Guide</a>
       </div>
+      <p class="text-sm mt-8 opacity-50 max-w-2xl mx-auto">This community-driven Bizarre Lineage Wiki aims to provide the most accurate, reliable, and comprehensive wiki database for all Roblox players. Whether you are a beginner looking for a basic tutorial or a veteran checking the updated tier lists, our wiki has you covered.</p>
     </div>
   </section>
 
@@ -208,6 +215,28 @@ const faqs = [
   padding: 8rem 0 4rem;
   text-align: center;
   position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--color-glass-border);
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero-bg img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  opacity: 0.25;
+}
+
+.hero-bg .hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 0%, var(--color-bg-base) 90%);
 }
 
 .hero-content {
@@ -419,17 +448,30 @@ const faqs = [
   justify-content: flex-end;
 }
 
-.bento-watermark {
+.bento-watermark-img {
   position: absolute;
-  top: 1.5rem;
-  right: 1.5rem;
-  opacity: 0.15;
-  pointer-events: none;
-  transition: opacity 0.3s;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
 }
 
-.bento-large:hover .bento-watermark {
-  opacity: 0.3;
+.bento-watermark-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0.4;
+  transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.bento-large:hover .bento-watermark-img img {
+  transform: scale(1.05);
+}
+
+.bento-img-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(19,10,36,0.95) 0%, rgba(19,10,36,0.3) 100%);
 }
 
 .bento-inner {
