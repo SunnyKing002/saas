@@ -1,6 +1,6 @@
 ---
 // src/components/Sidebar.astro
-import { Trello, Moon, Crosshair, BookOpen, Star, ChevronLeft, ChevronRight } from "lucide-react";
+import { Trello, Moon, Crosshair, BookOpen, Star, ChevronLeft, ChevronRight, Zap } from "lucide-react";
 
 const currentPath = Astro.url.pathname;
 
@@ -15,6 +15,7 @@ const sidebarLinks = [
   {
     category: "Quick Links",
     items: [
+      { text: "World High Voltage", href: "/world-high-voltage", icon: Zap },
       { text: "Tier List", href: "/tier-list", icon: Star },
       { text: "Codes", href: "/codes", icon: Crosshair },
       { text: "Leveling", href: "/guides/leveling", icon: BookOpen },

@@ -1,0 +1,1017 @@
+---
+import Layout from "../layouts/Layout.astro";
+import FAQ from "../components/FAQ.astro";
+import { Zap, Target, ArrowRight, Swords, Shield, Clock, Eye } from "lucide-react";
+
+const faqs = [
+  {
+    question: "What is World High Voltage in A Universal Time (AUT)?",
+    answer: "World High Voltage (TWHV) is a Rare Stand in A Universal Time on Roblox, based on Alternate World Diego Brando's Stand from JoJo's Bizarre Adventure: Steel Ball Run. World High Voltage features the iconic timestop ability alongside an electric, knife-and-revolver combat style that sets it apart from every other Stand in AUT."
+  },
+  {
+    question: "How do I get World High Voltage in AUT?",
+    answer: "There are two routes to obtain World High Voltage. Route 1: Obtain Shadow DIO via Stand Arrow or Ability Crafting, then scavenge Saint's Eyes from Sand Debris or Epic Loot Crate drops, and use Saint's Eyes on Shadow DIO. Route 2: Collect 3 Rare World High Voltage Shards from Loot Crates, then Craft World High Voltage using the 3 Shards plus a Saint's Eyes from Sand Debris."
+  },
+  {
+    question: "What are the best moves for World High Voltage in PvP?",
+    answer: "The strongest World High Voltage moves for PvP are Blink Execution (T — Stand On), which forces a kneel and delivers a point-blank revolver shot, and Timestop (H) to reset positioning. Combine these with Vicious Cleaving (R — Stand Off) for burst damage openers. Revolver Flank and Shining Impale are excellent for gap-closing. World High Voltage rewards players who master the Stand On/Off toggle to mix up combos."
+  },
+  {
+    question: "What is the Timestop in World High Voltage?",
+    answer: "World High Voltage's Timestop (H keybind, Stand On) halts time for all opponents. The duration scales with your heat meter and Special Stat points from Ability Leveling. At high heat you can activate Timestop Movement (H+ keybind) to actually move and strike enemies during timestop — a mechanic unique to World High Voltage that makes it extremely dangerous at full meter."
+  },
+  {
+    question: "What is the High Voltage move?",
+    answer: "High Voltage is the Z-keybind signature move of World High Voltage. TWHV launches a powerful punch — if it connects, the user teleports backwards, stops time, delivers a dramatic monologue from Diego Brando, and then unleashes a volley of precision knives at the pinned opponent. High Voltage requires 75 heat and is best used as a match-finishing combo ender."
+  },
+  {
+    question: "Is World High Voltage still good in the current AUT meta?",
+    answer: "Yes. World High Voltage consistently holds S or A+ tier in AUT. Its full toolkit of Stand Off knife/revolver attacks and Stand On barrages cover every range, and the Timestop provides match-defining momentum swings. World High Voltage's rarity also means opponents are often less familiar with how to counter its unique Stand toggle mechanics."
+  },
+  {
+    question: "What skins are available for World High Voltage?",
+    answer: "World High Voltage has several skins: Sapphire (Rare), Ruby (Rare), High Voltage (Epic), 20XX (Epic), Lightmare (Epic), and the unobtainable DTWHV skin. Epic skins feature animated effects. All World High Voltage skins are purely cosmetic and do not affect move stats or heat costs."
+  }
+];
+
+const moves = [
+  {
+    key: "R (Stand Off)",
+    name: "Vicious Cleaving",
+    description: "TWHV unleashes a strong punch. If it connects, the Stand appears behind the target and delivers 3 powerful sequential strikes. A high-damage opener in World High Voltage's Stand Off kit.",
+    heat: 0,
+    img: "/bizarre/TWHV_Vicious_Cleaving.webp",
+    imgAlt: "World High Voltage Vicious Cleaving move animation"
+  },
+  {
+    key: "T (Stand On)",
+    name: "Blink Execution",
+    description: "World High Voltage punches the opponent and forces them to kneel. The user then draws a revolver and shoots them point-blank from behind. Costs 25 heat but delivers massive burst damage.",
+    heat: 25,
+    img: "/bizarre/TWHV_Blink_Execution.webp",
+    imgAlt: "World High Voltage Blink Execution revolver move animation"
+  },
+  {
+    key: "Y (Stand On/Off)",
+    name: "Flashbang",
+    description: "Usable in both Stand states. World High Voltage hurls a flash grenade that stuns every enemy it touches for 4 seconds — opening a full timestop-combo window. Zero heat cost makes Flashbang a core setup move.",
+    heat: 0,
+    img: "/bizarre/Updated_TWHV_Flashbang.webp",
+    imgAlt: "World High Voltage Flashbang grenade stun move animation"
+  },
+  {
+    key: "Z (Stand On)",
+    name: "High Voltage",
+    description: "TWHV's signature finisher. A punch sends the user teleporting backwards, then World High Voltage stops time and hurls a calculated volley of knives at the frozen target. Requires 75 heat and is best used to seal a win.",
+    heat: 75,
+    img: null,
+    imgAlt: "World High Voltage signature High Voltage finisher move"
+  },
+  {
+    key: "H (Stand On)",
+    name: "Timestop",
+    description: "World High Voltage stops time. Duration scales with your heat meter and Special Stat points. Combined with H+ Timestop Movement, you can freely reposition and attack opponents frozen in stopped time.",
+    heat: 50,
+    img: null,
+    imgAlt: "World High Voltage Timestop ability"
+  },
+  {
+    key: "Y+ (Stand Off)",
+    name: "Revolver Flank",
+    description: "The user fires a revolver forward. If the shot connects, World High Voltage instantly appears behind the target and delivers a devastating kick, combining ranged damage with a close-range followup. Costs 25 heat.",
+    heat: 25,
+    img: null,
+    imgAlt: "World High Voltage Revolver Flank ranged move"
+  }
+];
+---
+
+<Layout
+  title="World High Voltage (TWHV) Guide — AUT Moves, How to Get & Best Build"
+  exactTitle={true}
+  description="Complete World High Voltage guide for A Universal Time (AUT): all moves, how to unlock TWHV via Shadow DIO + Saint's Eyes, best PvP combos, and tier ranking. Try Now."
+  canonicalPath="/world-high-voltage"
+>
+
+  <!-- HERO SECTION -->
+  <section class="whv-hero">
+    <div class="whv-hero-bg">
+      <img
+        src="/bizarre/world-high-voltage-bg.jpg"
+        alt="World High Voltage Stand idle pose background in AUT Roblox"
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+      />
+      <div class="hero-overlay"></div>
+      <div class="electric-lines">
+        <span></span><span></span><span></span><span></span>
+      </div>
+    </div>
+
+    <div class="container hero-inner animate-fade-in">
+      <!-- Portrait + Title side by side on desktop -->
+      <div class="hero-double">
+        <div class="hero-text">
+          <div class="hero-badge">
+            <Zap size={14} />
+            S-Tier · A Universal Time · Updated 2026
+          </div>
+
+          <h1 class="hero-title">
+            World High Voltage
+            <span class="title-sub">The World: High Voltage (TWHV) — Full Guide</span>
+          </h1>
+
+          <p class="hero-desc">
+            World High Voltage is the Rare Stand of Alternate World Diego Brando in A Universal Time.
+            Armed with timestop, electric knife volleys, and a revolver, World High Voltage dominates
+            both PvP duels and PvE content. This guide covers every move, both obtainment routes,
+            and the optimal combo strategy to master World High Voltage in 2026.
+          </p>
+
+          <div class="hero-ctas">
+            <a href="#how-to-get" class="btn btn-electric">
+              <Zap size={16} />
+              How to Get World High Voltage
+            </a>
+            <a href="#moves" class="btn btn-ghost">
+              <Swords size={16} />
+              Full Moveset
+            </a>
+          </div>
+
+          <div class="stat-strip">
+            <div class="stat-item">
+              <span class="stat-val text-electric">S+</span>
+              <span class="stat-lbl">PvP Tier</span>
+            </div>
+            <div class="stat-div"></div>
+            <div class="stat-item">
+              <span class="stat-val">Rare</span>
+              <span class="stat-lbl">Rarity</span>
+            </div>
+            <div class="stat-div"></div>
+            <div class="stat-item">
+              <span class="stat-val">Diego Brando</span>
+              <span class="stat-lbl">Stand User</span>
+            </div>
+            <div class="stat-div"></div>
+            <div class="stat-item">
+              <span class="stat-val">SBR Part 7</span>
+              <span class="stat-lbl">Origin</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Portrait image -->
+        <div class="hero-portrait">
+          <div class="portrait-glow"></div>
+          <img
+            src="/bizarre/Custom_TWHV_Portrait.webp"
+            alt="World High Voltage TWHV custom portrait art in A Universal Time"
+            loading="eager"
+            decoding="async"
+            width="380"
+            height="480"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LORE / OVERVIEW -->
+  <section class="overview-section section">
+    <div class="container overview-inner">
+      <h2 class="section-title">What Is World High Voltage?</h2>
+      <p class="section-subtitle">An S-tier Rare Stand with a dual-state combat system that combines knife, revolver, Stand barrage, and timestop mechanics.</p>
+
+      <div class="overview-body">
+        <p>
+          <strong>World High Voltage</strong> (shortened to TWHV) is the Stand of Alternate World Diego Brando
+          in <em>A Universal Time</em> (AUT) on Roblox, drawing from JoJo's Bizarre Adventure: Steel Ball Run.
+          Unlike the original The World, World High Voltage wields a revolver and combat knives alongside
+          its electric-tinted Stand — creating a kill-or-be-killed playstyle where every move matters.
+        </p>
+        <p>
+          The Stand operates on two modes: <strong>Stand Off</strong> (knife/revolver) and <strong>Stand On</strong>
+          (barrage, Blink Execution, Flashbang, and Timestop). Cycling between both states fluidly is the
+          core skill ceiling of World High Voltage, allowing experienced players to chain combos that
+          opponents cannot predict or safely punish.
+        </p>
+        <p>
+          World High Voltage's catchphrase, <em>"This time is only mine..."</em>, reinforces the Stand's
+          identity as the ultimate time-stopper — and in competitive AUT lobbies, that statement is fact.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW TO OBTAIN -->
+  <section id="how-to-get" class="obtain-section section">
+    <div class="container">
+      <h2 class="section-title">How to Get World High Voltage</h2>
+      <p class="section-subtitle">Two routes exist to unlock World High Voltage in AUT. Pick whichever fits your current inventory.</p>
+
+      <div class="routes-grid">
+        <!-- Route 1 -->
+        <div class="route-card glass-card">
+          <div class="route-badge">Route 1</div>
+          <h3>Shadow DIO Evolution</h3>
+          <p class="route-intro">Evolve Shadow DIO directly into World High Voltage using Saint's Eyes.</p>
+          <ol class="route-steps">
+            <li>
+              <span class="step-dot">1</span>
+              <div>
+                <strong>Obtain Shadow DIO</strong> — via Stand Arrow rolls or Ability Crafting. Shadow DIO has a higher pull rate than World High Voltage and serves as the evolutionary base.
+              </div>
+            </li>
+            <li>
+              <span class="step-dot">2</span>
+              <div>
+                <strong>Find Saint's Eyes</strong> — scavenge Sand Debris nodes across the map, or look for Epic-rarity drops from Loot Crates. Saint's Eyes is the key item to unlock World High Voltage.
+              </div>
+            </li>
+            <li>
+              <span class="step-dot">3</span>
+              <div>
+                <strong>Use Saint's Eyes on Shadow DIO</strong> — this immediately evolves Shadow DIO into World High Voltage, unlocking the full TWHV moveset.
+              </div>
+            </li>
+          </ol>
+        </div>
+
+        <!-- Route 2 -->
+        <div class="route-card glass-card route-craft">
+          <div class="route-badge route-badge-alt">Route 2</div>
+          <h3>Ability Crafting</h3>
+          <p class="route-intro">Craft World High Voltage directly using Shards and a Saint's Eyes — no Shadow DIO required.</p>
+          <ol class="route-steps">
+            <li>
+              <span class="step-dot">1</span>
+              <div>
+                <strong>Collect 3 Rare World High Voltage Shards</strong> — sourced from Loot Crates. Shard drop rates increase with Crate tier. Farm aggressively or trade with other players.
+              </div>
+            </li>
+            <li>
+              <span class="step-dot">2</span>
+              <div>
+                <strong>Obtain Saint's Eyes</strong> — same as Route 1. Scavenge Sand Debris or earn it from Epic Loot Crate drops.
+              </div>
+            </li>
+            <li>
+              <span class="step-dot">3</span>
+              <div>
+                <strong>Craft World High Voltage</strong> — open Ability Crafting, combine 3 TWHV Shards + Saint's Eyes, and World High Voltage is yours instantly.
+              </div>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MOVESET SECTION -->
+  <section id="moves" class="moves-section section">
+    <div class="container">
+      <h2 class="section-title">World High Voltage Full Moveset</h2>
+      <p class="section-subtitle">
+        World High Voltage has two combat modes. Below are the most impactful moves with in-game footage where available.
+      </p>
+
+      <!-- TWHV Pose showcase - wide ambient image -->
+      <div class="pose-showcase glass-card">
+        <img
+          src="/bizarre/TWHV_Pose.webp"
+          alt="World High Voltage TWHV Stand pose animation in AUT"
+          loading="lazy"
+          decoding="async"
+          width="1200"
+          height="500"
+        />
+        <div class="pose-overlay">
+          <span class="pose-label">
+            <Zap size={14} />
+            The World: High Voltage — Stand Idle
+          </span>
+        </div>
+      </div>
+
+      <!-- Move cards grid -->
+      <div class="moves-grid">
+        {moves.map((move) => (
+          <div class={`move-card glass-card ${move.img ? 'has-media' : ''}`}>
+            {move.img && (
+              <div class="move-media">
+                <img
+                  src={move.img}
+                  alt={move.imgAlt}
+                  loading="lazy"
+                  decoding="async"
+                  width="600"
+                  height="338"
+                />
+                <div class="move-media-overlay"></div>
+              </div>
+            )}
+            <div class="move-content">
+              <div class="move-header">
+                <div class="move-key">{move.key}</div>
+                {move.heat > 0 && (
+                  <div class="move-heat">
+                    <Zap size={11} />
+                    {move.heat} Heat
+                  </div>
+                )}
+                {move.heat === 0 && (
+                  <div class="move-heat free">No Heat</div>
+                )}
+              </div>
+              <h3 class="move-name">{move.name}</h3>
+              <p class="move-desc">{move.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <!-- Remaining moves table for completeness -->
+      <div class="moves-table-wrap glass-card">
+        <h3 class="table-title">Complete World High Voltage Keybind Reference</h3>
+        <div class="table-scroller">
+          <table class="moves-table">
+            <thead>
+              <tr>
+                <th>Key</th>
+                <th>Mode</th>
+                <th>Move</th>
+                <th>Heat</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>LMB</td><td>Stand Off</td><td>Rush Attack (3-hit knife)</td><td>0</td></tr>
+              <tr><td>E</td><td>Stand Off</td><td>Fierce Rushdown</td><td>25</td></tr>
+              <tr><td>R</td><td>Stand Off</td><td>Vicious Cleaving</td><td>0</td></tr>
+              <tr><td>T</td><td>Stand Off</td><td>Checkmate (knife throw)</td><td>0</td></tr>
+              <tr><td>Y+</td><td>Stand Off</td><td>Revolver Flank</td><td>25</td></tr>
+              <tr class="highlight"><td>LMB</td><td>Stand On</td><td>Rush Attack (4-hit combo)</td><td>0</td></tr>
+              <tr class="highlight"><td>E</td><td>Stand On</td><td>Barrage (cancellable)</td><td>0</td></tr>
+              <tr class="highlight"><td>R</td><td>Stand On</td><td>Chop</td><td>0</td></tr>
+              <tr class="highlight"><td>T</td><td>Stand On</td><td>Blink Execution ⭐</td><td>25</td></tr>
+              <tr class="highlight"><td>Y</td><td>Both</td><td>Flashbang (4s stun)</td><td>0</td></tr>
+              <tr class="highlight"><td>Y+</td><td>Stand On</td><td>Shining Impale</td><td>35</td></tr>
+              <tr class="highlight"><td>G</td><td>Stand On</td><td>Lethal Grasp</td><td>25</td></tr>
+              <tr class="highlight"><td>H</td><td>Stand On</td><td>Timestop ⭐⭐</td><td>50+</td></tr>
+              <tr class="highlight"><td>H+</td><td>Stand On</td><td>Timestop Movement</td><td>50+</td></tr>
+              <tr class="highlight"><td>V</td><td>Stand On</td><td>Teleport</td><td>0</td></tr>
+              <tr class="highlight"><td>Z</td><td>Stand On</td><td>High Voltage ⭐⭐⭐</td><td>75</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ADVANTAGES -->
+  <section class="adv-section section">
+    <div class="container">
+      <h2 class="section-title">Why Play World High Voltage?</h2>
+      <p class="section-subtitle">Concrete advantages that keep World High Voltage at the top of the AUT meta every patch.</p>
+
+      <div class="adv-grid">
+        <div class="adv-card glass-card">
+          <Clock size={32} className="adv-icon electric" />
+          <h4>Timestop + Movement Combo</h4>
+          <p>World High Voltage's Timestop (H) paired with Timestop Movement (H+) lets you freely reposition and hit pinned opponents — unmatched in competitive AUT play.</p>
+        </div>
+        <div class="adv-card glass-card">
+          <Swords size={32} className="adv-icon purple" />
+          <h4>Dual-State Combat Depth</h4>
+          <p>World High Voltage's Stand On / Stand Off toggle doubles your available moves, making advanced combo expression far richer than single-state Stands.</p>
+        </div>
+        <div class="adv-card glass-card">
+          <Eye size={32} className="adv-icon gold" />
+          <h4>Flashbang Setup Tool</h4>
+          <p>Zero heat cost and 4-second stun makes Flashbang one of the best setup moves in AUT. World High Voltage players use it to guarantee Blink Execution or full barrages.</p>
+        </div>
+        <div class="adv-card glass-card">
+          <Target size={32} className="adv-icon green" />
+          <h4>Ranged + Melee Coverage</h4>
+          <p>Revolver Flank and Checkmate handle mid-range poke while Vicious Cleaving and Barrage dominate close range. World High Voltage has no dead zone in any fight.</p>
+        </div>
+        <div class="adv-card glass-card">
+          <Shield size={32} className="adv-icon red" />
+          <h4>High-Voltage Finisher</h4>
+          <p>The signature High Voltage move (Z, 75 heat) sequences a punch, teleport, timestop, and knife volley — guaranteed kill on low-HP targets and one of the most satisfying finishers in AUT.</p>
+        </div>
+        <div class="adv-card glass-card">
+          <Zap size={32} className="adv-icon electric" />
+          <h4>Multiple Unlock Routes</h4>
+          <p>World High Voltage can be obtained via Shadow DIO evolution or direct crafting with Shards — giving every player a realistic path to unlocking it regardless of inventory.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ SECTION -->
+  <section class="faq-outer section">
+    <div class="container">
+      <h2 class="section-title">World High Voltage FAQ</h2>
+      <p class="section-subtitle">Every common question from AUT players searching for World High Voltage information, answered accurately.</p>
+      <FAQ items={faqs} />
+    </div>
+  </section>
+
+  <!-- RELATED CONTENT -->
+  <section class="related-section section">
+    <div class="container">
+      <h2 class="section-title">More World High Voltage Resources</h2>
+      <div class="related-grid">
+        <a href="/tier-list" class="related-card glass-card">
+          <span class="related-emoji">⚡</span>
+          <div>
+            <h4>World High Voltage Tier Ranking</h4>
+            <p>See TWHV's exact placement in our current Bizarre Lineage tier list, updated after every patch by our editors.</p>
+            <span class="related-arrow">View Tier List <ArrowRight size={14} className="inline-icon" /></span>
+          </div>
+        </a>
+        <a href="/codes" class="related-card glass-card">
+          <span class="related-emoji">🎁</span>
+          <div>
+            <h4>Free Codes for World High Voltage Shards</h4>
+            <p>Active codes can award Stand Arrows and bonus items to speed up your World High Voltage grind. Updated within minutes of every drop.</p>
+            <span class="related-arrow">Check Codes <ArrowRight size={14} className="inline-icon" /></span>
+          </div>
+        </a>
+        <a href="/stands" class="related-card glass-card">
+          <span class="related-emoji">🗡️</span>
+          <div>
+            <h4>Compare World High Voltage to Other Stands</h4>
+            <p>Browse every Stand in the database with raw stats and moveset breakdowns to see how World High Voltage stacks up.</p>
+            <span class="related-arrow">All Stands <ArrowRight size={14} className="inline-icon" /></span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOTTOM CTA -->
+  <section class="bottom-cta section">
+    <div class="container cta-inner">
+      <div class="cta-badge"><Zap size={14} /> World High Voltage — S-Tier AUT Stand</div>
+      <h2 class="section-title">Ready to Master World High Voltage?</h2>
+      <p class="section-subtitle">Use both obtainment routes, master the Stand On/Off combos, and stop time on your opponents in AUT.</p>
+      <div class="cta-btns">
+        <a href="#how-to-get" class="btn btn-electric">
+          Get World High Voltage Now
+        </a>
+        <a href="#moves" class="btn btn-ghost">
+          Review All Moves
+        </a>
+      </div>
+      <p class="cta-note">
+        This World High Voltage guide is maintained by experienced AUT players and verified directly in-game. Move stats, heat costs, and obtainment routes for World High Voltage are rechecked after every major AUT update.
+      </p>
+    </div>
+  </section>
+
+</Layout>
+
+<style>
+/* ─── HERO ─────────────────────────────────── */
+.whv-hero {
+  position: relative;
+  overflow: hidden;
+  padding: 7rem 0 4rem;
+  border-bottom: 1px solid var(--color-glass-border);
+}
+
+.whv-hero-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.whv-hero-bg img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center 25%;
+  opacity: 0.18;
+}
+
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(10,5,18,0.8) 0%, rgba(10,5,18,0.4) 60%, rgba(10,5,18,0.7) 100%);
+}
+
+/* electric animated lines */
+.electric-lines {
+  position: absolute; inset: 0; overflow: hidden; pointer-events: none;
+}
+.electric-lines span {
+  position: absolute;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, rgba(96,211,255,0.5), transparent);
+  animation: electricLine 4s linear infinite;
+  opacity: 0;
+}
+.electric-lines span:nth-child(1) { left: 15%; height: 60%; animation-delay: 0s; animation-duration: 3.5s; }
+.electric-lines span:nth-child(2) { left: 40%; height: 40%; animation-delay: 1.2s; animation-duration: 5s; }
+.electric-lines span:nth-child(3) { left: 70%; height: 70%; animation-delay: 2s; animation-duration: 4s; }
+.electric-lines span:nth-child(4) { left: 88%; height: 50%; animation-delay: 0.6s; animation-duration: 6s; }
+
+@keyframes electricLine {
+  0%   { top: 100%; opacity: 0; }
+  10%  { opacity: 1; }
+  90%  { opacity: 1; }
+  100% { top: -10%; opacity: 0; }
+}
+
+.hero-inner { position: relative; z-index: 1; }
+
+.hero-double {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 3rem;
+  align-items: center;
+}
+
+/* Badge */
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.35rem 1rem; border-radius: 99px;
+  background: rgba(96,211,255,0.1); border: 1px solid rgba(96,211,255,0.3);
+  color: #60d3ff; font-size: 0.82rem; font-weight: 600; margin-bottom: 1.5rem;
+}
+
+.hero-title {
+  font-size: 3.8rem; font-weight: 900; line-height: 1.08;
+  color: #fff; margin-bottom: 1.25rem;
+}
+
+.title-sub {
+  display: block;
+  background: linear-gradient(135deg, #60d3ff, #a855f7);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: 0.5em; font-weight: 700; margin-top: 0.4rem;
+  filter: drop-shadow(0 0 12px rgba(96,211,255,0.3));
+}
+
+.hero-desc {
+  font-size: 1.05rem; color: var(--color-text-secondary);
+  line-height: 1.75; max-width: 580px; margin-bottom: 2rem;
+}
+
+.hero-ctas {
+  display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 2.5rem;
+}
+
+.btn {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.75rem 1.6rem; border-radius: 99px;
+  font-family: var(--font-heading); font-size: 0.95rem; font-weight: 600;
+  text-decoration: none; transition: all 0.22s cubic-bezier(0.34,1.56,0.64,1);
+  min-height: 44px; cursor: pointer;
+}
+
+.btn-electric {
+  background: linear-gradient(135deg, #1a7fff, #60d3ff);
+  color: #000; font-weight: 700;
+  box-shadow: 0 4px 20px rgba(96,211,255,0.3);
+}
+
+.btn-electric:hover {
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 8px 30px rgba(96,211,255,0.45);
+}
+
+.btn-ghost {
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
+  color: var(--color-text-primary); backdrop-filter: blur(8px);
+}
+
+.btn-ghost:hover {
+  background: rgba(255,255,255,0.1); border-color: rgba(96,211,255,0.3);
+  transform: translateY(-2px);
+}
+
+/* Stat strip */
+.stat-strip {
+  display: flex; align-items: center; gap: 2rem;
+  padding: 1.25rem 2rem; border-radius: 16px;
+  background: var(--color-glass-bg); border: 1px solid var(--color-glass-border);
+  backdrop-filter: blur(16px); width: fit-content;
+}
+
+.stat-item { display: flex; flex-direction: column; align-items: center; gap: 0.1rem; }
+.stat-val { font-family: var(--font-heading); font-size: 1.2rem; font-weight: 800; color: #fff; }
+.stat-lbl { font-size: 0.73rem; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; white-space: nowrap; }
+.stat-div { width: 1px; height: 36px; background: rgba(255,255,255,0.08); }
+.text-electric { color: #60d3ff; text-shadow: 0 0 10px rgba(96,211,255,0.5); }
+
+/* Hero Portrait */
+.hero-portrait {
+  position: relative;
+  display: flex; align-items: center; justify-content: center;
+}
+
+.portrait-glow {
+  position: absolute; inset: -20px;
+  background: radial-gradient(circle, rgba(96,211,255,0.15) 0%, transparent 70%);
+  border-radius: 50%; pointer-events: none;
+  animation: glowPulse 3s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0%, 100% { opacity: 0.6; transform: scale(0.95); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+
+.hero-portrait img {
+  width: 100%; max-width: 380px;
+  border-radius: 20px;
+  border: 1px solid rgba(96,211,255,0.25);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 40px rgba(96,211,255,0.1);
+  object-fit: cover;
+}
+
+/* ─── OVERVIEW ─────────────────────────────── */
+.overview-inner {
+  max-width: 820px;
+  text-align: center;
+  margin: 0 auto;  /* center within container */
+}
+
+.overview-body {
+  text-align: left;
+  max-width: 760px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.overview-body p {
+  color: var(--color-text-secondary); font-size: 1rem; line-height: 1.8; margin: 0;
+}
+
+.overview-body strong { color: var(--color-text-primary); }
+.overview-body em { color: #60d3ff; font-style: normal; font-weight: 600; }
+
+/* ─── OBTAIN ────────────────────────────────── */
+.routes-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
+  margin-top: 2rem;
+}
+
+.glass-card {
+  background: var(--color-glass-bg);
+  border: 1px solid var(--color-glass-border);
+  border-radius: 20px; padding: 2rem;
+  transition: all 0.3s ease; text-decoration: none; position: relative; overflow: hidden;
+}
+
+.glass-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(96,211,255,0.2);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 0 30px rgba(96,211,255,0.07);
+}
+
+.route-badge {
+  display: inline-block; padding: 0.25rem 0.75rem; border-radius: 8px;
+  background: rgba(96,211,255,0.12); border: 1px solid rgba(96,211,255,0.3);
+  color: #60d3ff; font-size: 0.78rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 1rem;
+}
+
+.route-badge-alt {
+  background: rgba(168,85,247,0.12); border-color: rgba(168,85,247,0.3);
+  color: #c084fc;
+}
+
+.route-card h3 {
+  font-size: 1.35rem; font-weight: 800; color: #fff; margin-bottom: 0.5rem;
+}
+
+.route-intro {
+  color: var(--color-text-secondary); font-size: 0.95rem;
+  line-height: 1.6; margin-bottom: 1.5rem;
+}
+
+.route-steps {
+  list-style: none; padding: 0; margin: 0;
+  display: flex; flex-direction: column; gap: 1rem;
+}
+
+.route-steps li {
+  display: flex; gap: 1rem; align-items: flex-start;
+}
+
+.step-dot {
+  width: 26px; height: 26px; min-width: 26px;
+  border-radius: 8px; display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, #1a7fff, #60d3ff);
+  color: #000; font-weight: 800; font-size: 0.8rem; margin-top: 2px;
+}
+
+.route-craft .step-dot {
+  background: linear-gradient(135deg, #a855f7, #c084fc);
+}
+
+.route-steps div {
+  font-size: 0.92rem; color: var(--color-text-secondary); line-height: 1.65;
+}
+
+.route-steps strong { color: var(--color-text-primary); }
+
+/* ─── MOVES ─────────────────────────────────── */
+/* Pose showcase */
+.pose-showcase {
+  padding: 0;
+  margin-bottom: 2rem;
+  overflow: hidden;
+  border-radius: 20px;
+  position: relative;
+  /* Use auto height — the animated webp may be tall; cap to avoid viewport blowout */
+  max-height: 480px;
+}
+
+.pose-showcase img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  object-position: center top;
+  max-height: 480px;
+}
+
+.pose-overlay {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 1rem 1.5rem;
+  background: linear-gradient(to top, rgba(10,5,18,0.95) 0%, transparent 60%);
+}
+
+.pose-label {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  color: #60d3ff; font-size: 0.85rem; font-weight: 600;
+}
+
+/* Moves grid */
+.moves-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+/* move-card MUST override glass-card's padding:2rem because it uses internal layout */
+.move-card.glass-card {
+  padding: 0 !important;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.move-media {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--color-bg-surface);
+  flex-shrink: 0;
+}
+
+.move-media img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+  display: block;
+}
+
+.move-card.glass-card:hover .move-media img { transform: scale(1.04); }
+
+.move-media-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(10,5,18,0.7) 0%, transparent 50%);
+}
+
+.move-content {
+  padding: 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.move-header {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 0.5rem; margin-bottom: 0.6rem;
+}
+
+.move-key {
+  font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.05em; color: #60d3ff;
+  padding: 0.2rem 0.6rem; background: rgba(96,211,255,0.1);
+  border: 1px solid rgba(96,211,255,0.25); border-radius: 6px;
+}
+
+.move-heat {
+  display: inline-flex; align-items: center; gap: 0.25rem;
+  font-size: 0.72rem; font-weight: 600; padding: 0.2rem 0.55rem;
+  background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.25);
+  border-radius: 6px; color: #f87171;
+}
+
+.move-heat.free {
+  background: rgba(34,197,94,0.1); border-color: rgba(34,197,94,0.25);
+  color: #4ade80;
+}
+
+.move-name {
+  font-size: 1.15rem; font-weight: 700; color: #fff; margin-bottom: 0.6rem;
+}
+
+.move-desc {
+  color: var(--color-text-secondary); font-size: 0.9rem; line-height: 1.65; margin: 0;
+}
+
+/* Moves table */
+.moves-table-wrap {
+  overflow: hidden;
+}
+
+.table-title {
+  font-size: 1.2rem; font-weight: 700; color: var(--color-text-primary);
+  padding: 1.5rem 1.5rem 1rem; margin: 0; border-bottom: 1px solid var(--color-glass-border);
+}
+
+.table-scroller { overflow-x: auto; }
+
+.moves-table {
+  width: 100%; border-collapse: collapse; font-size: 0.9rem;
+}
+
+.moves-table th {
+  background: rgba(96,211,255,0.06); color: var(--color-text-muted);
+  font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.05em; padding: 0.75rem 1.5rem; text-align: left;
+  border-bottom: 1px solid var(--color-glass-border);
+}
+
+.moves-table td {
+  padding: 0.7rem 1.5rem; color: var(--color-text-secondary);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+
+.moves-table tr:last-child td { border-bottom: none; }
+
+.moves-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+.moves-table tr.highlight td { background: rgba(96,211,255,0.03); }
+
+/* ─── ADVANTAGES ─────────────────────────────── */
+.adv-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+  align-items: start;
+}
+
+.adv-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* lucide-react icons rendered via className — color set globally */
+.adv-card svg { flex-shrink: 0; }
+
+.adv-card h4 {
+  font-size: 1.05rem; font-weight: 700; color: #fff; margin: 0;
+}
+
+.adv-card p {
+  font-size: 0.9rem; color: var(--color-text-secondary); line-height: 1.65; margin: 0;
+}
+
+/* icon color overrides — targeting the SVG rendered by Lucide React */
+.adv-card:nth-child(1) svg { color: #60d3ff; }
+.adv-card:nth-child(2) svg { color: #c084fc; }
+.adv-card:nth-child(3) svg { color: #f59e0b; }
+.adv-card:nth-child(4) svg { color: #4ade80; }
+.adv-card:nth-child(5) svg { color: #f87171; }
+.adv-card:nth-child(6) svg { color: #60d3ff; }
+
+/* ─── RELATED ─────────────────────────────────── */
+.related-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+  align-items: start;
+}
+
+/* related-card: override glass-card's hover transform so inner content isn't disrupted */
+.related-card.glass-card {
+  display: flex;
+  gap: 1.25rem;
+  align-items: flex-start;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.related-emoji {
+  font-size: 2rem; line-height: 1; flex-shrink: 0; margin-top: 0.2rem;
+  /* fix emoji rendering on some browsers */
+  display: block;
+}
+
+.related-card h4 {
+  font-size: 1rem; font-weight: 700; color: #fff;
+  margin: 0 0 0.35rem;
+}
+
+.related-card p {
+  font-size: 0.88rem; color: var(--color-text-secondary); line-height: 1.6;
+  margin: 0 0 0.5rem;
+}
+
+.related-arrow {
+  color: #60d3ff; font-size: 0.85rem; font-weight: 600;
+  display: inline-flex; align-items: center; gap: 0.3rem;
+  /* prevent arrow from being treated as min-height:44px touch target */
+  min-height: unset; min-width: unset;
+}
+
+.inline-icon { display: inline-block; vertical-align: middle; }
+
+/* ─── BOTTOM CTA ─────────────────────────────── */
+.cta-inner { text-align: center; }
+
+.cta-badge {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.35rem 1rem; border-radius: 99px;
+  background: rgba(96,211,255,0.1); border: 1px solid rgba(96,211,255,0.3);
+  color: #60d3ff; font-size: 0.82rem; font-weight: 600; margin-bottom: 1.5rem;
+}
+
+.cta-btns {
+  display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 2rem;
+}
+
+.cta-note {
+  margin-top: 2rem; font-size: 0.85rem;
+  color: var(--color-text-muted); max-width: 600px; margin-left: auto; margin-right: auto;
+  line-height: 1.7;
+}
+
+/* ─── RESPONSIVE ─────────────────────────────── */
+@media (max-width: 1200px) {
+  .stat-strip { gap: 1.5rem; padding: 1rem 1.5rem; }
+}
+
+@media (max-width: 1024px) {
+  .hero-double {
+    grid-template-columns: 1fr;
+    /* On tablet portrait is below text — reorder */
+  }
+  .hero-portrait {
+    justify-content: center;
+    order: -1;  /* show portrait ABOVE text on mobile */
+  }
+  .hero-portrait img {
+    max-width: 260px;
+    max-height: 320px;
+  }
+  .moves-grid { grid-template-columns: repeat(2, 1fr); }
+  .adv-grid { grid-template-columns: repeat(2, 1fr); }
+  .related-grid { grid-template-columns: repeat(2, 1fr); }
+  .routes-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 768px) {
+  .whv-hero { padding: 5rem 0 3rem; }
+  .hero-title { font-size: 2.4rem; }
+  .hero-desc { font-size: 0.95rem; }
+  /* On mobile, buttons in hero are side-by-side (don't force width:100%) */
+  .hero-ctas .btn { width: auto; }
+  /* Only CTA section buttons are full width */
+  .cta-btns .btn { width: 100%; justify-content: center; max-width: 320px; }
+  .cta-btns { flex-direction: column; align-items: center; }
+  .routes-grid { grid-template-columns: 1fr; }
+  .moves-grid { grid-template-columns: 1fr; }
+  .adv-grid { grid-template-columns: 1fr; }
+  .related-grid { grid-template-columns: 1fr; }
+  .stat-strip {
+    gap: 1rem;
+    padding: 0.9rem 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+  }
+  .stat-div { display: none; } /* hide dividers on mobile when wrapping */
+  .pose-showcase { max-height: 280px; }
+  .pose-showcase img { max-height: 280px; }
+  .hero-portrait img { max-width: 200px; max-height: 260px; }
+  .moves-table th, .moves-table td { padding: 0.6rem 1rem; font-size: 0.82rem; }
+}
+</style>
