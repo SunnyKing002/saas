@@ -1,0 +1,123 @@
+---
+// apps/site-template/src/pages/payment/success.astro
+// 支付成功页
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Payment Successful 🎉</title>
+  <meta name="robots" content="noindex" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #0a0a0f; --surface: #13131a; --border: rgba(255,255,255,0.08);
+      --accent: #7c3aed; --accent-light: #a78bfa; --green: #10b981; --text: #f0f0f5; --muted: #9494a8;
+    }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh;
+      display: grid; place-items: center; padding: 2rem; }
+    .card {
+      background: var(--surface); border: 1px solid var(--border); border-radius: 24px;
+      padding: 3rem 2.5rem; text-align: center; max-width: 480px; width: 100%;
+      animation: slideUp 0.5s ease-out;
+      box-shadow: 0 0 60px rgba(16,185,129,0.08), 0 20px 60px rgba(0,0,0,0.4);
+    }
+    @keyframes slideUp { from { opacity:0; transform: translateY(24px); } to { opacity:1; transform: translateY(0); } }
+    .success-ring {
+      width: 100px; height: 100px; margin: 0 auto 2rem;
+      border-radius: 50%; background: rgba(16,185,129,0.1); border: 2px solid rgba(16,185,129,0.3);
+      display: flex; align-items: center; justify-content: center;
+      animation: pulse 2s ease-in-out infinite;
+      position: relative;
+    }
+    @keyframes pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(16,185,129,0.3); }
+      50% { box-shadow: 0 0 0 20px rgba(16,185,129,0); }
+    }
+    .check-icon { font-size: 3rem; }
+    h1 { font-size: 1.75rem; font-weight: 800; margin-bottom: 0.75rem; }
+    .sub-text { font-size: 0.95rem; color: var(--muted); margin-bottom: 2rem; line-height: 1.6; }
+    .credits-info {
+      display: flex; align-items: center; justify-content: center; gap: 0.75rem;
+      background: rgba(16,185,129,0.08); border: 1px solid rgba(16,185,129,0.2);
+      border-radius: 12px; padding: 1rem 1.5rem; margin-bottom: 2rem;
+    }
+    .credits-icon { font-size: 1.5rem; }
+    .credits-text { text-align: left; }
+    .credits-label { font-size: 0.75rem; color: var(--muted); }
+    .credits-value { font-size: 1.1rem; font-weight: 700; color: var(--green); }
+    .btn-primary {
+      display: block; width: 100%; padding: 0.875rem; border-radius: 12px; border: none;
+      background: linear-gradient(135deg, #7c3aed, #a78bfa); color: #fff;
+      font-size: 0.95rem; font-weight: 600; cursor: pointer; text-decoration: none;
+      margin-bottom: 0.75rem; transition: opacity 0.2s;
+    }
+    .btn-primary:hover { opacity: 0.9; }
+    .btn-ghost {
+      display: block; width: 100%; padding: 0.75rem; border-radius: 12px;
+      border: 1px solid var(--border); background: transparent; color: var(--muted);
+      font-size: 0.9rem; cursor: pointer; text-decoration: none; transition: color 0.2s;
+    }
+    .btn-ghost:hover { color: var(--text); }
+    .loader { width: 24px; height: 24px; border: 3px solid var(--border); border-top-color: var(--green);
+      border-radius: 50%; animation: spin 0.8s linear infinite; margin: 1rem auto; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    #status-text { font-size: 0.85rem; color: var(--muted); margin-bottom: 1.5rem; min-height: 1.3em; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="success-ring">
+      <span class="check-icon">✅</span>
+    </div>
+    <h1>Payment Successful!</h1>
+    <p class="sub-text">Your credits are being processed. This usually takes just a few seconds.</p>
+
+    <div id="credits-section" class="credits-info" style="display:none;">
+      <span class="credits-icon">⚡</span>
+      <div class="credits-text">
+        <div class="credits-label">Current Balance</div>
+        <div class="credits-value" id="balance-display">—</div>
+      </div>
+    </div>
+
+    <div class="loader" id="loader"></div>
+    <p id="status-text">Fetching your updated balance...</p>
+
+    <a href="/dashboard" class="btn-primary">Go to Dashboard →</a>
+    <a href="/pricing" class="btn-ghost">View all plans</a>
+  </div>
+
+  <script>
+    // Poll credit balance for up to 10 seconds
+    async function pollBalance(attempts = 0) {
+      if (attempts >= 5) {
+        document.getElementById('status-text').textContent = 'Credits will appear shortly in your dashboard.';
+        document.getElementById('loader').style.display = 'none';
+        return;
+      }
+
+      try {
+        const res = await fetch('/api/credits/balance');
+        if (!res.ok) throw new Error();
+        const { balance } = await res.json();
+
+        document.getElementById('loader').style.display = 'none';
+        document.getElementById('credits-section').style.display = 'flex';
+        document.getElementById('balance-display').textContent = `${balance.toLocaleString()} credits`;
+        document.getElementById('status-text').textContent = '✨ Your credits have been added!';
+      } catch {
+        await new Promise(r => setTimeout(r, 2000));
+        pollBalance(attempts + 1);
+      }
+    }
+
+    // Redirect to dashboard after 5 seconds
+    setTimeout(() => { window.location.href = '/dashboard'; }, 8000);
+
+    pollBalance();
+  </script>
+</body>
+</html>

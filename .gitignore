@@ -118,3 +118,12 @@ dist/
 
 # Turborepo
 .turbo/
+
+# Environment Variables & Secrets
+.env*
+.dev.vars
+
+# Local Database & State
+*.sqlite
+*.sqlite-journal
+.wrangler/

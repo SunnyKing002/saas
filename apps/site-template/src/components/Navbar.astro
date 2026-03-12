@@ -1,6 +1,5 @@
 ---
-// apps/site-template/src/components/Navbar.astro
-// 顶部导航栏 - 导航链接来自 D1（Worker 注入）或 Layout 默认值
+import AuthButton from "./AuthButton";
 
 export interface NavLinkItem {
   label: string;
@@ -42,9 +41,9 @@ const currentPath = Astro.url.pathname;
       }
     </ul>
 
-    <!-- CTA 按钮 -->
+    <!-- 右侧：登录/用户按钮（React Island，客户端动态渲染） -->
     <div class="nav-cta">
-      <a href="#pricing" class="btn btn-primary">Get Started</a>
+      <AuthButton client:load />
     </div>
 
     <!-- 汉堡菜单（移动端，TODO: 用 React island 实现交互） -->

@@ -49,11 +49,11 @@ export const SITE_REGISTRY: SiteConfig[] = [
         },
     },
     {
-        key: "face-paint-ideas",
-        domain: "facepaint.top",
-        title: "Face Paint Ideas",
-        description: "Creative face painting ideas and tutorials for kids and parties.",
-        primaryColor: "#ec4899",
+        key: "bizarre-lineage",
+        domain: "bizarre-lineage.com",
+        title: "Bizarre Lineage",
+        description: "The ultimate Bizarre Lineage Wiki for Roblox. Updated Stand Tier List, active codes, best builds, fighting styles, sub-abilities, and guides for PvP & PvE.",
+        primaryColor: "#7c3aed",
         locale: "en",
     },
     // TODO: 在此添加新站点配置，例如：

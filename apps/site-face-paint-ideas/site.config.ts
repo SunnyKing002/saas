@@ -7,7 +7,7 @@ const siteConfig: SiteConfig = {
   domain: "facepaint.top",
   devDomain: "localhost",
   title: "Face Paint Ideas",
-  description: "Creative face painting ideas and tutorials for kids and parties.",
+  description: "TODO: 填写站点描述",
   primaryColor: "#ec4899",
   locale: "en",
   gaId: undefined,                   // TODO: 填写 Google Analytics ID（可选）

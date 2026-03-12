@@ -1,0 +1,401 @@
+---
+// apps/site-template/src/pages/dashboard.astro
+// 用户控制台页面（登录后可见）
+import Layout from "../layouts/Layout.astro";
+import siteConfig from "../../site.config";
+
+const seo = {
+  title: `Dashboard · ${siteConfig.title}`,
+  description: "Your personal dashboard.",
+  noindex: true,
+};
+---
+
+<Layout seo={seo}>
+  <div class="dashboard-page">
+    <!-- Auth guard: 未登录时重定向 -->
+    <div id="loadingState" class="state-container" role="status" aria-live="polite">
+      <div class="spinner" aria-hidden="true"></div>
+      <p>Loading your account…</p>
+    </div>
+
+    <!-- 已登录内容 -->
+    <div id="dashContent" class="dash-content" style="display:none">
+      <!-- Background orbs -->
+      <div class="bg-orb bg-orb-1" aria-hidden="true"></div>
+      <div class="bg-orb bg-orb-2" aria-hidden="true"></div>
+
+      <div class="container">
+        <!-- Header -->
+        <div class="dash-header">
+          <div class="user-hero">
+            <div class="avatar-wrap">
+              <img id="userAvatar" src="" alt="User avatar" class="avatar" width="72" height="72" loading="lazy" />
+              <div class="avatar-ring" aria-hidden="true"></div>
+            </div>
+            <div class="user-info">
+              <h1 class="greeting">Welcome back, <span id="userName">there</span> 👋</h1>
+              <p class="user-email" id="userEmail"></p>
+              <span class="badge-role" id="userRole">Member</span>
+            </div>
+          </div>
+          <button class="logout-btn" id="logoutBtn" aria-label="Sign out of your account">
+            <svg viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path d="M13 4.5l4.5 5.5-4.5 5.5M17.5 10H7.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M7.5 15H4a1 1 0 01-1-1V6a1 1 0 011-1h3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            Sign out
+          </button>
+        </div>
+
+        <!-- Stats cards -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon stat-icon--blue" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="stat-body">
+              <p class="stat-label">Plan</p>
+              <p class="stat-value" id="planName">Free</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon stat-icon--yellow" aria-hidden="true">
+              ⚡
+            </div>
+            <div class="stat-body">
+              <p class="stat-label">Credits</p>
+              <p class="stat-value" id="creditBalance">—</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon stat-icon--purple" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.5"/><path d="M12 8v4l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </div>
+            <div class="stat-body">
+              <p class="stat-label">Member since</p>
+              <p class="stat-value" id="memberSince">—</p>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon stat-icon--green" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div class="stat-body">
+              <p class="stat-label">Account</p>
+              <p class="stat-value">Verified ✓</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Upgrade CTA (for free users) -->
+        <div class="upgrade-card" id="upgradeCard">
+          <div class="upgrade-left">
+            <div class="upgrade-badge">⚡ Upgrade</div>
+            <h2 class="upgrade-title">Unlock the full experience</h2>
+            <p class="upgrade-desc">Get unlimited access, priority support, and advanced features with our Pro plan.</p>
+          </div>
+          <a href="/pricing" class="upgrade-btn">View Plans →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  const WORKER_API = (import.meta as any).env?.WORKER_API_URL || "http://localhost:8787";
+
+  async function init() {
+    try {
+      const res = await fetch(`${WORKER_API}/api/auth/me`, { credentials: "include" });
+      const { user } = await res.json() as { user: any };
+
+      if (!user) {
+        // 未登录，重定向到登录页
+        window.location.href = "/auth/login";
+        return;
+      }
+
+      // 填充用户信息
+      const avatar = document.getElementById("userAvatar") as HTMLImageElement;
+      if (avatar && user.avatarUrl) {
+        avatar.src = user.avatarUrl;
+        avatar.alt = user.displayName || user.email;
+      }
+      const nameEl = document.getElementById("userName");
+      if (nameEl) nameEl.textContent = user.displayName?.split(" ")[0] || user.email;
+      const emailEl = document.getElementById("userEmail");
+      if (emailEl) emailEl.textContent = user.email;
+      const roleEl = document.getElementById("userRole");
+      if (roleEl) roleEl.textContent = user.role === "admin" ? "Admin" : "Member";
+
+      // 加载积分信息
+      fetchCredits();
+
+      // 隐藏 loading，显示内容
+      const loading = document.getElementById("loadingState");
+      const content = document.getElementById("dashContent");
+      if (loading) loading.style.display = "none";
+      if (content) content.style.display = "block";
+    } catch {
+      window.location.href = "/auth/login";
+    }
+  }
+
+  async function fetchCredits() {
+    try {
+      const res = await fetch('/api/credits/balance', { credentials: 'include' });
+      if (!res.ok) return;
+      const data = await res.json() as { balance: number; subscription: { status:string; planId:string } | null };
+      const balEl = document.getElementById('creditBalance');
+      if (balEl) balEl.textContent = data.balance.toLocaleString();
+      const planEl = document.getElementById('planName');
+      if (planEl && data.subscription?.status === 'active') {
+        planEl.textContent = 'Pro';
+        planEl.style.color = '#a78bfa';
+        const upgradeCard = document.getElementById('upgradeCard');
+        if (upgradeCard) upgradeCard.style.display = 'none'; // hide upgrade CTA for subscribers
+      }
+    } catch {}
+  }
+
+  // Logout
+  document.getElementById("logoutBtn")?.addEventListener("click", async () => {
+    const btn = document.getElementById("logoutBtn") as HTMLButtonElement;
+    if (btn) { btn.disabled = true; btn.textContent = "Signing out…"; }
+    try {
+      await fetch(`${WORKER_API}/api/auth/logout`, { method: "POST", credentials: "include" });
+    } finally {
+      window.location.href = "/";
+    }
+  });
+
+  init();
+</script>
+
+<style>
+  .dashboard-page {
+    min-height: calc(100vh - 64px);
+    padding: 2rem 0 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Loading state */
+  .state-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    gap: 1rem;
+    color: #475569;
+    font-size: 0.9rem;
+  }
+  .spinner {
+    width: 36px;
+    height: 36px;
+    border: 3px solid rgba(99,102,241,0.2);
+    border-top-color: #6366f1;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .dash-content { position: relative; }
+
+  /* Background orbs */
+  .bg-orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(100px);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .bg-orb-1 {
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(99,102,241,0.08) 0%, transparent 70%);
+    top: -200px; right: -200px;
+  }
+  .bg-orb-2 {
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(192,132,252,0.06) 0%, transparent 70%);
+    bottom: 0; left: -100px;
+  }
+
+  .container { position: relative; z-index: 1; }
+
+  /* Dashboard Header */
+  .dash-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    padding-top: 1rem;
+    flex-wrap: wrap;
+  }
+  .user-hero {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .avatar-wrap {
+    position: relative;
+    flex-shrink: 0;
+  }
+  .avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: linear-gradient(135deg, #6366f1, #c084fc);
+    display: block;
+  }
+  .avatar-ring {
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #6366f1, #c084fc);
+    z-index: -1;
+    opacity: 0.6;
+  }
+  .greeting {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #f1f5f9;
+    margin: 0 0 0.35rem;
+    letter-spacing: -0.03em;
+    line-height: 1.2;
+  }
+  .user-email {
+    font-size: 0.875rem;
+    color: #64748b;
+    margin: 0 0 0.5rem;
+  }
+  .badge-role {
+    display: inline-block;
+    background: rgba(99,102,241,0.15);
+    color: #a5b4fc;
+    border: 1px solid rgba(99,102,241,0.2);
+    border-radius: 9999px;
+    padding: 0.2rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: #64748b;
+    border-radius: 10px;
+    padding: 0.625rem 1.125rem;
+    min-height: 44px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .logout-btn svg { width: 16px; height: 16px; }
+  .logout-btn:hover {
+    background: rgba(239,68,68,0.1);
+    border-color: rgba(239,68,68,0.2);
+    color: #fca5a5;
+  }
+  .logout-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  /* Stats Grid */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .stat-card {
+    background: rgba(15,15,25,0.6);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 16px;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    transition: border-color 0.2s;
+  }
+  .stat-card:hover { border-color: rgba(255,255,255,0.12); }
+  .stat-icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .stat-icon svg { width: 22px; height: 22px; }
+  .stat-icon--blue { background: rgba(59,130,246,0.15); color: #60a5fa; }
+  .stat-icon--purple { background: rgba(167,139,250,0.15); color: #a78bfa; }
+  .stat-icon--green { background: rgba(74,222,128,0.15); color: #4ade80; }
+  .stat-icon--yellow { background: rgba(251,191,36,0.15); color: #fbbf24; font-size: 1.25rem; display: flex; align-items: center; justify-content: center; }
+  .stat-label { font-size: 0.75rem; color: #475569; margin: 0 0 0.25rem; text-transform: uppercase; letter-spacing: 0.06em; }
+  .stat-value { font-size: 1rem; font-weight: 700; color: #e2e8f0; margin: 0; }
+
+  /* Upgrade Card */
+  .upgrade-card {
+    background: linear-gradient(135deg, rgba(99,102,241,0.12) 0%, rgba(192,132,252,0.08) 100%);
+    border: 1px solid rgba(99,102,241,0.2);
+    border-radius: 20px;
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  .upgrade-badge {
+    display: inline-flex;
+    align-items: center;
+    background: rgba(99,102,241,0.2);
+    color: #a5b4fc;
+    border-radius: 9999px;
+    padding: 0.25rem 0.75rem;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    margin-bottom: 0.75rem;
+  }
+  .upgrade-title {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #f1f5f9;
+    margin: 0 0 0.5rem;
+    letter-spacing: -0.02em;
+  }
+  .upgrade-desc { color: #64748b; font-size: 0.9rem; margin: 0; max-width: 400px; }
+  .upgrade-btn {
+    display: inline-flex;
+    align-items: center;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: white;
+    border-radius: 12px;
+    padding: 0.75rem 1.5rem;
+    min-height: 48px;
+    font-size: 0.925rem;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: all 0.2s;
+    box-shadow: 0 4px 15px rgba(99,102,241,0.3);
+  }
+  .upgrade-btn:hover { transform: translateY(-1px); box-shadow: 0 8px 25px rgba(99,102,241,0.4); }
+
+  @media (max-width: 640px) {
+    .dash-header { flex-direction: column; }
+    .greeting { font-size: 1.4rem; }
+    .upgrade-card { flex-direction: column; align-items: flex-start; }
+  }
+</style>

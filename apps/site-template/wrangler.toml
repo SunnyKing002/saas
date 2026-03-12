@@ -31,6 +31,15 @@ database_id = "YOUR_D1_DATABASE_ID"  # TODO: 执行 `wrangler d1 create saas-mat
 [vars]
 SITE_KEY = "site-template"          # TODO: 克隆新站时改为对应站点 key
 ENVIRONMENT = "production"
+GOOGLE_CLIENT_ID = "814135065400-jv099grcipji662hfrkmnjuovfg4ekl7.apps.googleusercontent.com"
+# Creem 支付配置
+CREEM_TEST_MODE = "false"           # "true" = 测试模式（使用 test-api.creem.io）
+# 以下敏感密钥通过 wrangler secret 存储（不提交到代码库）：
+# wrangler secret put JWT_SECRET
+# wrangler secret put GOOGLE_CLIENT_SECRET
+# wrangler secret put CREEM_API_KEY             # Creem API Key
+# wrangler secret put CREEM_WEBHOOK_SECRET      # Creem Webhook 签名密钥
+# wrangler secret put CREDITS_API_KEY           # 内部积分扣减接口密钥
 
 # ---------------------------------------------------------------
 # 本地开发配置（wrangler dev 时生效）
@@ -43,4 +52,4 @@ local_protocol = "http"
 # 本地开发环境（覆盖上方 vars）
 # ---------------------------------------------------------------
 [env.development]
-vars = { SITE_KEY = "site-template", ENVIRONMENT = "development" }
+vars = { SITE_KEY = "site-template", ENVIRONMENT = "development", GOOGLE_CLIENT_ID = "814135065400-jv099grcipji662hfrkmnjuovfg4ekl7.apps.googleusercontent.com", JWT_SECRET = "dev-local-secret-change-in-production", CREEM_TEST_MODE = "true", CREEM_API_KEY = "your_creem_api_key_here", CREEM_WEBHOOK_SECRET = "your_webhook_secret_here", CREDITS_API_KEY = "dev-credits-api-key-change-in-production" }
