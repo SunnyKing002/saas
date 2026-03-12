@@ -2,67 +2,63 @@
 // src/pages/codes.astro
 import Layout from "../layouts/Layout.astro";
 import { activeCodes, expiredCodes, expectedRewards } from "../data/codes";
-import { Gift, ArrowRight } from "lucide-react";
+import { Gift, Copy, Check } from "lucide-react";
+import FAQ from "../components/FAQ.astro";
 
 const faqs = [
   {
-    question: "Are there any Bizarre Lineage codes working right now?",
-    answer: "Currently, no. The game just launched and lead developer MIDAS is still finalizing the code redemption UI. However, MIDAS has promised the very first code will be '200KLIKES' once the game hits that milestone on the Roblox page."
+    question: "What are the latest active Bizarre Lineage codes working right now?",
+    answer: "Yes! There are currently several active Bizarre Lineage codes giving out free Stat Point Essences, Stand Stat Essences, and Rare Chests. You can find our fully verified list of codes above."
   },
   {
     question: "How do I redeem my Bizarre Lineage codes?",
-    answer: "Once the code patch drops, you'll open up the in-game menu (usually by tapping 'M' or the UI button on the left), click the 'Codes' tab (the Twitter bird icon), paste the code exactly as we have it below, and hit Redeem. We'll update this with exact screenshots the second it's live."
+    answer: "To redeem any Bizarre Lineage code, you must first join the Bizarre Collective Roblox group and Like the game on the main page. Then, load into the game, open the chat box in the top-left corner, and type '!code ' followed by your chosen code (e.g. '!code 100kLikes'). Press enter to claim the code's reward."
   },
   {
     question: "Where is the best place to find new Bizarre Lineage codes?",
-    answer: "Right here! Alternatively, you can join the official Bizarre Lineage Discord server or check their official Trello board. We constantly scrape both of those sources to update this list so you don't have to."
+    answer: "Right here! We constantly monitor the official Bizarre Lineage Discord server and the Trello board to ensure this list of codes is updated the very second a new code drops. Save this codes page!"
   },
   {
     question: "Do Bizarre Lineage codes expire?",
-    answer: "Absolutely. Roblox game codes constantly expire naturally after a few days or when a new major update drops. You've gotta be quick. Bookmark us to make sure you grab your Roka and Arrows before they vanish."
+    answer: "Absolutely. Roblox game codes constantly expire after a few days or when a new major update drops. Bookmark our codes page to make sure you grab your Essences before these codes vanish."
   },
   {
-    question: "What do I get from Bizarre Lineage codes?",
-    answer: "You can expect the usual essentials: free Stand Arrows (to roll for shiny Mythicals), Rokakaka Fruits (to reset your bad pulls), Cash for sub-abilities, and temporary EXP Boosts to help you grind up to max level faster."
+    question: "Why isn't my Bizarre Lineage code working?",
+    answer: "The most common reason a code fails is that you haven't joined the Roblox Group or Liked the game yet—this is a strict requirement for all codes. Alternatively, the code may have been typed without the '!code ' prefix, or the code has officially expired."
   }
 ];
 
-const faqSchema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "mainEntity": faqs.map(f => ({
-    "@type": "Question",
-    "name": f.question,
-    "acceptedAnswer": { "@type": "Answer", "text": f.answer }
-  }))
-};
+
 ---
 <Layout
-  title="Bizarre Lineage Codes (March 2026) | code"
-  description="Looking for Bizarre Lineage codes? Get all the latest working codes for free Stand Arrows, Cash, and Rokakaka. We check the official Discord daily so you don't have to."
+  title="Bizarre Lineage Codes (March 2026) – All Working Codes, Rewards"
+  description="Bizarre Lineage codes updated for March 2026. Find every working code for Stat Point Essences, Rare Chests and more rewards, tested in game and refreshed daily."
   canonicalPath="/codes"
+  exactTitle={true}
 >
-  <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
 
   <section class="section"><div class="container">
     <h1 class="section-title">All Bizarre Lineage Codes</h1>
-    <p class="section-subtitle">Tired of grinding for Stand Arrows and Roka? We've got you covered. Here's the complete, up-to-date list of every working <b>Bizarre Lineage code</b>. We actively monitor lead dev MIDAS's Discord and the official Trello board so this page updates the second a new code drops.</p>
+    <p class="section-subtitle">Don't miss out on free <strong>Stat Point Essences</strong> and <strong>Rare Chests</strong> from the newest codes. We test and verify every single <b>Bizarre Lineage code</b> daily so you can maximize your rerolls without the hassle. Find all the latest active codes below and start dominating.</p>
 
     {activeCodes.length > 0 ? (
       <div class="codes-list">
-        <h2 class="sub-title">Active & Upcoming Bizarre Lineage Codes</h2>
+        <h2 class="sub-title">Active Bizarre Lineage Codes</h2>
         {activeCodes.map((c) => (
           <div class={`code-card ${c.status}`}>
-            <code class="code-text">{c.code}</code>
+            <div class="code-action-group">
+              <code class="code-text">{c.code}</code>
+              <button class="copy-btn" onclick={`navigator.clipboard.writeText('${c.code}'); this.classList.add('copied'); setTimeout(() => this.classList.remove('copied'), 2000);`} aria-label="Copy code">
+                <span class="icon-copy"><Copy size={16} /></span>
+                <span class="icon-check"><Check size={16} /></span>
+              </button>
+            </div>
             <span class="code-reward">{c.reward}</span>
-            {c.status === 'upcoming' ? (
-              <span class="code-status upcoming">Awaiting Patch</span>
-            ) : (
-              <span class="code-status active">Active</span>
-            )}
+            <span class="code-status active">Active</span>
           </div>
         ))}
-        <p class="text-sm text-gray-400 mt-4 mb-8"><em>* Developer MIDAS promised the <strong>200KLIKES</strong> code will drop in the upcoming update. The redemption UI is currently disabled in-game. Be ready to redeem it the moment servers reboot!</em></p>
+        <p class="text-sm text-gray-400 mt-4 mb-8"><em>* Remember: You MUST include the <code>!code</code> prefix exactly as shown above when claiming rewards in the chat box!</em></p>
       </div>
     ) : (
       <div class="no-codes glass-panel">
@@ -77,23 +73,23 @@ const faqSchema = {
     <div class="steps-grid">
       <div class="step-card glass-panel">
         <span class="step-num">1</span>
-        <h3>Launch Bizarre Lineage</h3>
-        <p>Open Roblox and load into the Bizarre Lineage game world.</p>
+        <h3>Join the Community</h3>
+        <p>Before doing anything, you <strong>must</strong> join the official 'Bizarre Collective' Roblox group and Like the game via the main page.</p>
       </div>
       <div class="step-card glass-panel">
         <span class="step-num">2</span>
-        <h3>Open the Codes Menu</h3>
-        <p>Tap the menu icon on the left side of your screen and select the codes tab.</p>
+        <h3>Launch the Game</h3>
+        <p>Boot up Bizarre Lineage in Roblox and wait for your character to fully load into the server.</p>
       </div>
       <div class="step-card glass-panel">
         <span class="step-num">3</span>
-        <h3>Enter Your Code</h3>
-        <p>Type or paste the Bizarre Lineage code exactly as shown and press Redeem.</p>
+        <h3>Open the Chat Box</h3>
+        <p>Navigate to the top-left corner of your screen and click on the in-game text chat icon (or press '/').</p>
       </div>
       <div class="step-card glass-panel">
         <span class="step-num">4</span>
-        <h3>Collect Rewards</h3>
-        <p>Your free items — Stand Arrows, Cash, or EXP Boosts — will appear in your inventory instantly.</p>
+        <h3>Enter Final Code</h3>
+        <p>Type the code exactly as written, including the <code>!code </code> prefix (e.g. <code>!code 100kLikes</code>), and hit Enter to claim!</p>
       </div>
     </div>
 
@@ -104,8 +100,20 @@ const faqSchema = {
       <p>Want to hunt for them yourself? The two best official sources are the <a href="https://discord.com/invite/bizarrelineage" target="_blank" rel="noopener noreferrer" style="color:var(--color-primary);">Bizarre Lineage Discord Server</a> and the official <a href="https://trello.com/b/Zi6UTMnO/official-bizzare-lineage" target="_blank" rel="noopener noreferrer" style="color:var(--color-primary);">Trello board</a>. But honestly, watching Discord announcements all day is exhausting. Just bookmark our page instead — we do the heavy lifting for you.</p>
     </div>
 
+    <!-- SEO Value Add & Milestones-->
+    <h2 class="sub-title">Upcoming Bizarre Lineage Code Milestones</h2>
+    <div class="seo-block glass-panel mb-8">
+      <p>Developers usually drop a brand new <strong>Bizarre Lineage code</strong> whenever the game reaches a massive Like milestone on the official Roblox page. This means the community can actively work together to unlock the next code. Currently, the most anticipated code drop will occur at <strong>200,000 Likes</strong>. Once that milestone is hit, a huge new code will be released, likely rewarding premium items. We will update this codes list the absolute second the new codes drop.</p>
+    </div>
+
+    <h2 class="sub-title">What are Stat Point Essences in Bizarre Lineage?</h2>
+    <div class="seo-block glass-panel mb-8">
+      <p>As you can see from our active codes list, developers are primarily handing out <strong>Stat Point Essences</strong> and <strong>Stand Personality Essences</strong> via these codes right now rather than just plain cash. These rewards from codes are crucial high-tier items that dictate your entire build.</p>
+      <p>A Stat Point Essence from a code allows you to respec and re-allocate points into Vitality, Strength, or specific Stand power scaling. Before using these highly coveted codes rewards, we highly recommend checking out our comprehensive <a href="/tier-list" style="color:var(--color-primary);">Stand Tier List</a>. Don't waste your precious Stat Essences maxing out scaling on a D-tier Stand! Make sure you have rolled something worthwhile like The World or Star Platinum before cashing these codes in.</p>
+    </div>
+
     <!-- Expected Rewards -->
-    <h2 class="sub-title">What Will Bizarre Lineage Codes Give?</h2>
+    <h2 class="sub-title">Types of Rewards from Codes</h2>
     <div class="rewards-grid">
       {expectedRewards.map((r) => (
         <div class="reward-card glass-panel">
@@ -142,15 +150,7 @@ const faqSchema = {
     )}
 
     <!-- FAQ -->
-    <h2 class="sub-title" style="margin-top:3rem;">Bizarre Lineage Codes FAQ</h2>
-    <div class="faq-list">
-      {faqs.map(f => (
-        <details class="faq-item">
-          <summary>{f.question}</summary>
-          <p>{f.answer}</p>
-        </details>
-      ))}
-    </div>
+    <FAQ items={faqs} />
   </div></section>
 </Layout>
 
@@ -203,7 +203,18 @@ const faqSchema = {
 
   .expired-note { color: var(--color-text-muted); font-size: 0.9rem; margin-bottom: 1rem; }
   .code-card { display: flex; align-items: center; gap: 1rem; padding: 0.8rem 1rem; background: var(--color-glass-bg); border: 1px solid var(--color-glass-border); border-radius: 10px; margin-bottom: 0.5rem; }
-  .code-text { font-size: 1rem; font-weight: 700; color: #f59e0b; background: rgba(245,158,11,0.1); padding: 0.3rem 0.8rem; border-radius: 6px; }
+  .code-text { font-size: 1rem; font-weight: 700; color: #f59e0b; background: rgba(245,158,11,0.1); padding: 0.4rem 0.8rem; border-radius: 6px; }
+  
+  .code-action-group { display: flex; align-items: stretch; }
+  .code-action-group .code-text { border-radius: 6px 0 0 6px; border-right: 1px solid rgba(245,158,11,0.2); }
+  .copy-btn { margin: 0; background: rgba(245,158,11,0.1); border: none; padding: 0 0.7rem; border-radius: 0 6px 6px 0; color: #f59e0b; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; }
+  .copy-btn:hover { background: rgba(245,158,11,0.25); color: #fff; }
+  .copy-btn .icon-copy, .copy-btn .icon-check { display: flex; align-items: center; justify-content: center; }
+  .copy-btn .icon-check { display: none; color: #10b981; }
+  .copy-btn.copied { background: rgba(16, 185, 129, 0.15); border-color: rgba(16, 185, 129, 0.3); }
+  .copy-btn.copied .icon-copy { display: none; }
+  .copy-btn.copied .icon-check { display: flex; }
+
   .code-reward { font-size: 0.85rem; color: var(--color-text-secondary); flex: 1; }
   .code-status { font-size: 0.75rem; font-weight: 600; padding: 0.2rem 0.6rem; border-radius: 4px; }
   .code-card.active .code-status { background: rgba(34,197,94,0.15); color: #22c55e; }
@@ -216,11 +227,7 @@ const faqSchema = {
   .mt-4 { margin-top: 1rem; }
   .mb-8 { margin-bottom: 2rem; }
 
-  .faq-list { max-width: 800px; }
-  .faq-item { background: var(--color-glass-bg); border: 1px solid var(--color-glass-border); border-radius: 12px; margin-bottom: 1rem; overflow: hidden; }
-  .faq-item summary { padding: 1.2rem 1.5rem; cursor: pointer; font-weight: 600; color: var(--color-text-primary); font-size: 1rem; list-style: none; }
-  .faq-item summary::-webkit-details-marker { display: none; }
-  .faq-item p { padding: 0 1.5rem 1.2rem; margin: 0; color: var(--color-text-secondary); line-height: 1.7; }
+
 
   @media (max-width: 768px) { .rewards-grid, .steps-grid { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 480px) { .rewards-grid, .steps-grid { grid-template-columns: 1fr; } .cta-links { flex-direction: column; align-items: center; } }

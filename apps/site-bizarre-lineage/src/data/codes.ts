@@ -12,9 +12,27 @@ export interface GameCode {
 // 活跃/即将到来的兑换码
 export const activeCodes: GameCode[] = [
     {
-        code: "200KLIKES",
-        reward: "Stand Arrow & Rokakaka",
-        status: "upcoming",
+        code: "!code 100kLikes",
+        reward: "1 Stat Point Essence, 1 Rare Chest",
+        status: "active",
+        addedDate: new Date().toISOString()
+    },
+    {
+        code: "!code 30kLikes",
+        reward: "1 Stat Point Essence",
+        status: "active",
+        addedDate: new Date().toISOString()
+    },
+    {
+        code: "!code shutdownwoops",
+        reward: "1 Stand Stat Essence",
+        status: "active",
+        addedDate: new Date().toISOString()
+    },
+    {
+        code: "!code 1week",
+        reward: "1 Stand Personality Essence",
+        status: "active",
         addedDate: new Date().toISOString()
     }
 ];
@@ -23,8 +41,8 @@ export const expiredCodes: GameCode[] = [];
 
 // 即将到来的可能奖励类型
 export const expectedRewards = [
+    { icon: "✨", name: "Stat Point Essence", description: "Instantly grants points to allocate to your character's combat stats." },
+    { icon: "🧬", name: "Stand Personality Essence", description: "Used to reroll or modify your Stand's personality traits for hidden buffs." },
+    { icon: "🎁", name: "Rare Chest", description: "Open for a chance to get high-tier accessories, cash, or drop-exclusive items." },
     { icon: "🏹", name: "Stand Arrow", description: "Use to roll for a random Stand. Higher rarity Stands have lower drop rates." },
-    { icon: "🍈", name: "Rokakaka Fruit", description: "Reset your current Stand. Useful when you get a low-tier Stand from an Arrow." },
-    { icon: "💰", name: "In-game Cash", description: "Currency for buying items, Fighting Styles, and Sub-Abilities." },
-    { icon: "⚡", name: "EXP Boost", description: "Temporary boost to experience gain for faster leveling." },
 ];
